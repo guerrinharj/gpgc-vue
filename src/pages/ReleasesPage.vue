@@ -1,7 +1,11 @@
 <template>
     <div class="releases-page">
         <h1>Releases</h1>
-        <ReleaseItem v-for="release in releases" :key="release.slug" :release="release" />
+        <ReleaseItem
+        v-for="release in releases"
+        :key="release.id"
+        :release="release"
+        />
     </div>
 </template>
 
@@ -10,12 +14,13 @@
     import ReleaseItem from '@/components/ReleaseItem.vue';
 
     export default {
-    components: { ReleaseItem },
-    computed: mapState(['releases']),
-    created() {
-        this.$store.dispatch('fetchReleases');
-    },
-    };
+        name: 'ReleasesPage',
+        components: { ReleaseItem },
+        computed: mapState(['releases']),
+        created() {
+            this.$store.dispatch('fetchReleases');
+        },
+        };
 </script>
 
 <style>

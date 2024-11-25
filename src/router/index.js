@@ -1,23 +1,23 @@
-import Vue from 'vue';
-import Router from 'vue-router';
-import Releases from '@/pages/Releases.vue';
-import Release from '@/pages/Release.vue';
-import Featurings from '@/pages/Featurings.vue';
-import Soundtracks from '@/pages/Soundtracks.vue';
-import About from '@/pages/About.vue';
-import Login from '@/pages/Login.vue';
-import AddContent from '@/pages/AddContent.vue';
+import { createRouter, createWebHistory } from 'vue-router';
+import ReleasesPage from '@/pages/ReleasesPage.vue';
+import FeaturingsPage from '@/pages/FeaturingsPage.vue';
+import SoundtracksPage from '@/pages/SoundtracksPage.vue';
+import AboutPage from '@/pages/AboutPage.vue';
+import LoginPage from '@/pages/LoginPage.vue';
+import AddContentPage from '@/pages/AddContentPage.vue';
 
-Vue.use(Router);
+const routes = [
+    { path: '/', component: ReleasesPage },
+    { path: '/featurings', component: FeaturingsPage },
+    { path: '/soundtracks', component: SoundtracksPage },
+    { path: '/about', component: AboutPage },
+    { path: '/login', component: LoginPage },
+    { path: '/add-content', component: AddContentPage },
+];
 
-export default new Router({
-    routes: [
-        { path: '/', component: Releases },
-        { path: '/releases/:slug', component: Release },
-        { path: '/featurings', component: Featurings },
-        { path: '/soundtracks', component: Soundtracks },
-        { path: '/about', component: About },
-        { path: '/login', component: Login },
-        { path: '/add-content', component: AddContent },
-    ],
+const router = createRouter({
+    history: createWebHistory(),
+    routes,
 });
+
+export default router;

@@ -14,6 +14,7 @@
     import SoundtrackItem from '@/components/SoundtrackItem.vue';
 
     export default {
+    name: 'SoundtracksPage',
     components: { SoundtrackItem },
     computed: mapState(['soundtracks']),
     created() {

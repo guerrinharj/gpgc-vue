@@ -14,11 +14,12 @@
     import FeaturingItem from '@/components/FeaturingItem.vue';
 
     export default {
-    components: { FeaturingItem },
-    computed: mapState(['featurings']),
-    created() {
-        this.$store.dispatch('fetchFeaturings');
-    },
+        name: 'FeaturingsPage',
+        components: { FeaturingItem },
+        computed: mapState(['featurings']),
+        created() {
+            this.$store.dispatch('fetchFeaturings');
+        },
     };
 </script>
 
