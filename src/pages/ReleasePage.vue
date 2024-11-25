@@ -12,10 +12,21 @@
             </div>
         </div>
 
+                <!-- Display Track List -->
+        <div class="release-tracks" v-if="release.tracks && release.tracks.length > 0">
+            <h4>Tracklist</h4>
+            <ul>
+                <li v-for="(track, index) in release.tracks" :key="index">
+                    <a v-if="track.url" :href="track.url" target="_blank" rel="noopener noreferrer">  {{ track.name }}</a>
+                </li>
+            </ul>
+        </div>
+
         <div v-if="release.release_date" class="release-info">
             <b>Release date</b>
             <span>{{ release.release_date }}</span>
         </div>
+
         <div v-if="release.label && release.label.length > 0" class="release-info">
             <b>Label</b>
             <span>{{ release.label.join(', ') }}</span>
@@ -25,15 +36,15 @@
             <span>{{ release.format.join(', ') }}</span>
         </div>
 
-        <!-- Display Track List -->
-        <div class="release-tracks" v-if="release.tracks && release.tracks.length > 0">
-            <h4>Tracklist:</h4>
+        <div v-if="release.links && Object.keys(release.links).length > 0" class="release-info">
+            <b>Links</b>
             <ul>
-                <li v-for="(track, index) in release.tracks" :key="index">
-                    <a v-if="track.url" :href="track.url" target="_blank" rel="noopener noreferrer">  {{ track.name }}</a>
+                <li v-for="(url, platform) in release.links" :key="platform">
+                    <a :href="url" target="_blank" rel="noopener noreferrer"> {{ platform }}</a>
                 </li>
             </ul>
         </div>
+
     </div>
 </template>
 
@@ -104,7 +115,7 @@ export default {
 
 /* Styling for release information */
 .release-info {
-    margin: 1rem 0;
+    margin: 2rem 0;
     text-align: center;
 }
 
@@ -114,7 +125,7 @@ export default {
 }
 
 .release-info span {
-    font-size: 1rem;
+    /* font-size: 1rem; */
 }
 
 /* Center the ordered list */
@@ -155,5 +166,25 @@ export default {
 
 .release-tracks a:hover {
     text-decoration: underline; 
+}
+
+.release-info ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.release-info li {
+    margin: 0.1rem 0;
+    text-align: center;
+}
+
+.release-info a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.release-info a:hover {
+    text-decoration: underline;
 }
 </style>

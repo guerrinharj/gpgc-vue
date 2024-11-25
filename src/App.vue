@@ -19,10 +19,14 @@ export default {
 /* Add global styles here if needed */
 
   body {
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     background-color: black;
     padding: 0;
     margin: 0;
     text-transform: lowercase;
+    -webkit-font-smoothing: antialiased; /* Smooth fonts for WebKit browsers */
+    -moz-osx-font-smoothing: grayscale; /* Smooth fonts for macOS */
+    font-size: 23px;
   }
 
   body::-webkit-scrollbar {

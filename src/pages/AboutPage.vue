@@ -24,7 +24,7 @@
         text-align: center;
         padding: 2rem;
         margin: auto;
-        max-width: 50%
+        max-width: 30%
     }
 
     .about-page a {
