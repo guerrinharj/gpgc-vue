@@ -1,7 +1,9 @@
 <template>
     <div class="release-item" @click="goToRelease">
-        <p>{{ release.name }}</p>
-        <p>{{ release.artist_name }}</p>
+        <div>
+            <p><b>{{ release.name }}</b></p>
+            <p>{{ release.artist_name }}</p>
+        </div>
     </div>
 </template>
 
@@ -32,5 +34,13 @@ export default {
     text-align: center;
     margin: 1rem;
     padding: 1rem;
+}
+
+.release-item p {
+    margin: 0.1rem;
+}
+
+.release-item div:hover {
+    text-decoration: underline;
 }
 </style>

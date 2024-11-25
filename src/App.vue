@@ -22,7 +22,14 @@ export default {
     background-color: black;
     padding: 0;
     margin: 0;
+    text-transform: lowercase;
   }
+
+  body::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, and Opera */
+}
+
+
   #app {
     background: black;
     color: white;

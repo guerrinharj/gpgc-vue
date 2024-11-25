@@ -2,12 +2,12 @@
     <div class="soundtrack-item">
         <div v-if="soundtrack.url">
             <a :href="soundtrack.url" target="_blank" rel="noopener noreferrer">
-                <p>{{ soundtrack.name }}</p>
+                <p><b>{{ soundtrack.name }}</b></p>
                 <p>{{ soundtrack.company }}</p>
             </a>
         </div>
         <div v-else>
-            <p>{{ soundtrack.name }}</p>
+            <p><b>{{ soundtrack.name }}</b></p>
             <p>{{ soundtrack.company }}</p>
         </div>
     </div>
@@ -25,6 +25,10 @@ export default {
     text-align: center;
     margin: 1rem;
     padding: 1rem;
+}
+
+.soundtrack-item p {
+    margin: 0.1rem;
 }
 
 .soundtrack-item a {

@@ -2,12 +2,12 @@
     <div class="featuring-item">
         <div v-if="featuring.url">
             <a :href="featuring.url" target="_blank" rel="noopener noreferrer">
-                <p>{{ featuring.name }}</p>
+                <p><b>{{ featuring.name }}</b></p>
                 <p>{{ featuring.artist }}</p>
             </a>
         </div>
         <div v-else>
-            <p>{{ featuring.name }}</p>
+            <p><b>{{ featuring.name }}</b></p>
             <p>{{ featuring.artist }}</p>
         </div>
     </div>
@@ -25,6 +25,10 @@
         text-align: center;
         margin: 1rem;
         padding: 1rem;
+    }
+
+    .featuring-item p {
+        margin: 0.1rem;
     }
 
     /* Style for anchor tags in featuring items */
