@@ -1,26 +1,39 @@
 <template>
     <div class="soundtrack-item">
-        <h3 @click="goToSoundtrack">{{ soundtrack.name }}</h3>
+        <div v-if="soundtrack.url">
+            <a :href="soundtrack.url" target="_blank" rel="noopener noreferrer">
+                <p>{{ soundtrack.name }}</p>
+                <p>{{ soundtrack.company }}</p>
+            </a>
+        </div>
+        <div v-else>
+            <p>{{ soundtrack.name }}</p>
+            <p>{{ soundtrack.company }}</p>
+        </div>
     </div>
 </template>
 
 <script>
-    export default {
+export default {
     props: ['soundtrack'],
-    methods: {
-        goToSoundtrack() {
-        // Replace with actual route if individual soundtrack detail page is implemented
-        console.log(`Clicked on Soundtrack: ${this.soundtrack.title}`);
-        },
-    },
-    };
+};
 </script>
 
 <style>
-    .soundtrack-item {
-    cursor: pointer;
+.soundtrack-item {
     color: white;
     text-align: center;
     margin: 1rem;
-    }
+    padding: 1rem;
+}
+
+.soundtrack-item a {
+    text-decoration: none; /* Remove underline for all links initially */
+    color: white; /* Ensure the link matches the styling */
+    cursor: pointer;
+}
+
+.soundtrack-item a:hover {
+    text-decoration: underline; /* Add underline on hover */
+}
 </style>

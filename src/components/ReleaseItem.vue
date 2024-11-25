@@ -1,6 +1,7 @@
 <template>
-    <div class="release-item">
-        <h3 @click="goToRelease">{{ release.name }}</h3>
+    <div class="release-item" @click="goToRelease">
+        <p>{{ release.name }}</p>
+        <p>{{ release.artist_name }}</p>
     </div>
 </template>
 
@@ -8,8 +9,17 @@
 export default {
     props: ['release'],
     methods: {
-        goToRelease() {
-        this.$router.push(`/releases/${this.release.slug}`);
+        async goToRelease() {
+            try {
+                // Dispatch the action to fetch the release
+                await this.$store.dispatch('fetchRelease', this.release.slug);
+
+                // Navigate to the release page
+                this.$router.push(`/releases/${this.release.slug}`);
+            } catch (error) {
+                console.error('Error navigating to release:', error);
+                alert('Failed to load release details. Please try again.');
+            }
         },
     },
 };
@@ -21,5 +31,6 @@ export default {
     color: white;
     text-align: center;
     margin: 1rem;
+    padding: 1rem;
 }
 </style>

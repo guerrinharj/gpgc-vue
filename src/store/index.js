@@ -6,6 +6,7 @@ const store = createStore({
         releases: [],
         featurings: [],
         soundtracks: [],
+        selectedRelease: null, // To store the fetched release
         user: null,
         error: null,
     },
@@ -18,6 +19,9 @@ const store = createStore({
         },
         setSoundtracks(state, soundtracks) {
             state.soundtracks = soundtracks;
+        },
+        setSelectedRelease(state, release) {
+            state.selectedRelease = release;
         },
         setUser(state, user) {
             state.user = user;
@@ -57,6 +61,15 @@ const store = createStore({
                 commit('setError', 'Failed to load soundtracks.');
             }
         },
+        async fetchRelease({ commit }, slug) {
+            try {
+                const response = await axios.get(`https://gpgc-api.onrender.com/api/v1/releases/${slug}`);
+                commit('setSelectedRelease', response.data);
+            } catch (error) {
+                console.error('Error fetching release:', error);
+                commit('setError', 'Failed to load release.');
+            }
+        },
         async login({ commit }, { username, password }) {
             try {
                 const response = await axios.post('https://gpgc-api.onrender.com/login', {
@@ -93,6 +106,9 @@ const store = createStore({
         },
         getSoundtracks(state) {
             return state.soundtracks;
+        },
+        getSelectedRelease(state) {
+            return state.selectedRelease;
         },
     },
 });
