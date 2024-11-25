@@ -1,7 +1,6 @@
 <template>
     <div class="featuring-item">
-        <h3 @click="goToFeaturing">{{ featuring.featuring_name }}</h3>
-        <p>{{ featuring.label }}</p>
+        <h3 @click="goToFeaturing">{{ featuring.name }}</h3>
     </div>
 </template>
 

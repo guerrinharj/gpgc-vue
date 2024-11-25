@@ -1,6 +1,6 @@
 <template>
     <div class="release-item">
-        <h3 @click="goToRelease">{{ release.title }}</h3>
+        <h3 @click="goToRelease">{{ release.name }}</h3>
     </div>
 </template>
 

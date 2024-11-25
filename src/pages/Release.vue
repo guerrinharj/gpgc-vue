@@ -1,7 +1,6 @@
 <template>
     <div class="release-page">
-        <h1>{{ release.title }}</h1>
-        <p>{{ release.description }}</p>
+        <h1>{{ release.name }}</h1>
     </div>
 </template>
 

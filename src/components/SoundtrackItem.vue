@@ -1,7 +1,6 @@
 <template>
     <div class="soundtrack-item">
-        <h3 @click="goToSoundtrack">{{ soundtrack.title }}</h3>
-        <p>{{ soundtrack.release_date }}</p>
+        <h3 @click="goToSoundtrack">{{ soundtrack.name }}</h3>
     </div>
 </template>
 
