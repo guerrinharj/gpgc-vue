@@ -1,0 +1,28 @@
+<template>
+    <div class="releases-page">
+        <h1>Releases</h1>
+        <ReleaseItem v-for="release in releases" :key="release.slug" :release="release" />
+    </div>
+</template>
+
+<script>
+    import { mapState } from 'vuex';
+    import ReleaseItem from '@/components/ReleaseItem.vue';
+
+    export default {
+    components: { ReleaseItem },
+    computed: mapState(['releases']),
+    created() {
+        this.$store.dispatch('fetchReleases');
+    },
+    };
+</script>
+
+<style>
+    .releases-page {
+    background: black;
+    color: white;
+    text-align: center;
+    padding: 2rem;
+    }
+</style>

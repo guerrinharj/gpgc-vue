@@ -1,0 +1,32 @@
+<template>
+    <div class="soundtracks-page">
+        <h1>Soundtracks</h1>
+        <SoundtrackItem
+        v-for="soundtrack in soundtracks"
+        :key="soundtrack.id"
+        :soundtrack="soundtrack"
+        />
+    </div>
+</template>
+
+<script>
+    import { mapState } from 'vuex';
+    import SoundtrackItem from '@/components/SoundtrackItem.vue';
+
+    export default {
+    components: { SoundtrackItem },
+    computed: mapState(['soundtracks']),
+    created() {
+        this.$store.dispatch('fetchSoundtracks');
+    },
+    };
+</script>
+
+<style>
+    .soundtracks-page {
+    background: black;
+    color: white;
+    text-align: center;
+    padding: 2rem;
+    }
+</style>
