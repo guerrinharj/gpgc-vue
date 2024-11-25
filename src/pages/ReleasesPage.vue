@@ -1,6 +1,5 @@
 <template>
     <div class="releases-page">
-        <h1>Releases</h1>
         <ReleaseItem
         v-for="release in releases"
         :key="release.id"

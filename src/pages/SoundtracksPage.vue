@@ -1,6 +1,5 @@
 <template>
     <div class="soundtracks-page">
-        <h1>Soundtracks</h1>
         <SoundtrackItem
         v-for="soundtrack in soundtracks"
         :key="soundtrack.id"

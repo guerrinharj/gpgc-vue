@@ -1,6 +1,5 @@
 <template>
     <div class="featurings-page">
-        <h1>Featurings</h1>
         <FeaturingItem
         v-for="featuring in featurings"
         :key="featuring.id"

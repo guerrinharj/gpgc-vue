@@ -1,6 +1,5 @@
 <template>
     <div class="add-content-page">
-        <h1>Add Content</h1>
         <p>Welcome! You can now add releases, featurings, and soundtracks.</p>
     </div>
 </template>
