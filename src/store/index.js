@@ -80,7 +80,7 @@ const store = createStore({
                 });
         
                 if (response.status === 201) {
-                    commit('setUser', response.data.user);
+                    commit('setUser', response.data.auth_token);
                     commit('setError', null);
                     return true; // Indicate success
                 } else {
@@ -93,8 +93,8 @@ const store = createStore({
                 return false; // Indicate failure
             }
         },
-        logout({ commit }) {
-            commit('setUser', null);
+        async logout({ commit }) {
+            commit('setUser', null); // Clear the user state
         },
     },
     getters: {
@@ -115,7 +115,7 @@ const store = createStore({
         },
         getSelectedRelease(state) {
             return state.selectedRelease;
-        },
+        }
     },
 });
 
