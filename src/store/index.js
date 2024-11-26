@@ -78,15 +78,19 @@ const store = createStore({
                     username,
                     password,
                 });
-                if (response.data.success) {
+        
+                if (response.status === 201) {
                     commit('setUser', response.data.user);
                     commit('setError', null);
+                    return true; // Indicate success
                 } else {
-                    throw new Error('Invalid username or password.');
+                    commit('setError', 'Login failed. Please check your credentials.');
+                    return false; // Indicate failure
                 }
             } catch (error) {
                 console.error('Login error:', error);
                 commit('setError', 'Login failed. Please check your credentials.');
+                return false; // Indicate failure
             }
         },
         logout({ commit }) {

@@ -2,67 +2,70 @@
     <div class="login-form">
         <h1>Login</h1>
         <form @submit.prevent="handleLogin">
-        <div class="form-group">
-            <label for="username">Username</label>
-            <input
-            type="text"
-            id="username"
-            v-model="username"
-            placeholder="Enter your username"
-            required
-            />
-        </div>
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input
+                    type="text"
+                    id="username"
+                    v-model="username"
+                    placeholder="Enter your username"
+                    required
+                />
+            </div>
 
-        <div class="form-group">
-            <label for="password">Password</label>
-            <input
-            type="password"
-            id="password"
-            v-model="password"
-            placeholder="Enter your password"
-            required
-            />
-        </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input
+                    type="password"
+                    id="password"
+                    v-model="password"
+                    placeholder="Enter your password"
+                    required
+                />
+            </div>
 
-        <button type="submit">Login</button>
+            <button type="submit">Login</button>
         </form>
-        <p v-if="error" class="error">{{ error }}</p>
+        <p v-if="errorMessage" class="error">{{ errorMessage }}</p>
     </div>
 </template>
 
 <script>
-    export default {
+import { mapActions, mapGetters } from 'vuex';
+
+export default {
     data() {
         return {
-        username: '',
-        password: '',
-        error: null,
+            username: '',
+            password: '',
         };
     },
-    methods: {
-        handleLogin() {
-        if (this.username && this.password) {
-            // Example: Replace with actual API call
-            console.log('Logging in with:', {
-            username: this.username,
-            password: this.password,
-            });
-
-            // Simulate success or failure
-            if (this.username === 'admin' && this.password === 'password') {
-            alert('Login successful!');
-            this.error = null;
-            // Redirect to a different page if needed
-            this.$router.push('/');
-            } else {
-            this.error = 'Invalid username or password.';
-            }
-        } else {
-            this.error = 'Please fill out all fields.';
-        }
+    computed: {
+        ...mapGetters(['getError']),
+        errorMessage() {
+            return this.getError;
         },
     },
-    };
+    methods: {
+        ...mapActions(['login']),
+        async handleLogin() {
+            if (this.username && this.password) {
+                try {
+                    const success = await this.login({ username: this.username, password: this.password }); //the variable "success" must returns a true statement to be defined
+                    
+                    // Redirect only if login is successful
+                    if (success) {
+                        this.$router.push('/');
+                    }
+                } catch (error) {
+                    console.error('Login failed:', error);
+                }
+            } else {
+                console.error('Please provide both username and password.');
+            }
+        },
+    },
+};
 </script>
 
 <style>

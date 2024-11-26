@@ -20,7 +20,7 @@ import LoginForm from '@/components/LoginForm.vue';
     background: black;
     color: white;
     text-align: center;
-    height: 100vh;
+    height: auto;
     display: flex;
     justify-content: center;
     align-items: center;
