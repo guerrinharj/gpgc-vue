@@ -40,11 +40,11 @@
             </ul>
         </div>
 
-        <div v-if="release.links && Object.keys(release.links).length > 0" class="release-info">
+        <div v-if="filteredLinks.length > 0" class="release-info">
             <b>Links</b>
             <ul>
-                <li v-for="(url, platform) in release.links" :key="platform">
-                    <a :href="url" target="_blank" rel="noopener noreferrer"> {{ platform }}</a>
+                <li v-for="({ platform, url }) in filteredLinks" :key="platform">
+                    <a :href="url" target="_blank" rel="noopener noreferrer">{{ platform }}</a>
                 </li>
             </ul>
         </div>
@@ -61,6 +61,12 @@ export default {
         release() {
             return this.getSelectedRelease;
         },
+        filteredLinks() {
+            if (!this.release.links) return [];
+            return Object.entries(this.release.links)
+                .filter(([, url]) => url) // Ignore `platform`, focus on `url`
+                .map(([platform, url]) => ({ platform, url })); // Use `platform` and `url` in the final result
+        }
     },
     created() {
         const slug = this.$route.params.slug;
