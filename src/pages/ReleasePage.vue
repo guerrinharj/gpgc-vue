@@ -29,11 +29,15 @@
 
         <div v-if="release.label && release.label.length > 0" class="release-info">
             <b>Label</b>
-            <span>{{ release.label.join(', ') }}</span>
+            <ul>
+                <li v-for="label in release.label" :key="label">{{ label }}</li>
+            </ul>
         </div>
         <div v-if="release.format && release.format.length > 0" class="release-info">
             <b>Formats</b>
-            <span>{{ release.format.join(', ') }}</span>
+            <ul>
+                <li v-for="format in release.format" :key="format">{{ format }}</li>
+            </ul>
         </div>
 
         <div v-if="release.links && Object.keys(release.links).length > 0" class="release-info">
