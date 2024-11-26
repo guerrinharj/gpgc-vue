@@ -8,6 +8,9 @@
             <li v-if="isAuthenticated" class="logout">
                 <a @click="logout">Logout</a>
             </li>
+            <li v-else class="login">
+                <router-link to="/login">Login</router-link>
+            </li>
         </ul>
     </nav>
 </template>

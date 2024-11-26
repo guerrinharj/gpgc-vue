@@ -5,6 +5,7 @@ const API_BASE_URL = process.env.VUE_APP_API_BASE_URL;
 
 const store = createStore({
     state: {
+        artists: [],
         releases: [],
         featurings: [],
         soundtracks: [],
@@ -13,6 +14,9 @@ const store = createStore({
         error: null,
     },
     mutations: {
+        setArtists(state, artists) {
+            state.artists = artists; 
+        },
         setReleases(state, releases) {
             state.releases = releases;
         },
@@ -72,6 +76,84 @@ const store = createStore({
                 commit('setError', 'Failed to load release.');
             }
         },
+
+        async createArtist({ state, commit }, artistData) {
+            try {
+                const response = await axios.post(`${API_BASE_URL}/api/v1/artists`, artistData, {
+                    headers: {
+                        Username: `${state.user.username}`,
+                        Password:  `${state.user.password}`,
+                    }
+                });
+    
+                // Optional: Update artists state if needed
+                commit('setArtists', [response.data, ...(state.artists || [])]); // Assuming `artists` state exists
+                return true; // Indicate success
+            } catch (error) {
+                console.error('Error creating artist:', error);
+                commit('setError', 'Failed to create artist.');
+                return false; // Indicate failure
+            }
+        },
+
+        
+        async createRelease({ state, commit }, releaseData) {
+            try {
+                const response = await axios.post(`${API_BASE_URL}/api/v1/releases`, releaseData, {
+                    headers: {
+                        Username: `${state.user.username}`,
+                        Password:  `${state.user.password}`,
+                    }
+                });
+        
+                // Update releases state with the newly created release
+                commit('setReleases', [response.data, ...state.releases]);
+                return true; // Indicate success
+            } catch (error) {
+                console.error('Error creating release:', error);
+                commit('setError', 'Failed to create release.');
+                return false; // Indicate failure
+            }
+        },
+
+
+        async createFeaturing({ state, commit }, featuringData) {
+            try {
+                const response = await axios.post(`${API_BASE_URL}/api/v1/featurings`, featuringData, {
+                    headers: {
+                        Username: `${state.user.username}`,
+                        Password:  `${state.user.password}`,
+                    }
+                });
+
+                // Update featurings state with the newly created featuring
+                commit('setFeaturings', [response.data, ...state.featurings]);
+                return true; // Indicate success
+            } catch (error) {
+                console.error('Error creating featuring:', error);
+                commit('setError', 'Failed to create featuring.');
+                return false; // Indicate failure
+            }
+        },
+
+        async createSoundtrack({ state, commit }, soundtrackData) {
+            try {
+                const response = await axios.post(`${API_BASE_URL}/api/v1/soundtracks`, soundtrackData, {
+                    headers: {
+                        Authorization: `Basic ${btoa(`${state.user.username}:${state.user.password}`)}`, // Encode username:password
+                    },
+                });
+    
+                // Update soundtracks state with the newly created soundtrack
+                commit('setSoundtracks', [response.data, ...state.soundtracks]);
+                return true; // Indicate success
+            } catch (error) {
+                console.error('Error creating soundtrack:', error);
+                commit('setError', 'Failed to create soundtrack.');
+                return false; // Indicate failure
+            }
+        },
+        
         async login({ commit }, { username, password }) {
             try {
                 const response = await axios.post(`${API_BASE_URL}/login`, {
@@ -80,7 +162,8 @@ const store = createStore({
                 });
         
                 if (response.status === 201) {
-                    commit('setUser', response.data.auth_token);
+                    // Store username and password in state
+                    commit('setUser', { username, password });
                     commit('setError', null);
                     return true; // Indicate success
                 } else {
@@ -93,6 +176,7 @@ const store = createStore({
                 return false; // Indicate failure
             }
         },
+        
         async logout({ commit }) {
             commit('setUser', null); // Clear the user state
         },

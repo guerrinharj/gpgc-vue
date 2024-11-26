@@ -1,5 +1,6 @@
 <template>
     <div class="create-bar" v-if="isAuthenticated">
+        <button @click="createArtist" class="create-button">Create Artist</button>
         <button @click="createRelease" class="create-button">Create Release</button>
         <button @click="createFeaturing" class="create-button">Create Featuring</button>
         <button @click="createSoundtrack" class="create-button">Create Soundtrack</button>
@@ -15,6 +16,11 @@ export default {
         ...mapGetters(['isAuthenticated']), // Use Vuex to check if the user is authenticated
     },
     methods: {
+        createArtist() {
+            console.log('Create Release button clicked');
+            // Add Vuex or routing logic here
+            this.$router.push('/create-artist'); // Example: Navigate to a route
+        },
         createRelease() {
             console.log('Create Release button clicked');
             // Add Vuex or routing logic here
