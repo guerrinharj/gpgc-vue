@@ -61,9 +61,9 @@ export default {
         release() {
             return this.getSelectedRelease;
         },
-        filteredLinks() {
-            if (!this.release.links) return [];
-            return Object.entries(this.release.links)
+        filteredLinks() { 
+            if (!this.release.links) return []; // In case "links" is null, return an empty array to avoid errors. 
+            return Object.entries(this.release.links) // Transform the array of objects "release.links" into an array of arrays that follow the pattern ["key", "value"]
                 .filter(([, url]) => url) // Ignore `platform`, focus on `url`
                 .map(([platform, url]) => ({ platform, url })); // Use `platform` and `url` in the final result
         }
