@@ -78,6 +78,8 @@ export default {
                 alert('Failed to load release details.');
             });
         }
+
+        window.scrollTo(0, 0);
     },
 };
 </script>
