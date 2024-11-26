@@ -77,17 +77,23 @@ const store = createStore({
             }
         },
 
+
         async createArtist({ state, commit }, artistData) {
             try {
-                const response = await axios.post(`${API_BASE_URL}/api/v1/artists`, artistData, {
+                const payload = {
+                    name: artistData.name,
+                    group: artistData.group,
+                };
+        
+                const response = await axios.post(`${API_BASE_URL}/api/v1/artists`, payload, {
                     headers: {
                         Username: `${state.user.username}`,
-                        Password:  `${state.user.password}`,
-                    }
+                        Password: `${state.user.password}`,
+                    },
                 });
-    
-                // Optional: Update artists state if needed
-                commit('setArtists', [response.data, ...(state.artists || [])]); // Assuming `artists` state exists
+        
+                // Update the state (array) with the new artist
+                commit('setArtists', [response.data, ...(state.artists || [])]); 
                 return true; // Indicate success
             } catch (error) {
                 console.error('Error creating artist:', error);
@@ -95,6 +101,8 @@ const store = createStore({
                 return false; // Indicate failure
             }
         },
+        
+        
 
         
         async createRelease({ state, commit }, releaseData) {

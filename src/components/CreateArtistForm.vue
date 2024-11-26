@@ -5,8 +5,8 @@
             <input id="name" v-model="form.name" required />
         </div>
         <div>
-            <label for="is_group">Is Group</label>
-            <input id="is_group" type="checkbox" v-model="form.is_group" />
+            <label for="group">Group</label>
+            <input id="group" type="checkbox" v-model="form.group" /> 
         </div>
         <button type="submit">Create</button>
     </form>
@@ -21,19 +21,23 @@ export default {
         return {
             form: {
                 name: '',
-                is_group: false,
+                group: false,
             },
         };
     },
     methods: {
         ...mapActions(['createArtist']),
         async submitForm() {
-            const success = await this.createArtist(this.form);
-            if (success) {
-                alert('Artist created successfully!');
-                this.$router.push('/'); // Redirect after creation
-            } else {
-                alert('Failed to create artist.');
+            try {
+                const success = await this.createArtist(this.form);
+                if (success) {
+                    alert('Artist created successfully!');
+                    this.$router.push('/'); // Redirect after creation
+                } else {
+                    throw new Error('Failed to create artist.');
+                }
+            } catch (error) {
+                alert(error);
             }
         },
     },
