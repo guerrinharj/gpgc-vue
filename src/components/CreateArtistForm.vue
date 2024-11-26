@@ -5,10 +5,10 @@
             <input id="name" v-model="form.name" required />
         </div>
         <div>
-            <label for="genre">Genre</label>
-            <input id="genre" v-model="form.genre" required />
+            <label for="is_group">Is Group</label>
+            <input id="is_group" type="checkbox" v-model="form.is_group" />
         </div>
-        <button type="submit">Create Artist</button>
+        <button type="submit">Create</button>
     </form>
 </template>
 
@@ -21,8 +21,7 @@ export default {
         return {
             form: {
                 name: '',
-                genre: '',
-                bio: '',
+                is_group: false,
             },
         };
     },
@@ -54,7 +53,7 @@ export default {
     font-weight: bold;
 }
 
-.create-artist-form input, .create-artist-form textarea {
+.create-artist-form input {
     padding: 0.5rem;
     font-size: 1rem;
     width: 100%;
@@ -62,6 +61,7 @@ export default {
 }
 
 .create-artist-form button {
+    text-transform: inherit;
     padding: 0.5rem 1rem;
     font-size: 1rem;
     color: white;
