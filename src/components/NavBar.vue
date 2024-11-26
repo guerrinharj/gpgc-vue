@@ -5,12 +5,24 @@
             <li><router-link to="/featurings">Featurings</router-link></li>
             <li><router-link to="/soundtracks">Soundtracks</router-link></li>
             <li><router-link to="/about">About</router-link></li>
+            <li v-if="isAuthenticated" class="logout">
+                <a @click="logout">Logout</a>
+            </li>
         </ul>
     </nav>
 </template>
 
 <script>
-export default {};
+    import { mapActions, mapGetters } from 'vuex';
+
+    export default {
+        computed: {
+            ...mapGetters(['isAuthenticated']),
+        },
+        methods: {
+            ...mapActions(['logout']),
+        }
+    };
 </script>
 
 <style>
@@ -27,5 +39,9 @@ export default {};
 .navbar li {
     display: inline;
     margin: 0 1rem;
+}
+
+.logout {
+    color: red!important;
 }
 </style>

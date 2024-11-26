@@ -78,19 +78,23 @@ const store = createStore({
                     username,
                     password,
                 });
-                if (response.data.success) {
-                    commit('setUser', response.data.user);
+        
+                if (response.status === 201) {
+                    commit('setUser', response.data.auth_token);
                     commit('setError', null);
+                    return true; // Indicate success
                 } else {
-                    throw new Error('Invalid username or password.');
+                    commit('setError', 'Login failed. Please check your credentials.');
+                    return false; // Indicate failure
                 }
             } catch (error) {
                 console.error('Login error:', error);
                 commit('setError', 'Login failed. Please check your credentials.');
+                return false; // Indicate failure
             }
         },
-        logout({ commit }) {
-            commit('setUser', null);
+        async logout({ commit }) {
+            commit('setUser', null); // Clear the user state
         },
     },
     getters: {
@@ -111,7 +115,7 @@ const store = createStore({
         },
         getSelectedRelease(state) {
             return state.selectedRelease;
-        },
+        }
     },
 });
 
