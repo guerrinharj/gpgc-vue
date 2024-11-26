@@ -37,6 +37,18 @@ const store = createStore({
         },
     },
     actions: {
+        async fetchArtists({ commit }) {
+            try {
+                const response = await axios.get('http://localhost:3000/api/v1/artists');
+                console.log('API Response:', response.data); // Debugging log
+                const sortedArtists = response.data;
+                commit('setArtists', sortedArtists);
+            } catch (error) {
+                console.error('Error fetching artists:', error);
+                commit('setError', 'Failed to load artists.');
+            }
+        },
+
         async fetchReleases({ commit }) {
             try {
                 const response = await axios.get('http://localhost:3000/api/v1/releases');
