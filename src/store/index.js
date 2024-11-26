@@ -33,7 +33,7 @@ const store = createStore({
     actions: {
         async fetchReleases({ commit }) {
             try {
-                const response = await axios.get('https://gpgc-api.onrender.com/api/v1/releases');
+                const response = await axios.get('http://localhost:3000/api/v1/releases');
                 const sortedReleases = response.data.sort((a, b) => new Date(b.release_date) - new Date(a.release_date));
                 commit('setReleases', sortedReleases);
             } catch (error) {
@@ -43,7 +43,7 @@ const store = createStore({
         },
         async fetchFeaturings({ commit }) {
             try {
-                const response = await axios.get('https://gpgc-api.onrender.com/api/v1/featurings');
+                const response = await axios.get(`${API_BASE_URL}/api/v1/featurings`);
                 const sortedFeaturings = response.data.sort((a, b) => new Date(b.release_date) - new Date(a.release_date));
                 commit('setFeaturings', sortedFeaturings);
             } catch (error) {
@@ -53,7 +53,7 @@ const store = createStore({
         },
         async fetchSoundtracks({ commit }) {
             try {
-                const response = await axios.get('https://gpgc-api.onrender.com/api/v1/soundtracks');
+                const response = await axios.get(`${API_BASE_URL}/api/v1/soundtracks`);
                 const sortedSoundtracks = response.data.sort((a, b) => b.year - a.year); // Sort by year
                 commit('setSoundtracks', sortedSoundtracks);
             } catch (error) {
@@ -63,7 +63,7 @@ const store = createStore({
         },
         async fetchRelease({ commit }, slug) {
             try {
-                const response = await axios.get(`https://gpgc-api.onrender.com/api/v1/releases/${slug}`);
+                const response = await axios.get(`${API_BASE_URL}/api/v1/releases/${slug}`);
                 commit('setSelectedRelease', response.data);
             } catch (error) {
                 console.error('Error fetching release:', error);
@@ -72,7 +72,7 @@ const store = createStore({
         },
         async login({ commit }, { username, password }) {
             try {
-                const response = await axios.post('https://gpgc-api.onrender.com/login', {
+                const response = await axios.post(`${API_BASE_URL}/login`, {
                     username,
                     password,
                 });
