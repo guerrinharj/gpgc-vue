@@ -136,7 +136,7 @@ export default {
 }
 
 .release-tracks {
-    padding: 2rem;
+    padding: 1rem;
 }
 
 .release-tracks h4 {
