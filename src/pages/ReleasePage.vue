@@ -33,10 +33,27 @@
                 <li v-for="label in release.label" :key="label">{{ label }}</li>
             </ul>
         </div>
+
         <div v-if="release.format && release.format.length > 0" class="release-info">
             <b>Formats</b>
             <ul>
                 <li v-for="format in release.format" :key="format">{{ format }}</li>
+            </ul>
+        </div>
+
+        <div v-if="filteredCredits.length > 0" class="release-info">
+            <b>Credits</b>
+            <ul>
+                <li v-for="({ name, credit }) in filteredCredits" :key="name">
+                    <strong>{{ name }}</strong>: {{ credit }}
+                </li>
+            </ul>
+        </div>
+
+        <div v-if="release.notes && release.notes.length > 0" class="release-info">
+            <b>Notes</b>
+            <ul>
+                <li v-for="notes in release.notes" :key="notes">{{ notes }}</li>
             </ul>
         </div>
 
@@ -48,6 +65,7 @@
                 </li>
             </ul>
         </div>
+
 
     </div>
 </template>
@@ -63,9 +81,14 @@ export default {
         },
         filteredLinks() { 
             if (!this.release.links) return []; // In case "links" is null, return an empty array to avoid errors. 
-            return Object.entries(this.release.links) // Transform the array of objects "release.links" into an array of arrays that follow the pattern ["key", "value"]
-                .filter(([, url]) => url) // Ignore `platform`, focus on `url`
+            return Object.entries(this.release.links) // Transform the array of objects "release.links" into an array that follow the pattern ["key", "value"]
                 .map(([platform, url]) => ({ platform, url })); // Use `platform` and `url` in the final result
+        },
+        filteredCredits() {
+            if (!this.release.credits) return [];
+            return Object.entries(this.release.credits) 
+                .map(([credit, name]) => ({ credit, name }));
+            
         }
     },
     created() {
