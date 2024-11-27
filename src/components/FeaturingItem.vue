@@ -5,18 +5,28 @@
                 <p><b>{{ featuring.name }}</b></p>
                 <p>{{ featuring.artist }}</p>
             </a>
+                <p><em>{{ formattedCredit }}</em></p>
+            
         </div>
         <div v-else>
             <p><b>{{ featuring.name }}</b></p>
             <p>{{ featuring.artist }}</p>
+            <p><em>{{ formattedCredit }}</em></p>
         </div>
     </div>
 </template>
 
 <script>
-    export default {
-        props: ['featuring'],
-    };
+export default {
+    props: ['featuring'],
+    computed: {
+        formattedCredit() {
+            return Array.isArray(this.featuring.credit) 
+                ? this.featuring.credit.join(', ') 
+                : this.featuring.credit;
+        }
+    }
+};
 </script>
 
 <style>
@@ -29,6 +39,11 @@
 
     .featuring-item p {
         margin: 0.1rem;
+    }
+
+    .featuring-item em {
+        font-style: italic; /* Ensure italic styling */
+        font-size: 1.1rem
     }
 
     /* Style for anchor tags in featuring items */
