@@ -2,16 +2,26 @@
     <form @submit.prevent="submitForm" class="create-release-form">
         <div>
             <label for="name">Name</label>
-            <input id="name" v-model="form.name" required />
+            <textarea
+                id="label"
+                placeholder="Add name of the release"
+                v-model="form.name"
+                @change="updateArray('name', form.name)"
+            ></textarea>
         </div>
         
         <div>
-            <label for="artist_name">Artist Name</label>
-            <select id="artist_name" v-model="form.artist_name" required>
+            <label for="artist_name">Artist</label>
+            <select id="artist_name" v-model="form.artist_name"  required>
                 <option v-for="artist in artists" :key="artist.id" :value="artist.name">
                     {{ artist.name }}
                 </option>
             </select>
+        </div>
+
+        <div>
+            <label for="release_date">Release Date</label>
+            <input id="release_date" type="date" v-model="form.release_date" required />
         </div>
 
         <div>
@@ -23,11 +33,7 @@
                 @change="updateArray('cover', form.cover)"
             ></textarea>
         </div>
-        
-        <div>
-            <label for="release_date">Release Date</label>
-            <input id="release_date" type="date" v-model="form.release_date" required />
-        </div>
+    
         
         <div>
             <label for="label">Label</label>
@@ -94,13 +100,12 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
+import { mapState, mapActions } from 'vuex';
 
 export default {
     name: "CreateReleaseForm",
     data() {
         return {
-            artists: [], // Load from Vuex or API
             form: {
                 name: '',
                 artist_name: '',
@@ -117,12 +122,15 @@ export default {
             linksInput: '',
         };
     },
+    computed: {
+        ...mapState(['artists']), // Bind Vuex state to the component
+    },
+    mounted() {
+        console.log("Fetching artists..."); // Debugging log
+        this.fetchArtists(); // Fetch artist data
+    },
     methods: {
         ...mapActions(['createRelease', 'fetchArtists']),
-        async mounted() {
-            console.log("Fetching artists..."); // Debugging log
-            this.artists = await this.fetchArtists(); // Fetch artist data
-        },
         updateArray(field, value) {
             this.form[field] = value.split(',').map(item => item.trim());
         },
@@ -154,6 +162,12 @@ export default {
     gap: 1rem;
     align-items: center;
 }
+
+#artist_name {
+    width: 110%;
+}
+
+
 
 .create-release-form label {
     color: white;

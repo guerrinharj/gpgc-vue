@@ -40,7 +40,6 @@ const store = createStore({
         async fetchArtists({ commit }) {
             try {
                 const response = await axios.get('http://localhost:3000/api/v1/artists');
-                console.log('API Response:', response.data); // Debugging log
                 const sortedArtists = response.data;
                 commit('setArtists', sortedArtists);
             } catch (error) {
