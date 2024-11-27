@@ -13,28 +13,20 @@ import { mapGetters } from 'vuex';
 export default {
     name: "CreateBar",
     computed: {
-        ...mapGetters(['isAuthenticated']), // Use Vuex to check if the user is authenticated
+        ...mapGetters(['isAuthenticated']),
     },
     methods: {
         createArtist() {
-            console.log('Create Release button clicked');
-            // Add Vuex or routing logic here
-            this.$router.push('/create-artist'); // Example: Navigate to a route
+            this.$router.push('/create-artist');
         },
         createRelease() {
-            console.log('Create Release button clicked');
-            // Add Vuex or routing logic here
-            this.$router.push('/create-release'); // Example: Navigate to a route
+            this.$router.push('/create-release');
         },
         createFeaturing() {
-            console.log('Create Featuring button clicked');
-            // Add Vuex or routing logic here
-            this.$router.push('/create-featuring'); // Example: Navigate to a route
+            this.$router.push('/create-featuring');
         },
         createSoundtrack() {
-            console.log('Create Soundtrack button clicked');
-            // Add Vuex or routing logic here
-            this.$router.push('/create-soundtrack'); // Example: Navigate to a route
+            this.$router.push('/create-soundtrack');
         },
     },
 };

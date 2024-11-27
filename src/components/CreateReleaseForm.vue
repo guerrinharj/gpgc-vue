@@ -6,7 +6,7 @@
                 id="label"
                 placeholder="Add name of the release"
                 v-model="form.name"
-                @change="updateArray('name', form.name)"
+                required
             ></textarea>
         </div>
         
@@ -16,6 +16,16 @@
                 <option v-for="artist in artists" :key="artist.id" :value="artist.name">
                     {{ artist.name }}
                 </option>
+            </select>
+        </div>
+
+        <div>
+            <label for="release_type">Release Type</label>
+            <select id="release_type" v-model="form.release_type" required>
+                <option value="" disabled>Select Release Type</option>
+                <option value="Album">Album</option>
+                <option value="EP">EP</option>
+                <option value="Single">Single</option>
             </select>
         </div>
 
@@ -76,16 +86,6 @@
         </div>
         
         <div>
-            <label for="tracks">Tracks</label>
-            <textarea
-                id="tracks"
-                placeholder='Add tracks as JSON array, e.g., [{"title": "Track 1", "url": "URL 1"}]'
-                v-model="tracksInput"
-                @change="updateObject('tracks', tracksInput)"
-            ></textarea>
-        </div>
-        
-        <div>
             <label for="links">Links</label>
             <textarea
                 id="links"
@@ -93,6 +93,26 @@
                 v-model="linksInput"
                 @change="updateObject('links', linksInput)"
             ></textarea>
+        </div>
+
+        <div>
+            <label for="tracks">Tracks</label>
+            <div v-for="(track, index) in form.tracks" :key="index" class="track-input-group">
+                <input
+                type="text"
+                placeholder="Track Name"
+                v-model="track.name"
+                required
+                />
+                <input
+                type="text"
+                placeholder="Track URL"
+                v-model="track.url"
+                required
+                />
+                <button type="button" @click="removeTrack(index)">remove</button>
+            </div>
+            <button id="add-track" type="button" @click="addTrack">add track</button>
         </div>
         
         <button type="submit">create</button>
@@ -110,11 +130,12 @@ export default {
                 name: '',
                 artist_name: '',
                 release_date: '',
+                release_type: '',
                 label: [],
                 format: [],
                 credits: {},
                 notes: [],
-                tracks: [],
+                tracks: [{ name: '', url: '' }],
                 links: {},
             },
             creditsInput: '',
@@ -123,10 +144,10 @@ export default {
         };
     },
     computed: {
-        ...mapState(['artists']), // Bind Vuex state to the component
+        ...mapState(['artists', 'user']), // Bind Vuex state to the component
     },
     mounted() {
-        console.log("Fetching artists..."); // Debugging log
+        console.log(this.user)
         this.fetchArtists(); // Fetch artist data
     },
     methods: {
@@ -141,6 +162,12 @@ export default {
                 alert('Invalid JSON format');
                 this.form[field] = {};
             }
+        },
+        addTrack() {
+            this.form.tracks.push({ name: '', url: '' });
+        },
+        removeTrack(index) {
+            this.form.tracks.splice(index, 1);
         },
         async submitForm() {
             const success = await this.createRelease(this.form);
@@ -167,7 +194,9 @@ export default {
     width: 110%;
 }
 
-
+#release_date {
+    width: 120%
+}
 
 .create-release-form label {
     color: white;
@@ -188,12 +217,46 @@ export default {
     overflow: hidden; /* Hides the scrollbar */
 }
 
+.track-input-group {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    border: solid 1px white;
+    padding: 20px;
+}
+
+.track-input-group input {
+    flex: 1;
+    padding: 0.5rem;
+    font-size: 1rem;
+    background-color: black;
+    color: white;
+}
+
+.track-input-group button {
+    margin: 1rem;
+    padding: 0.5rem;
+    font-size: 1rem;
+    background-color: red;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+#add-track {
+    margin: 1rem;
+}
+
+.track-input-group button:hover {
+    background-color: darkred;
+}
+
 .create-release-form button {
     padding: 0.5rem 1rem;
     font-size: 1rem;
     color: white;
     background-color: black;
-    border: 1px solid white;
+    border: 1px solid grey;
     cursor: pointer;
     transition: background-color 0.3s ease, color 0.3s ease;
 }
