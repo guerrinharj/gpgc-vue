@@ -157,6 +157,7 @@ export default {
                 artist_name: '',
                 release_date: '',
                 release_type: '',
+                cover: [],
                 label: [],
                 format: [],
                 credits: [],
@@ -196,13 +197,23 @@ export default {
             this.form.tracks.splice(index, 1);
         },
 
-
-
+        
         addCredit() {
             this.form.credits.push({ key: '', value: '' });
         },
         removeCredit(index) {
             this.form.credits.splice(index, 1);
+        },
+        prepareCredits() {
+            return this.form.credits
+            .filter((credit) => credit.key.trim() && credit.value.trim())
+            .reduce((acc, credit) => {
+                acc[credit.key] = credit.value;
+                return acc;
+            }, {});
+        },
+        processCreditsBeforeSubmit() {
+            this.form.credits = this.prepareCredits();
         },
 
 
@@ -212,8 +223,25 @@ export default {
         removeLink(index) {
             this.form.links.splice(index, 1);
         },
+        prepareLinks() {
+            return this.form.links
+            .filter((link) => link.key.trim() && link.value.trim())
+            .reduce((acc, link) => {
+                acc[link.key] = link.value;
+                return acc;
+            }, {});
+        },
+        processLinksBeforeSubmit() {
+            this.form.links = this.prepareLinks();
+        },
+
+
+
 
         async submitForm() {
+            this.processCreditsBeforeSubmit();
+            this.processLinksBeforeSubmit();
+
             const success = await this.createRelease(this.form);
             if (success) {
                 alert('Release created successfully!');
