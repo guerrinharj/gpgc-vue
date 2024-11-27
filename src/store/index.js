@@ -34,7 +34,7 @@ const store = createStore({
         },
         setError(state, error) {
             state.error = error;
-        },
+        }
     },
     actions: {
         async fetchArtists({ commit }) {
@@ -208,6 +208,29 @@ const store = createStore({
                 return false; 
             }
         },
+
+
+
+        async deleteRelease({ commit, state }, slug) {
+            try {
+                await axios.delete(`${API_BASE_URL}/api/v1/releases/${slug}`, {
+                    headers: {
+                        Username: `${state.user.username}`,
+                        Password: `${state.user.password}`,
+                    },
+                });
+                
+                // Filter out the deleted release and commit the updated releases list
+                const updatedReleases = state.releases.filter(release => release.slug !== slug);
+                commit('setReleases', updatedReleases);
+            } catch (error) {
+                console.error('Error deleting release:', error.response?.data?.message || error.message);
+                commit('setError', 'Failed to delete the release.');
+            }
+        },
+        
+
+
         
         async login({ commit }, { username, password }) {
             try {

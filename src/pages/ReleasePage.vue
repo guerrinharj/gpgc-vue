@@ -5,6 +5,12 @@
             <h1>{{ release.artist_name }}</h1>
         </div>
 
+        <div class="release-actions">
+            <p>
+                <a class="delete" @click="deleteRelease">delete</a>
+            </p>
+        </div>
+
         <!-- Display Cover Images -->
         <div class="release-cover" v-if="release.cover && release.cover.length > 0">
             <div v-for="(image, index) in release.cover" :key="index" class="cover-image">
@@ -91,6 +97,21 @@ export default {
             
         }
     },
+    methods: {
+        async deleteRelease() {
+            const confirmed = confirm(`Are you sure you want to delete "${this.release.name}"?`);
+            if (!confirmed) return;
+
+            try {
+                await this.$store.dispatch('deleteRelease', this.release.slug);
+                alert('Release deleted successfully!');
+                this.$router.push('/'); // Redirect to the releases page
+            } catch (error) {
+                console.error('Error deleting release:', error);
+                alert('Failed to delete the release. Please try again.');
+            }
+        }
+    },
     created() {
         const slug = this.$route.params.slug;
 
@@ -129,6 +150,14 @@ export default {
 
 .release-name {
     text-decoration: underline;
+}
+
+.release-actions {
+    font-size: 1.1rem;
+}
+
+.delete {
+    color: red
 }
 
 /* Cover images are stacked on top of each other */
