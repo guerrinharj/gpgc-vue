@@ -66,16 +66,6 @@
         </div>
         
         <div>
-            <label for="credits">Credits</label>
-            <textarea
-                id="credits"
-                placeholder='Add credits in JSON format, e.g., {"key1": "value1"}'
-                v-model="creditsInput"
-                @change="updateObject('credits', creditsInput)"
-            ></textarea>
-        </div>
-        
-        <div>
             <label for="notes">Notes</label>
             <textarea
                 id="notes"
@@ -114,6 +104,31 @@
             </div>
             <button id="add-track" type="button" @click="addTrack">add track</button>
         </div>
+
+        <div>
+            <label for="credits">Credits</label>
+            <div v-for="(credit, index) in form.credits" :key="index" class="credit-input-group">
+                <input
+                    type="text"
+                    placeholder="Credit Key"
+                    v-model="credit.key"
+                    required
+                />
+                <input
+                    type="text"
+                    placeholder="Credit Value"
+                    v-model="credit.value"
+                    required
+                />
+                <button type="button" @click="removeCredit(index)">remove</button>
+            </div>
+            <button id="add-credit" type="button" @click="addCredit">add credit</button>
+        </div>
+
+
+
+
+
         
         <button type="submit">create</button>
     </form>
@@ -133,25 +148,24 @@ export default {
                 release_type: '',
                 label: [],
                 format: [],
-                credits: {},
+                credits: [],
                 notes: [],
-                tracks: [{ name: '', url: '' }],
+                tracks: [],
                 links: {},
             },
-            creditsInput: '',
-            tracksInput: '',
             linksInput: '',
         };
     },
     computed: {
-        ...mapState(['artists', 'user']), // Bind Vuex state to the component
+        ...mapState(['artists']), // Bind Vuex state to the component
     },
     mounted() {
-        console.log(this.user)
         this.fetchArtists(); // Fetch artist data
     },
     methods: {
         ...mapActions(['createRelease', 'fetchArtists']),
+
+
         updateArray(field, value) {
             this.form[field] = value.split(',').map(item => item.trim());
         },
@@ -163,12 +177,24 @@ export default {
                 this.form[field] = {};
             }
         },
+
+
         addTrack() {
             this.form.tracks.push({ name: '', url: '' });
         },
         removeTrack(index) {
             this.form.tracks.splice(index, 1);
         },
+
+
+
+        addCredit() {
+            this.form.credits.push({ key: '', value: '' });
+        },
+        removeCredit(index) {
+            this.form.credits.splice(index, 1);
+        },
+
         async submitForm() {
             const success = await this.createRelease(this.form);
             if (success) {
@@ -217,7 +243,7 @@ export default {
     overflow: hidden; /* Hides the scrollbar */
 }
 
-.track-input-group {
+.track-input-group, .credit-input-group {
     display: flex;
     gap: 0.5rem;
     align-items: center;
@@ -225,7 +251,7 @@ export default {
     padding: 20px;
 }
 
-.track-input-group input {
+.track-input-group input, .credit-input-group input {
     flex: 1;
     padding: 0.5rem;
     font-size: 1rem;
@@ -233,7 +259,7 @@ export default {
     color: white;
 }
 
-.track-input-group button {
+.track-input-group button, .credit-input-group button {
     margin: 1rem;
     padding: 0.5rem;
     font-size: 1rem;
@@ -243,7 +269,7 @@ export default {
     cursor: pointer;
 }
 
-#add-track {
+#add-track, #add-credit {
     margin: 1rem;
 }
 
