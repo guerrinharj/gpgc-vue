@@ -152,15 +152,26 @@ const store = createStore({
 
         async createFeaturing({ state, commit }, featuringData) {
             try {
-                const response = await axios.post(`${API_BASE_URL}/api/v1/featurings`, featuringData, {
+                const payload = {
+                    name: featuringData.name,
+                    artist: featuringData.artist,
+                    is_album: featuringData.is_album,
+                    release_date: featuringData.release_date,
+                    label: featuringData.label,
+                    info: featuringData.info,
+                    credit: featuringData.credit,
+                    url: featuringData.url
+                };
+        
+                const response = await axios.post(`${API_BASE_URL}/api/v1/featurings`, payload, {
                     headers: {
                         Username: `${state.user.username}`,
-                        Password:  `${state.user.password}`,
-                    }
+                        Password: `${state.user.password}`,
+                    },
                 });
-
-                // Update featurings state with the newly created featuring
-                commit('setFeaturings', [response.data, ...state.featurings]);
+        
+                // Update the state (array) with the new artist
+                commit('setFeaturings', [response.data, ...(state.featurings || [])]); 
                 return true; // Indicate success
             } catch (error) {
                 console.error('Error creating featuring:', error);
@@ -168,6 +179,7 @@ const store = createStore({
                 return false; // Indicate failure
             }
         },
+
 
         async createSoundtrack({ state, commit }, soundtrackData) {
             try {
