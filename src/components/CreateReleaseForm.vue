@@ -73,17 +73,7 @@
                 v-model="form.notes"
                 @change="updateArray('notes', form.notes)"
             ></textarea>
-        </div>
-        
-        <div>
-            <label for="links">Links</label>
-            <textarea
-                id="links"
-                placeholder='Add links in JSON format, e.g., {"spotify": "url"}'
-                v-model="linksInput"
-                @change="updateObject('links', linksInput)"
-            ></textarea>
-        </div>
+        </div>        
 
         <div>
             <label for="tracks">Tracks</label>
@@ -126,6 +116,27 @@
         </div>
 
 
+        <div>
+            <label for="links">Links</label>
+            <div v-for="(link, index) in form.links" :key="index" class="link-input-group">
+                <input
+                    type="text"
+                    placeholder="Link Key"
+                    v-model="link.key"
+                    required
+                />
+                <input
+                    type="text"
+                    placeholder="Credit Value"
+                    v-model="link.value"
+                    required
+                />
+                <button type="button" @click="removeLink(index)">remove</button>
+            </div>
+            <button id="add-link" type="button" @click="addLink">add link</button>
+        </div>
+
+
 
 
 
@@ -151,9 +162,8 @@ export default {
                 credits: [],
                 notes: [],
                 tracks: [],
-                links: {},
-            },
-            linksInput: '',
+                links: [],
+            }
         };
     },
     computed: {
@@ -193,6 +203,14 @@ export default {
         },
         removeCredit(index) {
             this.form.credits.splice(index, 1);
+        },
+
+
+        addLink() {
+            this.form.links.push({ key: '', value: '' });
+        },
+        removeLink(index) {
+            this.form.links.splice(index, 1);
         },
 
         async submitForm() {
@@ -243,7 +261,7 @@ export default {
     overflow: hidden; /* Hides the scrollbar */
 }
 
-.track-input-group, .credit-input-group {
+.track-input-group, .credit-input-group, .link-input-group {
     display: flex;
     gap: 0.5rem;
     align-items: center;
@@ -251,7 +269,7 @@ export default {
     padding: 20px;
 }
 
-.track-input-group input, .credit-input-group input {
+.track-input-group input, .credit-input-group input, .link-input-group input {
     flex: 1;
     padding: 0.5rem;
     font-size: 1rem;
@@ -259,7 +277,7 @@ export default {
     color: white;
 }
 
-.track-input-group button, .credit-input-group button {
+.track-input-group button, .credit-input-group button, .link-input-group button {
     margin: 1rem;
     padding: 0.5rem;
     font-size: 1rem;
@@ -269,7 +287,7 @@ export default {
     cursor: pointer;
 }
 
-#add-track, #add-credit {
+#add-track, #add-credit, #add-link {
     margin: 1rem;
 }
 
