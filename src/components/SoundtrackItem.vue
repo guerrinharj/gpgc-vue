@@ -5,10 +5,12 @@
                 <p><b>{{ soundtrack.name }}</b></p>
                 <p>{{ soundtrack.company }}</p>
             </a>
+                <p class="year">({{ soundtrack.year }})</p>
         </div>
         <div v-else>
             <p><b>{{ soundtrack.name }}</b></p>
             <p>{{ soundtrack.company }}</p>
+            <p class="year">({{ soundtrack.year }})</p>
         </div>
     </div>
 </template>
@@ -39,5 +41,11 @@ export default {
 
 .soundtrack-item a:hover {
     text-decoration: underline; /* Add underline on hover */
+}
+
+.year {
+    font-style: italic;
+    padding-top: 9px;
+    font-size: 1.1rem;
 }
 </style>

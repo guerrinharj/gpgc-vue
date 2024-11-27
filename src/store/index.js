@@ -183,19 +183,29 @@ const store = createStore({
 
         async createSoundtrack({ state, commit }, soundtrackData) {
             try {
-                const response = await axios.post(`${API_BASE_URL}/api/v1/soundtracks`, soundtrackData, {
+                const payload = {
+                    name: soundtrackData.name,
+                    company: soundtrackData.company,
+                    year: soundtrackData.year,
+                    kind: soundtrackData.kind,
+                    info: soundtrackData.info,
+                    url: soundtrackData.url
+                };
+        
+                const response = await axios.post(`${API_BASE_URL}/api/v1/soundtracks`, payload, {
                     headers: {
-                        Authorization: `Basic ${btoa(`${state.user.username}:${state.user.password}`)}`, // Encode username:password
+                        Username: `${state.user.username}`,
+                        Password: `${state.user.password}`,
                     },
                 });
-    
-                // Update soundtracks state with the newly created soundtrack
-                commit('setSoundtracks', [response.data, ...state.soundtracks]);
-                return true; // Indicate success
+        
+                
+                commit('setSoundtracks', [response.data, ...(state.soundtracks || [])]); 
+                return true; 
             } catch (error) {
                 console.error('Error creating soundtrack:', error);
                 commit('setError', 'Failed to create soundtrack.');
-                return false; // Indicate failure
+                return false; 
             }
         },
         

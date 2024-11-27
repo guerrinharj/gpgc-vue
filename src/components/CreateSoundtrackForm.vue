@@ -1,16 +1,28 @@
 <template>
     <form @submit.prevent="submitForm" class="create-soundtrack-form">
         <div>
-            <label for="title">Soundtrack Title</label>
-            <input id="title" v-model="form.title" required />
+            <label for="name">Name</label>
+            <input id="name" v-model="form.name" required />
         </div>
         <div>
-            <label for="composer">Composer</label>
-            <input id="composer" v-model="form.composer" required />
+            <label for="company">Company</label>
+            <input id="company" v-model="form.company" required />
         </div>
         <div>
             <label for="year">Year</label>
             <input id="year" type="number" v-model="form.year" required />
+        </div>
+        <div>
+            <label for="info">Info</label>
+            <input id="info" v-model="form.info" required />
+        </div>
+        <div>
+            <label for="url">url</label>
+            <input id="url" v-model="form.url" required />
+        </div>
+        <div>
+            <label for="kind">kind</label>
+            <input id="kind" v-model="form.kind" required />
         </div>
         <button type="submit">create</button>
     </form>
@@ -24,9 +36,12 @@ export default {
     data() {
         return {
             form: {
-                title: '',
-                composer: '',
+                name: '',
+                company: '',
+                info: '',
                 year: '',
+                kind: '',
+                url: ''
             },
         };
     },
