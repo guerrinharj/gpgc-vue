@@ -30,13 +30,24 @@ const store = createStore({
             state.selectedRelease = release;
         },
         setUser(state, user) {
-            state.user = user;
+            state.user = user;         
         },
         setError(state, error) {
             state.error = error;
         },
     },
     actions: {
+        async fetchArtists({ commit }) {
+            try {
+                const response = await axios.get('http://localhost:3000/api/v1/artists');
+                const sortedArtists = response.data;
+                commit('setArtists', sortedArtists);
+            } catch (error) {
+                console.error('Error fetching artists:', error);
+                commit('setError', 'Failed to load artists.');
+            }
+        },
+
         async fetchReleases({ commit }) {
             try {
                 const response = await axios.get('http://localhost:3000/api/v1/releases');
@@ -107,15 +118,29 @@ const store = createStore({
         
         async createRelease({ state, commit }, releaseData) {
             try {
-                const response = await axios.post(`${API_BASE_URL}/api/v1/releases`, releaseData, {
+                const payload = {
+                    name: releaseData.name,
+                    artist_name: releaseData.artist_name,
+                    release_date: releaseData.release_date,
+                    release_type: releaseData.release_type,
+                    cover: releaseData.cover,
+                    label: releaseData.label,
+                    format: releaseData.format,
+                    credits: releaseData.credits,
+                    notes: releaseData.notes,
+                    tracks: releaseData.tracks,
+                    links: releaseData.links
+                };
+        
+                const response = await axios.post(`${API_BASE_URL}/api/v1/releases`, payload, {
                     headers: {
                         Username: `${state.user.username}`,
-                        Password:  `${state.user.password}`,
-                    }
+                        Password: `${state.user.password}`,
+                    },
                 });
         
-                // Update releases state with the newly created release
-                commit('setReleases', [response.data, ...state.releases]);
+                // Update the state (array) with the new artist
+                commit('setReleases', [response.data, ...(state.releases || [])]); 
                 return true; // Indicate success
             } catch (error) {
                 console.error('Error creating release:', error);
