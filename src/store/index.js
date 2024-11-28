@@ -43,7 +43,7 @@ const store = createStore({
         },
         hidePlayer(state) {
             state.isPlayerVisible = false;
-            state.currentTrackUrl = null;
+            state.currentTrack = null;
         },
     },
     actions: {

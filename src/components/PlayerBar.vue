@@ -43,6 +43,7 @@ methods: {
 
 <style>
 .player-bar {
+border-top: solid 1px white;
 position: fixed;
 bottom: 0;
 width: 100%;

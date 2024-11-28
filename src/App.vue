@@ -3,7 +3,7 @@
     <Navbar />
     <CreateBar />
     <router-view />
-    <PlayerBar v-if="isPlayerVisible" :track="currentTrack" />
+    <PlayerBar v-if="isPlayerVisible" :track="getCurrentTrack" />
   </div>
 </template>
 
