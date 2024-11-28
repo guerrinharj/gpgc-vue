@@ -47,10 +47,11 @@
     color: red!important;
 }
 
-@media (max-width: 400px) {
+@media (max-width: 600px) {
     .navbar {
         padding: 0.5rem;
-        width: 50%;
+        width: 100%;
+        margin: auto;
     }
 
     .navbar ul {
@@ -59,11 +60,11 @@
 
     .navbar li {
         margin: 0.5rem 0;
-        font-size: 0.7rem;
     }
 
-    .navbar a {
-        font-size: 0.7rem;
+    .navbar a, .navbar li {
+        font-size: 1rem;
+        padding: 0 8px;
     }
 }
 </style>
