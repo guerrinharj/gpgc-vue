@@ -188,7 +188,6 @@ export default {
     margin-bottom: 0.5rem;
 }
 
-/* Center the ordered list */
 .release-tracks {
     display: flex;
     flex-direction: column;
