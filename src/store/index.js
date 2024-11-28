@@ -228,6 +228,25 @@ const store = createStore({
                 commit('setError', 'Failed to delete the release.');
             }
         },
+
+
+        async deleteFeaturing({ commit, state }, slug) {
+            try {
+                await axios.delete(`${API_BASE_URL}/api/v1/featurings/${slug}`, {
+                    headers: {
+                        Username: `${state.user.username}`,
+                        Password: `${state.user.password}`,
+                    },
+                });
+    
+                // Filter out the deleted featuring and update state
+                const updatedFeaturings = state.featurings.filter(featuring => featuring.slug !== slug);
+                commit('setFeaturings', updatedFeaturings);
+            } catch (error) {
+                console.error('Error deleting featuring:', error.response?.data?.message || error.message);
+                commit('setError', 'Failed to delete the featuring.');
+            }
+        },
         
 
 

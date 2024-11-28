@@ -13,17 +13,41 @@
             <p>{{ featuring.artist }}</p>
             <p><em>{{ formattedCredit }}</em></p>
         </div>
+
+        <div v-if="isAuthenticated" class="featuring-actions">
+            <p>
+                <a class="delete" @click="deleteFeaturing">delete</a>
+            </p>
+        </div>
     </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+
 export default {
     props: ['featuring'],
     computed: {
+        ...mapGetters(['isAuthenticated']),
         formattedCredit() {
             return Array.isArray(this.featuring.credit) 
                 ? this.featuring.credit.join(', ') 
                 : this.featuring.credit;
+        }
+    },
+    methods: {
+        async deleteFeaturing() {
+            const confirmed = confirm(`Are you sure you want to delete "${this.featuring.name}"?`);
+            if (!confirmed) return;
+
+            try {
+                await this.$store.dispatch('deleteFeaturing', this.featuring.slug);
+                alert('Featuring deleted successfully!');
+                this.$router.push('/featurings');
+            } catch (error) {
+                console.error('Error deleting featuring:', error);
+                alert('Failed to delete the featuring. Please try again.');
+            }
         }
     }
 };
@@ -55,5 +79,14 @@ export default {
 
     .featuring-item a:hover {
         text-decoration: underline; /* Add underline on hover */
+    }
+
+    .featuring-actions {
+        padding: 10px;
+        font-size: 0.8rem;
+    }
+
+    .delete {
+        color: red!important
     }
 </style>
