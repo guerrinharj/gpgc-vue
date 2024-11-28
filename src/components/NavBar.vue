@@ -28,7 +28,12 @@
     color: white;
     text-align: center;
     padding: 1rem;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
+
 .navbar ul {
     list-style: none;
     padding: 0;
@@ -40,5 +45,23 @@
 
 .logout {
     color: red!important;
+}
+
+@media (max-width: 400px) {
+    .navbar {
+        padding: 0.5rem;
+    }
+
+    .navbar ul {
+        gap: 0.5rem;
+    }
+
+    .navbar li {
+        margin: 0.5rem 0;
+    }
+
+    .navbar a {
+        font-size: 1rem;
+    }
 }
 </style>
