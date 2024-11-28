@@ -307,8 +307,14 @@ const store = createStore({
         },
 
 
-        playTrack({ commit }, url, name) {
-            commit('setPlayerVisible', url, name);
+        playTrack({ commit, state }, track) {
+            if (state.currentTrack?.url === track.url) {
+                // If the same track is clicked, restart it
+                commit('setPlayerVisible', track);
+            } else {
+                // If a new track is clicked, update and play
+                commit('setPlayerVisible', track);
+            }
         },
 
         

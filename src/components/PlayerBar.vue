@@ -2,7 +2,13 @@
     <div class="player-bar" v-if="track">
         <div class="player-bar-content">
             <p>{{ track.name }}</p>
-            <audio ref="audio" :src="track.url" @timeupdate="updateProgress"></audio>
+            <audio
+                ref="audio"
+                :src="track.url"
+                @loadeddata="onAudioReady"
+                @timeupdate="updateProgress"
+                @ended="onTrackEnd"
+            ></audio>
             <div class="controls">
                 <button @click="togglePlay">{{ isPlaying ? 'Pause' : 'Play' }}</button>
                 <button @click="stopAudio">Stop</button>
@@ -11,38 +17,53 @@
     </div>
 </template>
 
-
 <script>
-import { mapActions } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 
 export default {
-props: ['track'],
-data() {
-    return {
-        isPlaying: false,
-    };
-},
-methods: {
-    ...mapActions(['stopPlayer']),
-    togglePlay() {
-        const audio = this.$refs.audio;
-        if (this.isPlaying) {
+    computed: {
+        ...mapGetters(['getCurrentTrack', 'isPlayerVisible']),
+        track() {
+            return this.getCurrentTrack; // Bind to Vuex state
+        },
+    },
+    data() {
+        return {
+            isPlaying: true, // Start playing automatically
+        };
+    },
+    methods: {
+        ...mapActions(['stopPlayer']),
+        togglePlay() {
+            const audio = this.$refs.audio;
+            if (this.isPlaying) {
+                audio.pause();
+            } else {
+                audio.play();
+            }
+            this.isPlaying = !this.isPlaying;
+        },
+        stopAudio() {
+            const audio = this.$refs.audio;
             audio.pause();
-        } else {
-            audio.play();
-        }
-        this.isPlaying = !this.isPlaying;
-    },
-    stopAudio() { // Rename this method to avoid conflict with Vuex action
-        const audio = this.$refs.audio;
-        audio.pause();
-        audio.currentTime = 0;
-        this.isPlaying = false;
-        this.stopPlayer(); // Dispatch the Vuex action to hide the player
-    },
-},
+            audio.currentTime = 0;
+            this.isPlaying = false;
+            this.stopPlayer(); // Dispatch Vuex action to hide the player
+        },
+        onAudioReady() {
+            if (this.isPlaying) {
+                const audio = this.$refs.audio;
+                audio.play(); // Play only after the audio is ready
+            }
+        },
+        onTrackEnd() {
+            this.isPlaying = false;
+        },
+    }
 };
 </script>
+
+
 
 <style>
 .player-bar {
