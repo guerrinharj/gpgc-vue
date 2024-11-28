@@ -52,23 +52,23 @@
             </ul>
         </div>
 
-        <div v-if="filteredCredits.length > 0" class="release-info">
+        <div id="credits" v-if="filteredCredits.length > 0" class="release-info">
             <b>Credits</b>
             <ul>
                 <li v-for="({ name, credit }) in filteredCredits" :key="name">
-                    <strong>{{ name }}</strong>: {{ credit }}
+                    <strong>{{ credit }}</strong>: {{ name }}
                 </li>
             </ul>
         </div>
 
-        <div v-if="release.notes && release.notes.length > 0" class="release-info">
+        <div id="notes" v-if="release.notes && release.notes.length > 0" class="release-info">
             <b>Notes</b>
             <ul>
                 <li v-for="notes in release.notes" :key="notes">{{ notes }}</li>
             </ul>
         </div>
 
-        <div v-if="filteredLinks.length > 0" class="release-info">
+        <div id="links" v-if="filteredLinks.length > 0" class="release-info">
             <b>Links</b>
             <ul>
                 <li v-for="({ platform, url }) in filteredLinks" :key="platform">
@@ -143,6 +143,7 @@ export default {
     color: white;
     text-align: center;
     padding: 2rem;
+    margin-bottom: 50px
 }
 
 .release-page b, h4 {
@@ -255,11 +256,46 @@ export default {
     text-decoration: underline;
 }
 
+
+.release-tracks .track-button {
+    background: none; /* Remove default button background */
+    border: none; /* Remove default button border */
+    color: white; /* Match the link color */
+    font-family: inherit; /* Use the page's font */
+    font-size: 20px; /* Adjust font size for readability */
+    padding: 5px 10px; /* Add padding for clickability */
+    cursor: pointer; /* Show a pointer cursor */
+    text-decoration: none; /* Remove underline */
+    transition: color 0.3s ease, text-decoration 0.3s ease; /* Add smooth hover effect */
+    text-transform: lowercase; /* Match the page's text style */
+}
+
+.release-tracks .track-button:hover {
+    color: white; /* Change color on hover */
+    text-decoration: underline; /* Optional: Add underline on hover */
+}
+
+.release-tracks .track-button:active {
+    color: gray; /* Add feedback for active state */
+}
+
+#links {
+    display: none;
+}
+
+#credits, #notes {
+    font-size: 16px;
+}
+
 @media (max-width: 400px) {
 
     .release-tracks li {
         font-size: 0.8rem;
         padding: 0.4rem;
+    }
+
+    .release-tracks .track-button {
+        font-size: 16px;
     }
     
 }
