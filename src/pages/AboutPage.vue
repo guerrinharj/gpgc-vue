@@ -36,7 +36,7 @@
         text-decoration: underline!important;
     }
 
-    @media (max-width: 400px) {
+    @media (max-width: 500px) {
         .about-page {
             max-width: 80%;
             font-size: 0.8rem;
