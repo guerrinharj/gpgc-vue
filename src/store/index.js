@@ -9,9 +9,11 @@ const store = createStore({
         releases: [],
         featurings: [],
         soundtracks: [],
-        selectedRelease: null, // To store the fetched release
+        selectedRelease: null,
         user: null,
         error: null,
+        currentTrack: null,
+        isPlayerVisible: false,
     },
     mutations: {
         setArtists(state, artists) {
@@ -34,7 +36,15 @@ const store = createStore({
         },
         setError(state, error) {
             state.error = error;
-        }
+        },
+        setPlayerVisible(state, track) {
+            state.isPlayerVisible = true;
+            state.currentTrack = track; // Updates the state with track details
+        },
+        hidePlayer(state) {
+            state.isPlayerVisible = false;
+            state.currentTrackUrl = null;
+        },
     },
     actions: {
         async fetchArtists({ commit }) {
@@ -295,6 +305,13 @@ const store = createStore({
         async logout({ commit }) {
             commit('setUser', null); // Clear the user state
         },
+
+
+        playTrack({ commit }, url, name) {
+            commit('setPlayerVisible', url, name);
+        },
+
+        
     },
     getters: {
         isAuthenticated(state) {
@@ -314,7 +331,9 @@ const store = createStore({
         },
         getSelectedRelease(state) {
             return state.selectedRelease;
-        }
+        },
+        getCurrentTrack: (state) => state.currentTrack,
+        isPlayerVisible: (state) => state.isPlayerVisible,
     },
 });
 

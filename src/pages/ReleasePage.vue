@@ -23,7 +23,12 @@
             <h4>Tracklist</h4>
             <ul>
                 <li v-for="(track, index) in release.tracks" :key="index">
-                    <a v-if="track.url" :href="track.url" target="_blank" rel="noopener noreferrer">  {{ track.name }}</a>
+                    <button 
+                        v-if="track.url" 
+                        @click="playTrackHandler(track.url, track.name)"
+                        class="track-button">
+                        {{ track.name }}
+                    </button>
                 </li>
             </ul>
         </div>
@@ -77,7 +82,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 
 export default {
     computed: {
@@ -98,6 +103,7 @@ export default {
         }
     },
     methods: {
+        ...mapActions(['playTrack']),
         async deleteRelease() {
             const confirmed = confirm(`Are you sure you want to delete "${this.release.name}"?`);
             if (!confirmed) return;
@@ -110,12 +116,15 @@ export default {
                 console.error('Error deleting release:', error);
                 alert('Failed to delete the release. Please try again.');
             }
-        }
+        },
+        playTrackHandler(url, name) {
+            this.playTrack({ url, name });
+        },
     },
+    
     created() {
         const slug = this.$route.params.slug;
 
-        // If no release is selected or slug doesn't match, fetch it
         if (!this.release || this.release.slug !== slug) {
             this.$store.dispatch('fetchRelease', slug).catch((error) => {
                 console.error('Error loading release:', error);
