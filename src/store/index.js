@@ -9,9 +9,17 @@ const store = createStore({
         releases: [],
         featurings: [],
         soundtracks: [],
-        selectedRelease: null, // To store the fetched release
+        selectedRelease: null,
         user: null,
         error: null,
+        currentTrack: {
+            url: null,
+            name: null,
+            artist: null,
+            release: null,
+            slug: null
+        },
+        isPlayerVisible: false,
     },
     mutations: {
         setArtists(state, artists) {
@@ -34,7 +42,21 @@ const store = createStore({
         },
         setError(state, error) {
             state.error = error;
-        }
+        },
+        setPlayerVisible(state, track) {
+            state.isPlayerVisible = true;
+            state.currentTrack = track; // Updates the state with track details
+        },
+        hidePlayer(state) {
+            state.isPlayerVisible = false;
+            state.currentTrack = {
+                url: null,
+                name: null,
+                artist: null,
+                release: null,
+                releaseSlug: null
+            };
+        },
     },
     actions: {
         async fetchArtists({ commit }) {
@@ -295,6 +317,19 @@ const store = createStore({
         async logout({ commit }) {
             commit('setUser', null); // Clear the user state
         },
+
+
+        playTrack({ commit, state }, track) {
+            if (state.currentTrack?.url === track.url) {
+                // If the same track is clicked, restart it
+                commit('setPlayerVisible', track);
+            } else {
+                // If a new track is clicked, update and play
+                commit('setPlayerVisible', track);
+            }
+        },
+
+        
     },
     getters: {
         isAuthenticated(state) {
@@ -314,7 +349,9 @@ const store = createStore({
         },
         getSelectedRelease(state) {
             return state.selectedRelease;
-        }
+        },
+        getCurrentTrack: (state) => state.currentTrack,
+        isPlayerVisible: (state) => state.isPlayerVisible,
     },
 });
 
