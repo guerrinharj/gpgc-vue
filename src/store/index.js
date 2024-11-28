@@ -12,7 +12,13 @@ const store = createStore({
         selectedRelease: null,
         user: null,
         error: null,
-        currentTrack: null,
+        currentTrack: {
+            url: null,
+            name: null,
+            artist: null,
+            release: null,
+            slug: null
+        },
         isPlayerVisible: false,
     },
     mutations: {
@@ -43,7 +49,13 @@ const store = createStore({
         },
         hidePlayer(state) {
             state.isPlayerVisible = false;
-            state.currentTrack = null;
+            state.currentTrack = {
+                url: null,
+                name: null,
+                artist: null,
+                release: null,
+                releaseSlug: null
+            };
         },
     },
     actions: {

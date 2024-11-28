@@ -118,7 +118,14 @@ export default {
             }
         },
         playTrackHandler(url, name) {
-            this.playTrack({ url, name });
+            const track = {
+                url,
+                name,
+                artist: this.release.artist_name, // Include artist name
+                release: this.release.name,      // Include release name
+                releaseSlug: this.release.slug
+            };
+            this.playTrack(track); // Dispatch Vuex action with all details
         },
     },
     
