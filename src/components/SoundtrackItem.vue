@@ -12,12 +12,38 @@
             <p>{{ soundtrack.company }}</p>
             <p class="year">({{ soundtrack.year }})</p>
         </div>
+
+        <div v-if="isAuthenticated" class="soundtrack-actions">
+            <p>
+                <a class="delete" @click="deleteSoundtrack">delete</a>
+            </p>
+        </div>
     </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+
 export default {
     props: ['soundtrack'],
+    computed: {
+        ...mapGetters(['isAuthenticated']),
+    },
+    methods: {
+        async deleteSoundtrack() {
+            const confirmed = confirm(`Are you sure you want to delete "${this.soundtrack.name}"?`);
+            if (!confirmed) return;
+
+            try {
+                await this.$store.dispatch('deleteSoundtrack', this.soundtrack.slug);
+                alert('Soundtrack deleted successfully!');
+                this.$router.push('/soundtracks');
+            } catch (error) {
+                console.error('Error deleting soundtrack:', error);
+                alert('Failed to delete the soundtrack. Please try again.');
+            }
+        }
+    }
 };
 </script>
 
@@ -47,5 +73,14 @@ export default {
     font-style: italic;
     padding-top: 9px;
     font-size: 1.1rem;
+}
+
+.soundtrack-actions {
+    padding: 10px;
+    font-size: 0.8rem;
+}
+
+.delete {
+    color: red!important
 }
 </style>
