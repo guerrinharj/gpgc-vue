@@ -39,7 +39,7 @@ const store = createStore({
     actions: {
         async fetchArtists({ commit }) {
             try {
-                const response = await axios.get('http://localhost:3000/api/v1/artists');
+                const response = await axios.get(`${API_BASE_URL}/api/v1/artists`);
                 const sortedArtists = response.data;
                 commit('setArtists', sortedArtists);
             } catch (error) {
@@ -50,7 +50,7 @@ const store = createStore({
 
         async fetchReleases({ commit }) {
             try {
-                const response = await axios.get('http://localhost:3000/api/v1/releases');
+                const response = await axios.get(`${API_BASE_URL}:3000/api/v1/releases`);
                 const sortedReleases = response.data.sort((a, b) => new Date(b.release_date) - new Date(a.release_date));
                 commit('setReleases', sortedReleases);
             } catch (error) {
