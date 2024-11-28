@@ -5,12 +5,6 @@
             <li><router-link to="/featurings">Featurings</router-link></li>
             <li><router-link to="/soundtracks">Soundtracks</router-link></li>
             <li><router-link to="/about">About</router-link></li>
-            <li v-if="isAuthenticated" class="logout">
-                <a @click="logout">Logout</a>
-            </li>
-            <li v-else class="login">
-                <router-link to="/login">Login</router-link>
-            </li>
         </ul>
     </nav>
 </template>

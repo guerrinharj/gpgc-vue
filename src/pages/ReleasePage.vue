@@ -188,10 +188,6 @@ export default {
     margin-bottom: 0.5rem;
 }
 
-.release-info span {
-    /* font-size: 1rem; */
-}
-
 /* Center the ordered list */
 .release-tracks {
     display: flex;
