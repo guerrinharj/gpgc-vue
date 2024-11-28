@@ -59,6 +59,7 @@
 
     .navbar li {
         margin: 0.5rem 0;
+        font-size: 0.7rem;
     }
 
     .navbar a {

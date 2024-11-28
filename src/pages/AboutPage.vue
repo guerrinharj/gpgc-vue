@@ -39,7 +39,7 @@
     @media (max-width: 500px) {
         .about-page {
             max-width: 80%;
-            font-size: 0.8rem;
+            font-size: 0.9rem;
         }
     }
 </style>
