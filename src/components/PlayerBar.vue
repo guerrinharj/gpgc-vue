@@ -1,5 +1,13 @@
 <template>
     <div class="player-bar" v-if="currentTrack">
+        <div class="progress-bar" @click="seekTrack($event)">
+            <div class="progress" :style="{ width: progressWidth }"></div>
+            <div
+                class="progress-handle"
+                :style="{ left: progressWidth }"
+                @mousedown="startDragging"
+            ></div>
+        </div>
         <audio
             ref="audio"
             :src="currentTrack.url"
@@ -35,15 +43,22 @@ import { mapGetters, mapActions } from 'vuex';
 export default {
     computed: {
         ...mapGetters(['currentTrack', 'isPlayerVisible']),
+        progressWidth() {
+            if (this.audioDuration === 0) return '0%';
+            return `${(this.audioCurrentTime / this.audioDuration) * 100}%`;
+        },
     },
     data() {
         return {
-            isPlaying: false, // Start as not playing
+            isPlaying: false,
+            audioCurrentTime: 0,
+            audioDuration: 0,
+            isDragging: false, // To track if the handle is being dragged
         };
     },
     methods: {
         ...mapActions(['playNextTrack', 'playPreviousTrack', 'stopPlayer', 'fetchRelease']),
-
+        
         async loadRelease() {
             const slug = this.$route.params.slug;
             try {
@@ -56,12 +71,20 @@ export default {
 
         onAudioReady() {
             const audio = this.$refs.audio;
+            this.audioDuration = audio.duration || 0;
 
             if (!this.isPlaying) {
-                // Auto-play if not already playing
                 audio.play().catch((error) => {
                     console.error("Error auto-playing audio:", error);
                 });
+                this.isPlaying = true;
+            }
+        },
+
+        updateProgress() {
+            if (!this.isDragging) {
+                const audio = this.$refs.audio;
+                this.audioCurrentTime = audio.currentTime;
             }
         },
 
@@ -77,62 +100,75 @@ export default {
                 this.isPlaying = true;
             }
         },
+
         stopAudio() {
             const audio = this.$refs.audio;
             audio.pause();
             audio.currentTime = 0;
             this.isPlaying = false;
-            this.stopPlayer(); // Hide the player bar
+            this.stopPlayer();
         },
+
         playNext() {
-            this.handleTrackSwitch(() => {
-                this.playNextTrack();
-            });
+            this.playNextTrack();
         },
+
         playPrevious() {
-            this.handleTrackSwitch(() => {
-                this.playPreviousTrack();
-            });
+            this.playPreviousTrack();
         },
+
         navigateToRelease() {
             if (this.currentTrack?.releaseSlug) {
                 this.$router.push(`/releases/${this.currentTrack.releaseSlug}`);
             }
         },
-        handleTrackSwitch(switchAction) {
+
+        seekTrack(event) {
             const audio = this.$refs.audio;
+            const progressBar = event.currentTarget;
+            const rect = progressBar.getBoundingClientRect();
+            const clickPosition = event.clientX - rect.left;
+            const newTime = (clickPosition / rect.width) * this.audioDuration;
 
-            // Pause and reset audio before switching
-            audio.pause();
-            audio.currentTime = 0;
+            audio.currentTime = newTime;
+            this.audioCurrentTime = newTime;
+        },
 
-            // Execute the track switch action
-            switchAction();
+        startDragging() {
+            this.isDragging = true;
+            window.addEventListener('mousemove', this.dragHandle);
+            window.addEventListener('mouseup', this.stopDragging);
+        },
 
-            // Wait for the DOM to update, then load the new track
-            this.$nextTick(() => {
-                audio.load(); // Trigger the load process
-                audio.oncanplay = () => {
-                    // Play only when the audio is ready
-                    audio.play().catch((error) => {
-                        console.error('Error playing track:', error);
-                    });
-                    /* this.isPlaying = true; */
-                };
-            });
+        dragHandle(event) {
+            if (!this.isDragging) return;
+
+            const progressBar = document.querySelector('.progress-bar');
+            const rect = progressBar.getBoundingClientRect();
+            const dragPosition = Math.min(Math.max(0, event.clientX - rect.left), rect.width);
+            const newTime = (dragPosition / rect.width) * this.audioDuration;
+
+            this.audioCurrentTime = newTime;
+        },
+
+        stopDragging() {
+            if (!this.isDragging) return;
+
+            const audio = this.$refs.audio;
+            audio.currentTime = this.audioCurrentTime;
+            this.isDragging = false;
+
+            window.removeEventListener('mousemove', this.dragHandle);
+            window.removeEventListener('mouseup', this.stopDragging);
         },
     },
     watch: {
-        '$route.params.slug': 'loadRelease', // React to route parameter changes
         currentTrack(newTrack) {
             if (newTrack && this.$refs.audio) {
                 const audio = this.$refs.audio;
-                audio.pause(); // Pause any current playback
-                audio.src = newTrack.url; // Update the audio source
-                audio.load(); // Prepare the audio element
-
+                audio.src = newTrack.url;
+                audio.load();
                 audio.oncanplay = () => {
-                    // Only start playing when the audio is ready
                     audio.play().catch((error) => {
                         console.error('Error playing new track:', error);
                     });
@@ -142,7 +178,7 @@ export default {
         },
     },
     mounted() {
-        this.loadRelease(); // Load the release when the component is created
+        this.loadRelease();
     },
 };
 </script>
@@ -153,9 +189,10 @@ export default {
 
 
 
+
+
 <style>
 .player-bar {
-    border-top: solid 1px white;
     position: fixed;
     bottom: 0;
     width: 100%;
@@ -219,5 +256,33 @@ export default {
 .clickable:hover {
     text-decoration: underline; /* Underline on hover */
 }
+
+
+.player-bar {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background: black;
+    color: white;
+    padding: 10px 20px;
+    z-index: 1000;
+}
+
+.progress-bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 5px; /* Height of the progress bar */
+    background: #444; /* Background color for the bar */
+    overflow: hidden;
+}
+
+.progress {
+    height: 100%;
+    background: linear-gradient(to right, #f06, #f90, #0f0); /* Gradient color */
+    transition: width 0.1s ease-in-out;
+}
+
 
 </style>
