@@ -35,4 +35,11 @@
     .about-page a:hover{
         text-decoration: underline!important;
     }
+
+    @media (max-width: 400px) {
+        .about-page {
+            max-width: 80%;
+            font-size: 0.8rem;
+        }
+    }
 </style>
