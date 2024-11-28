@@ -40,11 +40,6 @@ export default {
     background: black;
     color: white;
     min-height: 100vh;
-    width: 95%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow-x: hidden;
   }
 
   a {
