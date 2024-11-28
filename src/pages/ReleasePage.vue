@@ -5,7 +5,7 @@
             <h1>{{ release.artist_name }}</h1>
         </div>
 
-        <div class="release-actions">
+        <div v-if="isAuthenticated" class="release-actions">
             <p>
                 <a class="delete" @click="deleteRelease">delete</a>
             </p>
@@ -81,7 +81,7 @@ import { mapGetters } from 'vuex';
 
 export default {
     computed: {
-        ...mapGetters(['getSelectedRelease']),
+        ...mapGetters(['getSelectedRelease', 'isAuthenticated']),
         release() {
             return this.getSelectedRelease;
         },
@@ -105,7 +105,7 @@ export default {
             try {
                 await this.$store.dispatch('deleteRelease', this.release.slug);
                 alert('Release deleted successfully!');
-                this.$router.push('/'); // Redirect to the releases page
+                this.$router.push('/');
             } catch (error) {
                 console.error('Error deleting release:', error);
                 alert('Failed to delete the release. Please try again.');
