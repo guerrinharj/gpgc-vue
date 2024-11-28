@@ -1,8 +1,8 @@
 <template>
     <div class="about-page">
-        <p>You’ve stumbled upon a terrible fate… my website.</p>
+        <p>You’ve stumbled upon a terrible fate… my app.</p>
 
-        <p>The purpose of this site is to catalog everything I’ve done related to "music".</p>
+        <p>The purpose of this site is to catalog and serve as a streaming player to everything I’ve done related to "music".</p>
 
         <p>As the years went by, and i got more and more cursed by this abstract entity called "music" I've made the questionable choice to constantly release stuff under different groups, pseudonyms, aliases, featurings, soundtracks etc. Making things harder to catalog. The purpose here is to clarify it.</p>
 

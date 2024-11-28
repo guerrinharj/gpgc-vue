@@ -117,7 +117,7 @@ export default {
                     audio.play().catch((error) => {
                         console.error('Error playing track:', error);
                     });
-                    this.isPlaying = true;
+                    /* this.isPlaying = true; */
                 };
             });
         },
