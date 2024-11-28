@@ -245,4 +245,13 @@ export default {
 .release-info a:hover {
     text-decoration: underline;
 }
+
+@media (max-width: 400px) {
+
+    .release-tracks li {
+        font-size: 0.8rem;
+        padding: 0.4rem;
+    }
+    
+}
 </style>

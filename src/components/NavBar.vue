@@ -50,6 +50,7 @@
 @media (max-width: 400px) {
     .navbar {
         padding: 0.5rem;
+        width: 70%;
     }
 
     .navbar ul {
@@ -61,7 +62,7 @@
     }
 
     .navbar a {
-        font-size: 1rem;
+        font-size: 0.7rem;
     }
 }
 </style>
