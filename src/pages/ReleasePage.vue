@@ -177,7 +177,6 @@ export default {
     border-radius: 8px;
 }
 
-/* Styling for release information */
 .release-info {
     margin: 2rem 0;
     text-align: center;
