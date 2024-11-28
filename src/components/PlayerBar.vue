@@ -122,7 +122,7 @@ export default {
     display: flex;
     justify-content: space-between; /* Distribute items evenly */
     align-items: center; /* Align items vertically */
-    max-width: 400px; /* Limit the width of the bar */
+    max-width: 800px; /* Limit the width of the bar */
     width: 100%; /* Ensure the content spans the full bar */
     font-size: 20px;
 }
@@ -157,10 +157,6 @@ export default {
 
 .controls button:hover {
     text-decoration: underline; /* Optional: Add underline on hover */
-}
-
-.controls button:active {
-    color: darkblue; /* Darker color on active press */
 }
 
 
