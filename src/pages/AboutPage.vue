@@ -1,6 +1,6 @@
 <template>
     <div class="about-page">
-        <p>You’ve stumbled upon a terrible fate… my website.</p>
+        <p>You’ve stumbled upon a terrible fate… my app.</p>
 
         <p>The purpose of this site is to catalog everything I’ve done related to "music".</p>
 
