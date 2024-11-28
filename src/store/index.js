@@ -12,6 +12,8 @@ const store = createStore({
         selectedRelease: null,
         user: null,
         error: null,
+        playlist: [],
+        currentTrackIndex: null, 
         currentTrack: {
             url: null,
             name: null,
@@ -56,6 +58,22 @@ const store = createStore({
                 release: null,
                 releaseSlug: null
             };
+        },
+        setPlaylist(state, playlist) {
+            state.playlist = playlist;
+        },
+        setCurrentTrackIndex(state, index) {
+            state.currentTrackIndex = index;
+        },
+        playNextTrack(state) {
+            if (state.currentTrackIndex !== null && state.currentTrackIndex < state.playlist.length - 1) {
+                state.currentTrackIndex += 1;
+            }
+        },
+        playPreviousTrack(state) {
+            if (state.currentTrackIndex > 0) {
+                state.currentTrackIndex -= 1;
+            }
         },
     },
     actions: {
@@ -319,14 +337,22 @@ const store = createStore({
         },
 
 
-        playTrack({ commit, state }, track) {
-            if (state.currentTrack?.url === track.url) {
-                // If the same track is clicked, restart it
-                commit('setPlayerVisible', track);
-            } else {
-                // If a new track is clicked, update and play
-                commit('setPlayerVisible', track);
+        playTrack({ commit }, { track, playlist }) {
+            commit('setPlaylist', playlist);
+            const trackIndex = playlist.findIndex((t) => t.url === track.url);
+        
+            if (trackIndex !== -1) {
+                commit('setCurrentTrackIndex', trackIndex);
+                commit('setPlayerVisible', true);
             }
+        },
+
+        
+        playNextTrack({ commit }) {
+            commit('playNextTrack');
+        },
+        playPreviousTrack({ commit }) {
+            commit('playPreviousTrack');
         },
 
         
@@ -352,6 +378,9 @@ const store = createStore({
         },
         getCurrentTrack: (state) => state.currentTrack,
         isPlayerVisible: (state) => state.isPlayerVisible,
+        currentTrack(state) {
+            return state.playlist[state.currentTrackIndex] || null;
+        },
     },
 });
 

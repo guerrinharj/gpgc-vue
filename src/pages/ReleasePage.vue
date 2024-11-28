@@ -25,7 +25,7 @@
                 <li v-for="(track, index) in release.tracks" :key="index">
                     <button 
                         v-if="track.url" 
-                        @click="playTrackHandler(track.url, track.name)"
+                        @click="playTrackHandler(track)"
                         class="track-button">
                         {{ track.name }}
                     </button>
@@ -117,15 +117,22 @@ export default {
                 alert('Failed to delete the release. Please try again.');
             }
         },
-        playTrackHandler(url, name) {
-            const track = {
-                url,
-                name,
-                artist: this.release.artist_name, // Include artist name
-                release: this.release.name,      // Include release name
-                releaseSlug: this.release.slug
-            };
-            this.playTrack(track); // Dispatch Vuex action with all details
+
+
+
+        playTrackHandler(track) {
+            const playlist = this.release.tracks.map((t) => ({
+                ...t,
+                artist: this.release.artist_name,
+                release: this.release.name,
+                releaseSlug: this.release.slug,
+            }));
+
+            const trackIndex = playlist.findIndex((t) => t.url === track.url);
+
+            if (trackIndex !== -1) {
+                this.playTrack({ track: playlist[trackIndex], playlist });
+            }
         },
     },
     
