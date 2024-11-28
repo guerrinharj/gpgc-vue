@@ -1,29 +1,29 @@
 <template>
-    <div class="player-bar" v-if="track">
+    <div class="player-bar" v-if="currentTrack">
         <audio
             ref="audio"
-            :src="track.url"
+            :src="currentTrack.url"
             @loadeddata="onAudioReady"
             @timeupdate="updateProgress"
-            @ended="onTrackEnd"
+            @ended="playNext"
         ></audio>
         <div class="player-bar-content">
-            <!-- Artist Name -->
             <div class="player-artist">
-                <p @click="navigateToRelease" class="clickable">{{ track.artist }}</p>
+                <p @click="navigateToRelease" class="clickable">{{ currentTrack.artist }}</p>
             </div>
-            <!-- Track Name -->
             <div class="player-track">
-                <strong @click="navigateToRelease" class="clickable">{{ track.name }}</strong>
+                <strong @click="navigateToRelease" class="clickable">{{ currentTrack.name }}</strong>
             </div>
-            <!-- Controls -->
             <div class="controls">
-                <button @click="togglePlay">{{ isPlaying ? 'Pause' : 'Play' }}</button>
+                <button @click="togglePlay">{{ isPlaying ? 'Play' : 'Pause' }}</button>
                 <button @click="stopAudio">Stop</button>
+                <button @click="playPrevious">Previous</button>
+                <button @click="playNext">Next</button>
             </div>
         </div>
     </div>
 </template>
+
 
 
 
@@ -34,18 +34,15 @@ import { mapGetters, mapActions } from 'vuex';
 
 export default {
     computed: {
-        ...mapGetters(['getCurrentTrack', 'isPlayerVisible']),
-        track() {
-            return this.getCurrentTrack; // Fetch updated track details
-        },
+        ...mapGetters(['currentTrack', 'isPlayerVisible']),
     },
     data() {
         return {
-            isPlaying: true, // Start playing automatically
+            isPlaying: false, // Start as not playing
         };
     },
     methods: {
-        ...mapActions(['stopPlayer', 'fetchRelease']),
+        ...mapActions(['playNextTrack', 'playPreviousTrack', 'stopPlayer', 'fetchRelease']),
 
         async loadRelease() {
             const slug = this.$route.params.slug;
@@ -57,48 +54,101 @@ export default {
             }
         },
 
+        onAudioReady() {
+            const audio = this.$refs.audio;
 
+            if (!this.isPlaying) {
+                // Auto-play if not already playing
+                audio.play().catch((error) => {
+                    console.error("Error auto-playing audio:", error);
+                });
+            }
+        },
 
         togglePlay() {
             const audio = this.$refs.audio;
             if (this.isPlaying) {
                 audio.pause();
+                this.isPlaying = false;
             } else {
-                audio.play();
+                audio.play().catch((error) => {
+                    console.error('Error starting playback:', error);
+                });
+                this.isPlaying = true;
             }
-            this.isPlaying = !this.isPlaying;
         },
         stopAudio() {
             const audio = this.$refs.audio;
             audio.pause();
             audio.currentTime = 0;
             this.isPlaying = false;
-            this.stopPlayer(); // Dispatch Vuex action to hide the player
+            this.stopPlayer(); // Hide the player bar
         },
-        onAudioReady() {
-            if (this.isPlaying) {
-                const audio = this.$refs.audio;
-                audio.play(); // Play only after the audio is ready
-            }
+        playNext() {
+            this.handleTrackSwitch(() => {
+                this.playNextTrack();
+            });
         },
-        onTrackEnd() {
-            this.isPlaying = false;
+        playPrevious() {
+            this.handleTrackSwitch(() => {
+                this.playPreviousTrack();
+            });
         },
         navigateToRelease() {
-            // Navigate to the release page using the releaseSlug
-            if (this.track?.releaseSlug) {
-                this.$router.push(`/releases/${this.track.releaseSlug}`);
+            if (this.currentTrack?.releaseSlug) {
+                this.$router.push(`/releases/${this.currentTrack.releaseSlug}`);
             }
+        },
+        handleTrackSwitch(switchAction) {
+            const audio = this.$refs.audio;
+
+            // Pause and reset audio before switching
+            audio.pause();
+            audio.currentTime = 0;
+
+            // Execute the track switch action
+            switchAction();
+
+            // Wait for the DOM to update, then load the new track
+            this.$nextTick(() => {
+                audio.load(); // Trigger the load process
+                audio.oncanplay = () => {
+                    // Play only when the audio is ready
+                    audio.play().catch((error) => {
+                        console.error('Error playing track:', error);
+                    });
+                    this.isPlaying = true;
+                };
+            });
         },
     },
     watch: {
         '$route.params.slug': 'loadRelease', // React to route parameter changes
+        currentTrack(newTrack) {
+            if (newTrack && this.$refs.audio) {
+                const audio = this.$refs.audio;
+                audio.pause(); // Pause any current playback
+                audio.src = newTrack.url; // Update the audio source
+                audio.load(); // Prepare the audio element
+
+                audio.oncanplay = () => {
+                    // Only start playing when the audio is ready
+                    audio.play().catch((error) => {
+                        console.error('Error playing new track:', error);
+                    });
+                    this.isPlaying = true;
+                };
+            }
+        },
     },
-    created() {
+    mounted() {
         this.loadRelease(); // Load the release when the component is created
     },
 };
 </script>
+
+
+
 
 
 
