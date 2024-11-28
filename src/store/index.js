@@ -247,6 +247,24 @@ const store = createStore({
                 commit('setError', 'Failed to delete the featuring.');
             }
         },
+
+
+        async deleteSoundtrack({ commit, state }, slug) {
+            try {
+                await axios.delete(`${API_BASE_URL}/api/v1/soundtracks/${slug}`, {
+                    headers: {
+                        Username: `${state.user.username}`,
+                        Password: `${state.user.password}`,
+                    },
+                });
+    
+                const updatedSoundtracks = state.soundtracks.filter(soundtrack => soundtrack.slug !== slug);
+                commit('setSoundtracks', updatedSoundtracks);
+            } catch (error) {
+                console.error('Error deleting soundtrack:', error.response?.data?.message || error.message);
+                commit('setError', 'Failed to delete the soundtrack.');
+            }
+        },
         
 
 
