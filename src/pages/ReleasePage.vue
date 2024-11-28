@@ -33,19 +33,19 @@
             </ul>
         </div>
 
-        <div v-if="release.release_date" class="release-info">
+        <div id="release-date" v-if="release.release_date" class="release-info">
             <b>Release date</b>
             <span>{{ release.release_date }}</span>
         </div>
 
-        <div v-if="release.label && release.label.length > 0" class="release-info">
+        <div id="label" v-if="release.label && release.label.length > 0" class="release-info">
             <b>Label</b>
             <ul>
                 <li v-for="label in release.label" :key="label">{{ label }}</li>
             </ul>
         </div>
 
-        <div v-if="release.format && release.format.length > 0" class="release-info">
+        <div id="formats" v-if="release.format && release.format.length > 0" class="release-info">
             <b>Formats</b>
             <ul>
                 <li v-for="format in release.format" :key="format">{{ format }}</li>
@@ -297,7 +297,7 @@ export default {
     display: none;
 }
 
-#credits, #notes {
+#credits, #notes, #label, #formats, #release-date {
     font-size: 16px;
 }
 
