@@ -40,13 +40,14 @@
 @media (max-width: 768px) { /* Target tablets and smaller */
     .about-page {
         max-width: 70%; /* Take up 90% of the viewport width */
-        font-size: 1rem; /* Adjust font size for readability */
+        font-size: 1.6rem; /* Adjust font size for readability */
     }
 }
 
 @media (max-width: 500px) { /* Target small mobile devices */
     .about-page {
         max-width: 78%;
+        padding: 2rem 0 10rem;
         font-size: 1.5rem;
     }
 }
