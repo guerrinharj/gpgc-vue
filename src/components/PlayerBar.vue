@@ -318,7 +318,7 @@ export default {
 .volume-control input {
     width: 100%!important;
     padding: 0.1rem!important;
-    /* border: 1px solid white; */
+    border: none!important;
     border-radius: 3px!important;
     background: black;
     color: white;
