@@ -324,4 +324,38 @@ export default {
     color: white;
 }
 
+@media (max-width: 500px) {
+
+    .player-bar-content, .player-bar-wrapper {
+        padding: 8px;
+    }
+
+
+    .track-info {
+        display: block; /* Maintain block layout for mobile */
+        width: 50%; /* Define a consistent width */
+        overflow: hidden; /* Hide overflow content */
+        text-overflow: ellipsis; /* Add ellipsis for overflowing text */
+        white-space: nowrap; /* Prevent text wrapping */
+    }
+
+    .controls {
+        width: 50%;
+    }
+
+    .controls button {
+        padding: 8px;
+    }
+
+    .player-track {
+        text-align: left;
+    }
+
+    .track-info p, .track-info span strong {
+        text-align: left;
+        margin: 0;
+        font-size: 1rem;
+    }
+}
+
 </style>
