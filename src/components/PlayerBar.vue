@@ -27,10 +27,27 @@
                 </div>
                 <div class="controls">
                     <div class="play-controls">
-                        <button @click="togglePlay">{{ isPlaying ? 'Pause' : 'Play' }}</button>
-                        <button @click="stopAudio">Stop</button>
-                        <button @click="playPrevious">Previous</button>
-                        <button @click="playNext">Next</button>
+                        <!-- Play/Pause Button -->
+                        <button @click="togglePlay">
+                            <font-awesome-icon
+                                :icon="isPlaying ? 'pause' : 'play'"
+                            />
+                        </button>
+
+                        <!-- Stop Button -->
+                        <button @click="stopAudio">
+                            <font-awesome-icon icon="stop"/>
+                        </button>
+
+                        <!-- Previous Button -->
+                        <button @click="playPrevious">
+                            <font-awesome-icon icon="backward"  />
+                        </button>
+
+                        <!-- Next Button -->
+                        <button @click="playNext">
+                            <font-awesome-icon icon="forward" />
+                        </button>
                     </div>
                     <div class="volume-control">
                         <label for="volume-slider"></label>
@@ -324,10 +341,20 @@ export default {
     color: white;
 }
 
+
+/* Hide elements by default */
+.hidden-desktop {
+    display: none;
+}
+
+.hidden-mobile {
+    display: none;
+}
+
 @media (max-width: 500px) {
 
     .player-bar-wrapper {
-        width: 100%;
+        width: 85%;
     }
 
     .controls button {
@@ -360,6 +387,14 @@ export default {
         text-align: left;
         margin: 0;
         font-size: 1rem;
+    }
+
+    .hidden-mobile {
+        display: inline;
+    }
+
+    .hidden-desktop {
+        display: none;
     }
 }
 
