@@ -47,6 +47,12 @@ body::-webkit-scrollbar {
   background: black;
   color: white;
   min-height: 100vh;
+  display: flex; /* Use flexbox */
+  flex-direction: column; /* Stack children vertically */
+  align-items: center; /* Horizontally center */
+  justify-content: center; /* Vertically center */
+  text-align: center; /* Center text */
+  overflow-x: hidden;
 }
 
 a {

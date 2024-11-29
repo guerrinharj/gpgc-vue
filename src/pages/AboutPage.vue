@@ -19,27 +19,36 @@
 </script>
 
 <style>
+.about-page {
+    background: black;
+    color: white;
+    text-align: center;
+    padding: 2rem;
+    margin: auto;
+    max-width: 50%;
+}
+
+.about-page a {
+    font-weight: 600;
+}
+
+.about-page a:hover {
+    text-decoration: underline !important;
+}
+
+/* Responsive styles for smaller devices */
+@media (max-width: 768px) { /* Target tablets and smaller */
     .about-page {
-        background: black;
-        color: white;
-        text-align: center;
-        padding: 2rem;
-        margin: auto;
-        max-width: 30%
+        max-width: 70%; /* Take up 90% of the viewport width */
+        font-size: 1rem; /* Adjust font size for readability */
     }
+}
 
-    .about-page a {
-        font-weight: 600 ;
+@media (max-width: 500px) { /* Target small mobile devices */
+    .about-page {
+        max-width: 80%; /* Take up 90% width */
+        font-size: 0.9rem; /* Smaller font size */
     }
+}
 
-    .about-page a:hover{
-        text-decoration: underline!important;
-    }
-
-    @media (max-width: 500px) {
-        .about-page {
-            max-width: 80%;
-            font-size: 0.9rem;
-        }
-    }
 </style>
