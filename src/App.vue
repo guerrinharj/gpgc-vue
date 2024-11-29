@@ -120,5 +120,28 @@ a:hover {
 .up-down-effect:hover {
   animation: upDown 2s ease-in-out; /* Trigger the up-down animation on hover */
 }
+
+
+/* Transition for fading in from black */
+.fade-enter-active,
+.fade-leave-active {
+    transition: opacity 4s, transform 1s;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+    opacity: 0;
+    transform: translateY(20px); /* Slide in slightly from the bottom */
+}
+
+.fade-enter-to,
+.fade-leave-from {
+    opacity: 1;
+    transform: translateY(0); /* Final position */
+}
+
+.release-item {
+  margin-bottom: 20px; /* Space between items */
+}
 </style>
 
