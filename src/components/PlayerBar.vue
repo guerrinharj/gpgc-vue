@@ -63,7 +63,7 @@ export default {
             return `${(this.audioCurrentTime / this.audioDuration) * 100}%`;
         },
         volumeGradient() {
-            const percentage = this.volume * 100; // Convert volume to a percentage
+            const percentage = this.volume * 100;
             return {
                 background: `linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet, grey ${percentage}%)`,
             };
@@ -75,7 +75,7 @@ export default {
             audioCurrentTime: 0,
             audioDuration: 0,
             isDragging: false,
-            volume: 1, // Default volume level
+            volume: 1, 
         };
     },
     methods: {
