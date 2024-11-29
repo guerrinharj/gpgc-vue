@@ -1,5 +1,13 @@
 <template>
     <div class="player-bar" v-if="currentTrack">
+        <div class="progress-bar" @click="seekTrack($event)">
+            <div class="progress" :style="{ width: progressWidth }"></div>
+            <div
+                class="progress-handle"
+                :style="{ left: progressWidth }"
+                @mousedown="startDragging"
+            ></div>
+        </div>
         <audio
             ref="audio"
             :src="currentTrack.url"
@@ -8,26 +16,41 @@
             @ended="playNext"
         ></audio>
         <div class="player-bar-content">
-            <div class="player-artist">
-                <p @click="navigateToRelease" class="clickable">{{ currentTrack.artist }}</p>
-            </div>
-            <div class="player-track">
-                <strong @click="navigateToRelease" class="clickable">{{ currentTrack.name }}</strong>
-            </div>
-            <div class="controls">
-                <button @click="togglePlay">{{ isPlaying ? 'Play' : 'Pause' }}</button>
-                <button @click="stopAudio">Stop</button>
-                <button @click="playPrevious">Previous</button>
-                <button @click="playNext">Next</button>
+            <div class="player-bar-wrapper">
+                <div class="track-info">
+                    <div class="player-artist">
+                        <p @click="navigateToRelease" class="clickable">{{ currentTrack.artist }}  &nbsp; &nbsp; </p>
+                    </div>
+                    <div class="player-track">
+                        <span><strong @click="navigateToRelease" class="clickable">{{ currentTrack.name }}</strong></span>
+                    </div>
+                </div>
+                <div class="controls">
+                    <div class="play-controls">
+                        <button @click="togglePlay">{{ isPlaying ? 'Pause' : 'Play' }}</button>
+                        <button @click="stopAudio">Stop</button>
+                        <button @click="playPrevious">Previous</button>
+                        <button @click="playNext">Next</button>
+                    </div>
+                    <div class="volume-control">
+                        <label for="volume-slider"></label>
+                        <input
+                            ref="volumeSlider"
+                            id="volume-slider"
+                            type="range"
+                            min="0"
+                            max="1"
+                            step="0.01"
+                            v-model="volume"
+                            @input="adjustVolume"
+                            :style="volumeGradient"
+                        />
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </template>
-
-
-
-
-
 
 <script>
 import { mapGetters, mapActions } from 'vuex';
@@ -35,15 +58,29 @@ import { mapGetters, mapActions } from 'vuex';
 export default {
     computed: {
         ...mapGetters(['currentTrack', 'isPlayerVisible']),
+        progressWidth() {
+            if (this.audioDuration === 0) return '0%';
+            return `${(this.audioCurrentTime / this.audioDuration) * 100}%`;
+        },
+        volumeGradient() {
+            const percentage = this.volume * 100; // Convert volume to a percentage
+            return {
+                background: `linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet, grey ${percentage}%)`,
+            };
+        },
     },
     data() {
         return {
-            isPlaying: false, // Start as not playing
+            isPlaying: false,
+            audioCurrentTime: 0,
+            audioDuration: 0,
+            isDragging: false,
+            volume: 1, // Default volume level
         };
     },
     methods: {
         ...mapActions(['playNextTrack', 'playPreviousTrack', 'stopPlayer', 'fetchRelease']),
-
+        
         async loadRelease() {
             const slug = this.$route.params.slug;
             try {
@@ -56,12 +93,17 @@ export default {
 
         onAudioReady() {
             const audio = this.$refs.audio;
-
+            this.audioDuration = audio.duration || 0;
             if (!this.isPlaying) {
-                // Auto-play if not already playing
-                audio.play().catch((error) => {
-                    console.error("Error auto-playing audio:", error);
-                });
+                audio.play().catch((error) => console.error('Error auto-playing audio:', error));
+                this.isPlaying = true;
+            }
+        },
+
+        updateProgress() {
+            if (!this.isDragging) {
+                const audio = this.$refs.audio;
+                this.audioCurrentTime = audio.currentTime;
             }
         },
 
@@ -71,55 +113,75 @@ export default {
                 audio.pause();
                 this.isPlaying = false;
             } else {
-                audio.play().catch((error) => {
-                    console.error('Error starting playback:', error);
-                });
+                audio.play().catch((error) => console.error('Error starting playback:', error));
                 this.isPlaying = true;
             }
         },
+
         stopAudio() {
             const audio = this.$refs.audio;
             audio.pause();
             audio.currentTime = 0;
             this.isPlaying = false;
-            this.stopPlayer(); // Hide the player bar
+            this.stopPlayer();
         },
+
         playNext() {
-            this.handleTrackSwitch(() => {
-                this.playNextTrack();
-            });
+            this.playNextTrack();
         },
+
         playPrevious() {
-            this.handleTrackSwitch(() => {
-                this.playPreviousTrack();
-            });
+            this.playPreviousTrack();
         },
+
         navigateToRelease() {
             if (this.currentTrack?.releaseSlug) {
                 this.$router.push(`/releases/${this.currentTrack.releaseSlug}`);
             }
         },
-        handleTrackSwitch(switchAction) {
+
+        seekTrack(event) {
             const audio = this.$refs.audio;
+            const progressBar = event.currentTarget;
+            const rect = progressBar.getBoundingClientRect();
+            const clickPosition = event.clientX - rect.left;
+            const newTime = (clickPosition / rect.width) * this.audioDuration;
 
-            // Pause and reset audio before switching
-            audio.pause();
-            audio.currentTime = 0;
+            audio.currentTime = newTime;
+            this.audioCurrentTime = newTime;
+        },
 
-            // Execute the track switch action
-            switchAction();
+        startDragging() {
+            this.isDragging = true;
+            window.addEventListener('mousemove', this.dragHandle);
+            window.addEventListener('mouseup', this.stopDragging);
+        },
 
-            // Wait for the DOM to update, then load the new track
-            this.$nextTick(() => {
-                audio.load(); // Trigger the load process
-                audio.oncanplay = () => {
-                    // Play only when the audio is ready
-                    audio.play().catch((error) => {
-                        console.error('Error playing track:', error);
-                    });
-                    /* this.isPlaying = true; */
-                };
-            });
+        dragHandle(event) {
+            if (!this.isDragging) return;
+
+            const progressBar = document.querySelector('.progress-bar');
+            const rect = progressBar.getBoundingClientRect();
+            const dragPosition = Math.min(Math.max(0, event.clientX - rect.left), rect.width);
+            const newTime = (dragPosition / rect.width) * this.audioDuration;
+
+            this.audioCurrentTime = newTime;
+        },
+
+        stopDragging() {
+            if (!this.isDragging) return;
+
+            const audio = this.$refs.audio;
+            audio.currentTime = this.audioCurrentTime;
+            this.isDragging = false;
+
+            window.removeEventListener('mousemove', this.dragHandle);
+            window.removeEventListener('mouseup', this.stopDragging);
+        },
+
+        adjustVolume(event) {
+            const audio = this.$refs.audio;
+            audio.volume = event.target.value;
         },
     },
     watch: {
@@ -127,97 +189,139 @@ export default {
         currentTrack(newTrack) {
             if (newTrack && this.$refs.audio) {
                 const audio = this.$refs.audio;
-                audio.pause(); // Pause any current playback
-                audio.src = newTrack.url; // Update the audio source
-                audio.load(); // Prepare the audio element
-
+                audio.src = newTrack.url;
+                audio.load();
                 audio.oncanplay = () => {
-                    // Only start playing when the audio is ready
-                    audio.play().catch((error) => {
-                        console.error('Error playing new track:', error);
-                    });
+                    audio.play().catch((error) => console.error('Error playing new track:', error));
                     this.isPlaying = true;
                 };
             }
         },
     },
     mounted() {
-        this.loadRelease(); // Load the release when the component is created
+        this.loadRelease();
     },
 };
 </script>
 
-
-
-
-
-
-
 <style>
+/* Player bar */
 .player-bar {
-    border-top: solid 1px white;
     position: fixed;
     bottom: 0;
     width: 100%;
     background: black;
     color: white;
-    padding: 10px 20px; /* Add some horizontal padding */
+    padding: 10px 20px;
     z-index: 1000;
     display: flex;
-    justify-content: center; /* Center the player-bar content */
-    align-items: center; /* Align items vertically */
+    justify-content: space-between;
+    align-items: center;
+}
+
+.player-bar-content, .player-bar-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .player-bar-content {
-    display: flex;
-    justify-content: space-between; /* Distribute items evenly */
+    width: 100%
+}
+
+.player-bar-wrapper {
+    width: 80%;
+    margin: auto;
+}
+
+.track-info {
+    display: flex; /* Use flexbox to layout the children */
     align-items: center; /* Align items vertically */
-    max-width: 800px; /* Limit the width of the bar */
-    width: 100%; /* Ensure the content spans the full bar */
-    font-size: 20px;
+    justify-content: space-between; /* Space out items equally */
 }
 
-.player-artist {
-    flex: 1; /* Let the artist name take up equal space */
-    text-align: center; /* Align text to the left */
+.track-info span  {
+    cursor: pointer;
 }
 
-.player-track {
-    flex: 1; /* Let the track name take up equal space */
-    text-align: center; /* Center the track name */
+.track-info span:hover {
+    text-decoration: underline;
 }
 
-.controls {
-    font-size: 9px;
-    flex: 1; /* Let the controls take up equal space */
-    text-align: center; /* Align controls to the right */
+.progress-bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 5px;
+    background: #444;
 }
 
+.progress {
+    height: 100%;
+    background: linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet);
+    transition: width 0.1s ease-in-out;
+}
+
+.progress-handle {
+    position: absolute;
+    top: -3px;
+    width: 12px;
+    height: 12px;
+    background: white;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+/* Controls */
 .controls button {
-    background: none; /* Remove default button background */
-    border: none; /* Remove default button border */
-    color: white; /* Match the text color of the page */
-    font-family: inherit; /* Use the page's font */
-    font-size: 16px; /* Adjust the font size for consistency */
-    padding: 8px 16px; /* Add padding for better clickability */
-    cursor: pointer; /* Show a pointer cursor on hover */
-    text-transform: lowercase; /* Match the page's text style */
-    transition: color 0.3s ease; /* Add a smooth hover effect */
+    background: none;
+    border: none;
+    color: white;
+    font-family: inherit;
+    font-size: 16px;
+    padding: 8px 16px;
+    cursor: pointer;
+    text-transform: lowercase;
+    transition: color 0.3s ease;
 }
 
 .controls button:hover {
-    text-decoration: underline; /* Optional: Add underline on hover */
+    text-decoration: underline;
 }
 
+/* Volume slider */
+.volume-control {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
 
-.clickable {
+.volume-control input[type="range"] {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 0px;
+    background: linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet);
+    outline: none;
+}
+
+.volume-control input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 10px;
+    height: 10px;
+    background: white;
+    border: 2px solid white;
+    border-radius: 50%;
     cursor: pointer;
-    color: white; /* Highlight the clickable text */
-    transition: color 0.3s ease; /* Smooth transition on hover */
 }
 
-.clickable:hover {
-    text-decoration: underline; /* Underline on hover */
+input {
+    width: 100%;
+    padding: 0.1rem;
+    /* border: 1px solid white; */
+    border-radius: 3px;
+    background: black;
+    color: white;
 }
 
 </style>
