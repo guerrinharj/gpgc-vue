@@ -26,7 +26,7 @@ export default {
 </script>
 
 <style>
-/* Add global styles here if needed */
+/* Global styles */
 body {
   font-family: 'Helvetica', sans-serif;
   letter-spacing: -2px;
@@ -70,4 +70,55 @@ a:hover {
   text-decoration: underline; /* Optional: Add underline */
   color: white; /* Ensure active links are visible */
 }
+
+/* Keyframes for rainbow gradient animation */
+@keyframes rainbowGradient {
+  0% {
+    background: linear-gradient(90deg, red, orange, yellow, green, blue, indigo, violet, white);
+    background-size: 400% 400%;
+    color: transparent; /* Make the text transparent to show the gradient */
+    -webkit-background-clip: text; /* Use the background as text color */
+    background-clip: text;
+  }
+  50% {
+    background-position: 100% 0;
+    color: white;
+  }
+  100% {
+    color: white;
+  }
+}
+
+/* Hover effect class */
+.hover-rainbow {
+  transition: color 2.2s, background 0.2s; /* Smooth transition effect */
+}
+
+.hover-rainbow:hover {
+  animation: rainbowGradient 7s ease-in-out;
+}
+
+/* Keyframes for up-and-down animation */
+@keyframes upDown {
+  0% {
+    transform: translateY(0); /* Start at the original position */
+  }
+  50% {
+    transform: translateY(10px); /* Move up */
+  }
+  100% {
+    transform: translateY(0); /* Return to the original position */
+  }
+}
+
+/* Up-and-down animation class */
+.up-down-effect {
+  display: inline-block; /* Inline block for better control */
+  transition: transform 0.3s ease-in-out; /* Smooth transition */
+}
+
+.up-down-effect:hover {
+  animation: upDown 2s ease-in-out; /* Trigger the up-down animation on hover */
+}
 </style>
+
