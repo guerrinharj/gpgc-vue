@@ -218,7 +218,7 @@ export default {
 }
 
 .release-tracks {
-    padding: 1rem;
+    padding: 0.2rem;
 }
 
 .release-tracks h4 {
@@ -301,7 +301,15 @@ export default {
     font-size: 16px;
 }
 
-@media (max-width: 400px) {
+@media (max-width: 500px) {
+
+    .release-page h1 {
+        font-size: 26px;
+    }
+
+    .cover-image img {
+        max-width: 60%;
+    }
 
     .release-tracks li {
         font-size: 0.8rem;
