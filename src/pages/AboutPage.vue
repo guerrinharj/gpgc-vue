@@ -46,8 +46,8 @@
 
 @media (max-width: 500px) { /* Target small mobile devices */
     .about-page {
-        max-width: 80%; /* Take up 90% width */
-        font-size: 0.9rem; /* Smaller font size */
+        max-width: 78%;
+        font-size: 1.5rem;
     }
 }
 
