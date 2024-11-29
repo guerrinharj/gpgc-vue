@@ -82,7 +82,7 @@ export default {
 .navbar a {
     color: white;
     text-decoration: none;
-    font-size: 1.2rem;
+    font-size: 1.6rem;
     transition: color 0.3s;
 }
 
@@ -112,7 +112,7 @@ export default {
     }
 
     .navbar a {
-        font-size: 1rem; /* Reduce font size for mobile */
+        font-size: 1.4rem; /* Reduce font size for mobile */
         padding: 0.5rem; /* Optional: Add padding for touch-friendly links */
     }
 }

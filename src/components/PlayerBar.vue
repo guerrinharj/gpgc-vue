@@ -386,7 +386,7 @@ export default {
     .track-info p, .track-info span strong {
         text-align: left;
         margin: 0;
-        font-size: 1rem;
+        font-size: 1.4rem;
     }
 
     .hidden-mobile {
