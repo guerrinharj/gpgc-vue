@@ -16,26 +16,41 @@
             @ended="playNext"
         ></audio>
         <div class="player-bar-content">
-            <div class="player-artist">
-                <p @click="navigateToRelease" class="clickable">{{ currentTrack.artist }}</p>
-            </div>
-            <div class="player-track">
-                <strong @click="navigateToRelease" class="clickable">{{ currentTrack.name }}</strong>
-            </div>
-            <div class="controls">
-                <button @click="togglePlay">{{ isPlaying ? 'Play' : 'Pause' }}</button>
-                <button @click="stopAudio">Stop</button>
-                <button @click="playPrevious">Previous</button>
-                <button @click="playNext">Next</button>
+            <div class="player-bar-wrapper">
+                <div class="track-info">
+                    <div class="player-artist">
+                        <p @click="navigateToRelease" class="clickable">{{ currentTrack.artist }}  &nbsp; &nbsp; </p>
+                    </div>
+                    <div class="player-track">
+                        <span><strong @click="navigateToRelease" class="clickable">{{ currentTrack.name }}</strong></span>
+                    </div>
+                </div>
+                <div class="controls">
+                    <div class="play-controls">
+                        <button @click="togglePlay">{{ isPlaying ? 'Pause' : 'Play' }}</button>
+                        <button @click="stopAudio">Stop</button>
+                        <button @click="playPrevious">Previous</button>
+                        <button @click="playNext">Next</button>
+                    </div>
+                    <div class="volume-control">
+                        <label for="volume-slider"></label>
+                        <input
+                            ref="volumeSlider"
+                            id="volume-slider"
+                            type="range"
+                            min="0"
+                            max="1"
+                            step="0.01"
+                            v-model="volume"
+                            @input="adjustVolume"
+                            :style="volumeGradient"
+                        />
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </template>
-
-
-
-
-
 
 <script>
 import { mapGetters, mapActions } from 'vuex';
@@ -47,13 +62,20 @@ export default {
             if (this.audioDuration === 0) return '0%';
             return `${(this.audioCurrentTime / this.audioDuration) * 100}%`;
         },
+        volumeGradient() {
+            const percentage = this.volume * 100; // Convert volume to a percentage
+            return {
+                background: `linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet, grey ${percentage}%)`,
+            };
+        },
     },
     data() {
         return {
             isPlaying: false,
             audioCurrentTime: 0,
             audioDuration: 0,
-            isDragging: false, // To track if the handle is being dragged
+            isDragging: false,
+            volume: 1, // Default volume level
         };
     },
     methods: {
@@ -72,11 +94,8 @@ export default {
         onAudioReady() {
             const audio = this.$refs.audio;
             this.audioDuration = audio.duration || 0;
-
             if (!this.isPlaying) {
-                audio.play().catch((error) => {
-                    console.error("Error auto-playing audio:", error);
-                });
+                audio.play().catch((error) => console.error('Error auto-playing audio:', error));
                 this.isPlaying = true;
             }
         },
@@ -94,9 +113,7 @@ export default {
                 audio.pause();
                 this.isPlaying = false;
             } else {
-                audio.play().catch((error) => {
-                    console.error('Error starting playback:', error);
-                });
+                audio.play().catch((error) => console.error('Error starting playback:', error));
                 this.isPlaying = true;
             }
         },
@@ -161,17 +178,21 @@ export default {
             window.removeEventListener('mousemove', this.dragHandle);
             window.removeEventListener('mouseup', this.stopDragging);
         },
+
+        adjustVolume(event) {
+            const audio = this.$refs.audio;
+            audio.volume = event.target.value;
+        },
     },
     watch: {
+        '$route.params.slug': 'loadRelease', // React to route parameter changes
         currentTrack(newTrack) {
             if (newTrack && this.$refs.audio) {
                 const audio = this.$refs.audio;
                 audio.src = newTrack.url;
                 audio.load();
                 audio.oncanplay = () => {
-                    audio.play().catch((error) => {
-                        console.error('Error playing new track:', error);
-                    });
+                    audio.play().catch((error) => console.error('Error playing new track:', error));
                     this.isPlaying = true;
                 };
             }
@@ -183,81 +204,8 @@ export default {
 };
 </script>
 
-
-
-
-
-
-
-
-
 <style>
-.player-bar {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    background: black;
-    color: white;
-    padding: 10px 20px; /* Add some horizontal padding */
-    z-index: 1000;
-    display: flex;
-    justify-content: center; /* Center the player-bar content */
-    align-items: center; /* Align items vertically */
-}
-
-.player-bar-content {
-    display: flex;
-    justify-content: space-between; /* Distribute items evenly */
-    align-items: center; /* Align items vertically */
-    max-width: 800px; /* Limit the width of the bar */
-    width: 100%; /* Ensure the content spans the full bar */
-    font-size: 20px;
-}
-
-.player-artist {
-    flex: 1; /* Let the artist name take up equal space */
-    text-align: center; /* Align text to the left */
-}
-
-.player-track {
-    flex: 1; /* Let the track name take up equal space */
-    text-align: center; /* Center the track name */
-}
-
-.controls {
-    font-size: 9px;
-    flex: 1; /* Let the controls take up equal space */
-    text-align: center; /* Align controls to the right */
-}
-
-.controls button {
-    background: none; /* Remove default button background */
-    border: none; /* Remove default button border */
-    color: white; /* Match the text color of the page */
-    font-family: inherit; /* Use the page's font */
-    font-size: 16px; /* Adjust the font size for consistency */
-    padding: 8px 16px; /* Add padding for better clickability */
-    cursor: pointer; /* Show a pointer cursor on hover */
-    text-transform: lowercase; /* Match the page's text style */
-    transition: color 0.3s ease; /* Add a smooth hover effect */
-}
-
-.controls button:hover {
-    text-decoration: underline; /* Optional: Add underline on hover */
-}
-
-
-.clickable {
-    cursor: pointer;
-    color: white; /* Highlight the clickable text */
-    transition: color 0.3s ease; /* Smooth transition on hover */
-}
-
-.clickable:hover {
-    text-decoration: underline; /* Underline on hover */
-}
-
-
+/* Player bar */
 .player-bar {
     position: fixed;
     bottom: 0;
@@ -266,6 +214,38 @@ export default {
     color: white;
     padding: 10px 20px;
     z-index: 1000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.player-bar-content, .player-bar-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.player-bar-content {
+    width: 100%
+}
+
+.player-bar-wrapper {
+    width: 80%;
+    margin: auto;
+}
+
+.track-info {
+    display: flex; /* Use flexbox to layout the children */
+    align-items: center; /* Align items vertically */
+    justify-content: space-between; /* Space out items equally */
+}
+
+.track-info span  {
+    cursor: pointer;
+}
+
+.track-info span:hover {
+    text-decoration: underline;
 }
 
 .progress-bar {
@@ -273,16 +253,75 @@ export default {
     top: 0;
     left: 0;
     width: 100%;
-    height: 5px; /* Height of the progress bar */
-    background: #444; /* Background color for the bar */
-    overflow: hidden;
+    height: 5px;
+    background: #444;
 }
 
 .progress {
     height: 100%;
-    background: linear-gradient(to right, #f06, #f90, #0f0); /* Gradient color */
+    background: linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet);
     transition: width 0.1s ease-in-out;
 }
 
+.progress-handle {
+    position: absolute;
+    top: -3px;
+    width: 12px;
+    height: 12px;
+    background: white;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+/* Controls */
+.controls button {
+    background: none;
+    border: none;
+    color: white;
+    font-family: inherit;
+    font-size: 16px;
+    padding: 8px 16px;
+    cursor: pointer;
+    text-transform: lowercase;
+    transition: color 0.3s ease;
+}
+
+.controls button:hover {
+    text-decoration: underline;
+}
+
+/* Volume slider */
+.volume-control {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.volume-control input[type="range"] {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 0px;
+    background: linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet);
+    outline: none;
+}
+
+.volume-control input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 10px;
+    height: 10px;
+    background: white;
+    border: 2px solid white;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+input {
+    width: 100%;
+    padding: 0.1rem;
+    /* border: 1px solid white; */
+    border-radius: 3px;
+    background: black;
+    color: white;
+}
 
 </style>
