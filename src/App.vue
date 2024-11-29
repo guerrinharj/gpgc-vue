@@ -28,7 +28,8 @@ export default {
 <style>
 /* Add global styles here if needed */
 body {
-  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  font-family: 'Helvetica', sans-serif;
+  letter-spacing: -2px;
   background-color: black;
   padding: 0;
   margin: 0;

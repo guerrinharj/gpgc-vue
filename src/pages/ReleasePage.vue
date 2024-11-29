@@ -232,7 +232,7 @@ export default {
 }
 
 .release-tracks li {
-    margin: 0.1rem 0;
+    margin: 0;
     text-align: center;
 }
 
@@ -276,8 +276,8 @@ export default {
     border: none; /* Remove default button border */
     color: white; /* Match the link color */
     font-family: inherit; /* Use the page's font */
-    font-size: 20px; /* Adjust font size for readability */
-    padding: 5px 10px; /* Add padding for clickability */
+    letter-spacing: -2px;
+    font-size: 1.5rem; /* Adjust font size for readability */
     cursor: pointer; /* Show a pointer cursor */
     text-decoration: none; /* Remove underline */
     transition: color 0.3s ease, text-decoration 0.3s ease; /* Add smooth hover effect */
@@ -298,7 +298,7 @@ export default {
 }
 
 #credits, #notes, #label, #formats, #release-date {
-    font-size: 16px;
+    font-size: 1.2rem;
 }
 
 @media (max-width: 500px) {
@@ -313,11 +313,10 @@ export default {
 
     .release-tracks li {
         font-size: 0.8rem;
-        padding: 0.4rem;
     }
 
     .release-tracks .track-button {
-        font-size: 16px;
+        font-size: 1.4rem;
     }
     
 }
