@@ -326,8 +326,13 @@ export default {
 
 @media (max-width: 500px) {
 
-    .player-bar-content, .player-bar-wrapper {
-        padding: 8px;
+    .player-bar-wrapper {
+        width: 100%;
+    }
+
+    .controls button {
+        padding: 2px;
+        margin-bottom: 10px;
     }
 
 
