@@ -315,11 +315,11 @@ export default {
     cursor: pointer;
 }
 
-input {
-    width: 100%;
-    padding: 0.1rem;
+.volume-control input {
+    width: 100%!important;
+    padding: 0.1rem!important;
     /* border: 1px solid white; */
-    border-radius: 3px;
+    border-radius: 3px!important;
     background: black;
     color: white;
 }
