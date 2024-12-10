@@ -13,8 +13,19 @@
 
         <!-- Display Cover Images -->
         <div class="release-cover" v-if="release.cover && release.cover.length > 0">
-            <div v-for="(image, index) in release.cover" :key="index" class="cover-image">
-                <img :src="image" :alt="`${release.name} cover ${index + 1}`" />
+            <div v-if="release.cover.length === 1" class="cover-image">
+                <img :src="release.cover[0]" :alt="`${release.name} cover`" />
+            </div>
+            <div v-else class="cover-slider">
+                <img
+                    v-for="(image, index) in release.cover"
+                    :key="index"
+                    :src="image"
+                    :alt="`${release.name} cover ${index + 1}`"
+                    loading="lazy"
+                    class="cover-image"
+                    :style="{ opacity: currentCoverIndex === index ? 1 : 0 }"
+                />
             </div>
         </div>
 
@@ -85,6 +96,11 @@
 import { mapGetters, mapActions } from 'vuex';
 
 export default {
+    data() {
+        return {
+            currentCoverIndex: 0, // Track the current index of the displayed cover
+        };
+    },
     computed: {
         ...mapGetters(['getSelectedRelease', 'isAuthenticated']),
         release() {
@@ -134,6 +150,15 @@ export default {
                 this.playTrack({ track: playlist[trackIndex], playlist });
             }
         },
+
+        startCoverTransition() {
+            if (this.release.cover && this.release.cover.length > 1) {
+                setInterval(() => {
+                    this.currentCoverIndex =
+                        (this.currentCoverIndex + 1) % this.release.cover.length;
+                }, 3000); // Change cover every 3 seconds
+            }
+        },
     },
     
     created() {
@@ -146,6 +171,7 @@ export default {
             });
         }
 
+        this.startCoverTransition();
         window.scrollTo(0, 0);
     },
 };
@@ -196,9 +222,34 @@ export default {
 }
 
 .cover-image img {
-    max-width: 30%;
+    max-width: 400px;
     height: auto;
     border-radius: 8px;
+}
+
+.cover-slider {
+    position: relative;
+    width: 100%;
+    max-width: 400px; /* Ensure the max width is consistent */
+    margin: auto; /* Center the slider horizontally */
+    overflow: hidden; /* Prevent content overflow */
+    aspect-ratio: 1 / 1; /* Maintain a square aspect ratio (adjust as needed) */
+}
+
+.cover-slider img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%; /* Ensure images take the full width of the container */
+    height: 100%; /* Ensure images take the full height of the container */
+    object-fit: cover; /* Maintain aspect ratio and crop the image if necessary */
+    border-radius: 8px; /* Optional: Keep rounded corners */
+    opacity: 0; /* Default to invisible */
+    transition: opacity 1s ease-in-out;
+}
+
+.cover-slider img[v-show="true"] {
+    opacity: 1; /* Make the currently active image visible */
 }
 
 .release-info {
@@ -308,7 +359,7 @@ export default {
     }
 
     .cover-image img {
-        max-width: 60%;
+        max-width: 240px;
     }
 
     .release-tracks li {
