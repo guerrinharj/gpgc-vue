@@ -1,7 +1,11 @@
 <template>
     <div class="release-page">
         <div class="release-titles">
-            <h1 class="release-name">{{ release.name }}</h1>
+            <h1 class="release-name">
+                <a :href="release.download_link" download>
+                    {{ release.name }}
+                </a>
+            </h1>
             <h1>{{ release.artist_name }}</h1>
         </div>
 
@@ -199,7 +203,15 @@ export default {
 }
 
 .release-name {
+    position: relative;
+    display: inline-block;
     text-decoration: underline;
+    cursor: pointer;
+}
+
+.release-name:hover {
+    opacity: 0.8;
+    transition: ease-in-out 0.3s all;
 }
 
 .release-actions {
