@@ -163,6 +163,7 @@ const store = createStore({
                     artist_name: releaseData.artist_name,
                     release_date: releaseData.release_date,
                     release_type: releaseData.release_type,
+                    download_link: releaseData.download_link,
                     cover: releaseData.cover,
                     label: releaseData.label,
                     format: releaseData.format,
