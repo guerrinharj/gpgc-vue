@@ -35,6 +35,11 @@
         </div>
 
         <div>
+            <label for="download_link">Download Link</label>
+            <input id="download_link" v-model="form.download_link" required />
+        </div>
+
+        <div>
             <label for="cover">Cover</label>
             <textarea
                 id="cover"
@@ -157,6 +162,7 @@ export default {
                 artist_name: '',
                 release_date: '',
                 release_type: '',
+                download_link: '',
                 cover: [],
                 label: [],
                 format: [],
