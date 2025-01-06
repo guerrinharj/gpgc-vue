@@ -5,6 +5,12 @@
             <a @click="toggleReleases">
                 <h2><b>{{ artist.name }}</b></h2>
             </a>
+
+            <div v-if="isAuthenticated" class="artist-actions">
+                <p>
+                    <a class="delete" @click="deleteArtist">delete</a>
+                </p>
+            </div>
         </div>
 
         <!-- Release Lists -->
@@ -82,7 +88,21 @@ export default {
             this.$emit('toggle'); // Close the current list
             this.$router.push(`/releases/${slug}`); // Navigate to the release page
         },
-    },
+
+        async deleteArtist() {
+            const confirmed = confirm(`Are you sure you want to delete "${this.artist.name}"?`);
+            if (!confirmed) return;
+
+            try {
+                await this.$store.dispatch('deleteArtist', this.artist.slug);
+                alert('Artist deleted successfully!');
+                this.$router.push('/artists');
+            } catch (error) {
+                console.error('Error deleting artist:', error);
+                alert('Failed to delete the artist. Please try again.');
+            }
+        }
+    }
 };
 </script>
 

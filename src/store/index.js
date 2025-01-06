@@ -267,6 +267,24 @@ const store = createStore({
         },
 
 
+        async deleteArtist({ commit, state }, slug) {
+            try {
+                await axios.delete(`${API_BASE_URL}/api/v1/artists/${slug}`, {
+                    headers: {
+                        Username: `${state.user.username}`,
+                        Password: `${state.user.password}`,
+                    },
+                });
+    
+                const updatedArtists = state.artists.filter(artist => artist.slug !== slug);
+                commit('setArtists', updatedArtists);
+            } catch (error) {
+                console.error('Error deleting artist:', error.response?.data?.message || error.message);
+                commit('setError', 'Failed to delete the artist.');
+            }
+        },
+
+
 
         async deleteRelease({ commit, state }, slug) {
             try {
