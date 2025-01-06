@@ -113,7 +113,7 @@ export default {
     }
 
     .navbar a {
-        font-size: 1.4rem; /* Reduce font size for mobile */
+        font-size: 1.1rem; /* Reduce font size for mobile */
         padding: 0.5rem; /* Optional: Add padding for touch-friendly links */
     }
 }
