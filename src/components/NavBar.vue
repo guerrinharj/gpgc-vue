@@ -1,6 +1,7 @@
 <template>
     <nav class="navbar" ref="navbar">
         <ul>
+            <li><router-link to="/artists">Artists</router-link></li>
             <li><router-link to="/">Releases</router-link></li>
             <li><router-link to="/featurings">Featurings</router-link></li>
             <li><router-link to="/soundtracks">Soundtracks</router-link></li>
