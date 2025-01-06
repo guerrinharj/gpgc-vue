@@ -1,0 +1,149 @@
+<template>
+    <div class="artist-item">
+        <!-- Artist Name -->
+        <div>
+            <a @click="toggleReleases">
+                <h2><b>{{ artist.name }}</b></h2>
+            </a>
+        </div>
+
+        <!-- Release Lists -->
+        <div v-if="isActive" class="artist-releases">
+            <!-- Albums -->
+            <div v-if="albums.length > 0">
+                <h3>Albums:</h3>
+                <ul>
+                    <li v-for="album in albums" :key="album.id">
+                        <router-link 
+                            :to="`/releases/${album.slug}`" 
+                            @click="navigateToRelease(album.slug)">
+                            {{ album.name }} 
+                        </router-link>
+                        <span class="year">({{ album.release_date.slice(0, 4) }})</span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Singles / EPs -->
+            <div v-if="singlesAndEPs.length > 0">
+                <h3>Singles / EPs:</h3>
+                <ul>
+                    <li v-for="single in singlesAndEPs" :key="single.id">
+                        <router-link 
+                            :to="`/releases/${single.slug}`" 
+                            @click="handleLinkClick(single.slug)">
+                            {{ single.name }} 
+                            <span class="year">({{ single.release_date.slice(0, 4) }})</span>
+                        </router-link>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</template>
+
+
+<script>
+import { mapGetters } from 'vuex';
+
+export default {
+    props: ['artist', 'isActive'], // Accept isActive to determine visibility
+    data() {
+        return {
+            releases: [],
+        };
+    },
+    computed: {
+        ...mapGetters(['isAuthenticated']),
+        albums() {
+            return this.releases.filter(release => release.release_type === 'Album');
+        },
+        singlesAndEPs() {
+            return this.releases.filter(
+                release => release.release_type === 'Single' || release.release_type === 'EP'
+            );
+        },
+    },
+    methods: {
+        async toggleReleases() {
+            this.$emit('toggle'); // Notify the parent to toggle the active artist
+            if (this.releases.length === 0) {
+                try {
+                    const response = await this.$store.dispatch('fetchArtistReleases', this.artist.slug);
+                    this.releases = response;
+                } catch (error) {
+                    console.error('Error fetching releases:', error);
+                    alert('Failed to load artist details.');
+                }
+            }
+        },
+        navigateToRelease(slug) {
+            console.log('Navigating to slug:', slug); // Debugging
+            this.$emit('toggle'); // Close the current list
+            this.$router.push(`/releases/${slug}`); // Navigate to the release page
+        },
+    },
+};
+</script>
+
+
+
+<style>
+.artist-item {
+    color: white;
+    text-align: center;
+    margin: 1rem;
+    padding: 0.5rem;
+}
+
+.artist-item h2 {
+    margin: 0.1rem;
+}
+
+.artist-item a {
+    text-decoration: none;
+    color: white;
+    cursor: pointer;
+}
+
+.artist-item a:hover {
+    text-decoration: underline;
+}
+
+.artist-actions {
+    padding: 10px;
+    font-size: 0.8rem;
+}
+
+.artist-releases {
+    text-align: center;
+}
+
+.artist-releases ul {
+    list-style: none;
+    padding: 0;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.artist-releases li {
+    margin: 0.5rem 0;
+}
+
+.artist-releases h3 {
+    font-size: 1.4rem;
+    font-weight: 600;
+    padding: 0.8rem;
+}
+
+.year {
+    font-style: normal;
+    margin-left: 0.5rem;
+    padding-top: 9px;
+    font-size: 1.1rem;
+}
+
+.delete {
+    color: red;
+}
+</style>

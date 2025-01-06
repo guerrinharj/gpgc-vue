@@ -3,6 +3,7 @@ import ReleasesPage from '@/pages/ReleasesPage.vue';
 import ReleasePage from '@/pages/ReleasePage.vue'; // Import the ReleasePage component
 import FeaturingsPage from '@/pages/FeaturingsPage.vue';
 import SoundtracksPage from '@/pages/SoundtracksPage.vue';
+import ArtistsPage from '@/pages/ArtistsPage.vue';
 import AboutPage from '@/pages/AboutPage.vue';
 import LoginPage from '@/pages/LoginPage.vue';
 import CreateReleasePage from '@/pages/CreateReleasePage.vue';
@@ -13,6 +14,7 @@ import CreateArtistPage from '@/pages/CreateArtistPage.vue';
 const routes = [
     { path: '/', component: ReleasesPage },
     { path: '/releases/:slug', component: ReleasePage }, // Add dynamic route for ReleasePage
+    { path: '/artists', component: ArtistsPage },
     { path: '/featurings', component: FeaturingsPage },
     { path: '/soundtracks', component: SoundtracksPage },
     { path: '/about', component: AboutPage },

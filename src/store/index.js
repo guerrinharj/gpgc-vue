@@ -88,6 +88,22 @@ const store = createStore({
             }
         },
 
+        async fetchArtistReleases({ commit }, artistSlug) {
+            try {
+                // Fetch artist with releases
+                const response = await axios.get(`${API_BASE_URL}/api/v1/artists/${artistSlug}`);
+                
+                const artist = response.data;
+
+                const releases = artist.releases
+
+                return releases;
+            } catch (error) {
+                console.error('Error fetching artist with releases:', error);
+                commit('setError', 'Failed to load artist details.');
+            }
+        },
+
         async fetchReleases({ commit }) {
             try {
                 const response = await axios.get(`${API_BASE_URL}/api/v1/releases`);
@@ -364,6 +380,9 @@ const store = createStore({
         },
         getError(state) {
             return state.error;
+        },
+        getArtists(state) {
+            return state.artists;
         },
         getReleases(state) {
             return state.releases;
