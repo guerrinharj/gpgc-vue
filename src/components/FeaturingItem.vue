@@ -16,6 +16,13 @@
 
         <div v-if="isAuthenticated" class="featuring-actions">
             <p>
+                <router-link 
+                    class="edit" 
+                    :to="{ path: `/update-featuring/${featuring.slug}` }">
+                    edit
+                </router-link>
+            </p>
+            <p>
                 <a class="delete" @click="deleteFeaturing">delete</a>
             </p>
         </div>

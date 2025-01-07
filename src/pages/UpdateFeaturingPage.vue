@@ -1,11 +1,11 @@
 <template>
-    <div class="update-artist-page">
-        <UpdateArtist :slug="slug" />
+    <div class="update-featuring-page">
+        <UpdateFeaturing :slug="slug" />
     </div>
 </template>
 
 <script>
-import UpdateArtist from '@/components/UpdateArtistForm.vue';
+import UpdateFeaturing from '@/components/UpdateFeaturingForm.vue';
 
 export default {
     props: {
@@ -15,13 +15,13 @@ export default {
         },
     },
     components: {
-        UpdateArtist,
+        UpdateFeaturing,
     },
 };
 </script>
 
 <style>
-.update-artist-page {
+.update-featuring-page {
     padding: 2rem;
     background: black;
     color: white;
