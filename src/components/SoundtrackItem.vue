@@ -15,6 +15,13 @@
 
         <div v-if="isAuthenticated" class="soundtrack-actions">
             <p>
+                <router-link 
+                    class="edit" 
+                    :to="{ path: `/update-soundtrack/${soundtrack.slug}` }">
+                    edit
+                </router-link>
+            </p>
+            <p>
                 <a class="delete" @click="deleteSoundtrack">delete</a>
             </p>
         </div>

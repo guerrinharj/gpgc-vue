@@ -366,6 +366,32 @@ const store = createStore({
         },
 
 
+        async updateSoundtrack({ commit, state }, { slug, data }) {
+            try {
+                const response = await axios.put(`${API_BASE_URL}/api/v1/soundtracks/${slug}`, data, {
+                    headers: {
+                        Username: state.user?.username,
+                        Password: state.user?.password,
+                    },
+                });
+    
+                const updatedSoundtrack = response.data;
+    
+                const updatedSoundtracks = state.soundtracks.map((soundtrack) =>
+                    soundtrack.slug === slug ? updatedSoundtrack : soundtrack
+                );
+    
+                commit('setSoundtracks', updatedSoundtracks);
+    
+                return updatedSoundtrack;
+            } catch (error) {
+                console.error('Error updating soundtrack:', error.response?.data || error.message);
+                commit('setError', 'Failed to update the soundtrack.');
+                throw error; 
+            }
+        },
+
+
 
         async deleteRelease({ commit, state }, slug) {
             try {
@@ -508,6 +534,9 @@ const store = createStore({
         },
         getFeaturingBySlug: (state) => (slug) => {
             return state.featurings.find((featuring) => featuring.slug === slug) || null;
+        },
+        getSoundtrackBySlug: (state) => (slug) => {
+            return state.soundtracks.find((soundtrack) => soundtrack.slug === slug) || null;
         },
     },
 });
