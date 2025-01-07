@@ -314,6 +314,32 @@ const store = createStore({
         },
 
 
+        async updateArtist({ commit, state }, { slug, data }) {
+            try {
+                const response = await axios.put(`${API_BASE_URL}/api/v1/artists/${slug}`, data, {
+                    headers: {
+                        Username: state.user?.username,
+                        Password: state.user?.password,
+                    },
+                });
+    
+                const updatedArtist = response.data;
+    
+                const updatedArtists = state.artists.map((artist) =>
+                    artist.slug === slug ? updatedArtist : artist
+                );
+    
+                commit('setArtists', updatedArtists);
+    
+                return updatedArtist;
+            } catch (error) {
+                console.error('Error updating artist:', error.response?.data || error.message);
+                commit('setError', 'Failed to update the artist.');
+                throw error; 
+            }
+        },
+
+
 
         async deleteRelease({ commit, state }, slug) {
             try {
@@ -449,8 +475,10 @@ const store = createStore({
             return state.playlist[state.currentTrackIndex] || null;
         },
         getReleaseBySlug: (state) => (slug) => {
-            // Search for the release in the state.releases array by its slug
             return state.releases.find((release) => release.slug === slug) || null;
+        },
+        getArtistBySlug: (state) => (slug) => {
+            return state.artists.find((artist) => artist.slug === slug) || null;
         },
     },
 });
