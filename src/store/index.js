@@ -285,6 +285,61 @@ const store = createStore({
         },
 
 
+        async updateRelease({ commit, state }, { slug, data }) {
+            try {
+                // Make the PUT request to update the release
+                const response = await axios.put(`${API_BASE_URL}/api/v1/releases/${slug}`, data, {
+                    headers: {
+                        Username: state.user?.username,
+                        Password: state.user?.password,
+                    },
+                });
+    
+                // Get the updated release from the response
+                const updatedRelease = response.data;
+    
+                // Update the releases array in the Vuex state
+                const updatedReleases = state.releases.map((release) =>
+                    release.slug === slug ? updatedRelease : release
+                );
+    
+                commit('setReleases', updatedReleases);
+    
+                return updatedRelease; // Optionally return the updated release
+            } catch (error) {
+                console.error('Error updating release:', error.response?.data || error.message);
+                commit('setError', 'Failed to update the release.');
+                throw error; // Rethrow the error to handle it in the calling component
+            }
+        },
+
+
+        async updateArtist({ commit, state }, { slug, data }) {
+            try {
+                const response = await axios.put(`${API_BASE_URL}/api/v1/artists/${slug}`, data, {
+                    headers: {
+                        Username: state.user?.username,
+                        Password: state.user?.password,
+                    },
+                });
+    
+                const updatedArtist = response.data;
+    
+                const updatedArtists = state.artists.map((artist) =>
+                    artist.slug === slug ? updatedArtist : artist
+                );
+    
+                commit('setArtists', updatedArtists);
+    
+                return updatedArtist;
+            } catch (error) {
+                console.error('Error updating artist:', error.response?.data || error.message);
+                commit('setError', 'Failed to update the artist.');
+                throw error; 
+            }
+        },
+
+
 
         async deleteRelease({ commit, state }, slug) {
             try {
@@ -420,8 +475,10 @@ const store = createStore({
             return state.playlist[state.currentTrackIndex] || null;
         },
         getReleaseBySlug: (state) => (slug) => {
-            // Search for the release in the state.releases array by its slug
             return state.releases.find((release) => release.slug === slug) || null;
+        },
+        getArtistBySlug: (state) => (slug) => {
+            return state.artists.find((artist) => artist.slug === slug) || null;
         },
     },
 });

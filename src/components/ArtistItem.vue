@@ -8,6 +8,13 @@
 
             <div v-if="isAuthenticated" class="artist-actions">
                 <p>
+                    <router-link 
+                        class="edit" 
+                        :to="{ path: `/update-artist/${artist.slug}` }">
+                        edit
+                    </router-link>
+                </p>
+                <p>
                     <a class="delete" @click="deleteArtist">delete</a>
                 </p>
             </div>
@@ -161,6 +168,10 @@ export default {
     margin-left: 0.5rem;
     padding-top: 9px;
     font-size: 1.1rem;
+}
+
+.edit {
+    color: blue;
 }
 
 .delete {

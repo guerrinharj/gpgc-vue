@@ -11,12 +11,12 @@ import CreateFeaturingPage from '@/pages/CreateFeaturingPage.vue';
 import CreateSoundtrackPage from '@/pages/CreateSoundtrackPage.vue';
 import CreateArtistPage from '@/pages/CreateArtistPage.vue';
 import UpdateReleasePage from '@/pages/UpdateReleasePage.vue';
+import UpdateArtistPage from '@/pages/UpdateArtistPage.vue';
 
 
 const routes = [
     { path: '/', component: ReleasesPage },
     { path: '/releases/:slug', component: ReleasePage }, 
-    { path: '/update-release/:slug', component: UpdateReleasePage, props: true },
     { path: '/artists', component: ArtistsPage },
     { path: '/featurings', component: FeaturingsPage },
     { path: '/soundtracks', component: SoundtracksPage },
@@ -26,6 +26,8 @@ const routes = [
     { path: '/create-featuring', component: CreateFeaturingPage },
     { path: '/create-soundtrack', component: CreateSoundtrackPage },
     { path: '/create-artist', component: CreateArtistPage },
+    { path: '/update-release/:slug', component: UpdateReleasePage, props: true },
+    { path: '/update-artist/:slug', component: UpdateArtistPage, props: true },
     
 ];
 
