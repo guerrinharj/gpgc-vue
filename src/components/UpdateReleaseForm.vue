@@ -184,46 +184,47 @@ export default {
 
         async loadRelease() {
         // Fetch release from Vuex or API if not already loaded
-        const release = this.$store.getters.getReleaseBySlug
-            ? this.$store.getters.getReleaseBySlug(this.slug)
-            : null;
+            const release = this.$store.getters.getReleaseBySlug
+                ? this.$store.getters.getReleaseBySlug(this.slug)
+                : null;
 
-        if (!release) {
-            try {
-                await this.fetchRelease(this.slug); // Fetch from API if missing
-                this.initializeForm();
-            } catch (error) {
-                console.error('Error fetching release:', error);
-                alert('Failed to load release details.');
+            if (!release) {
+                try {
+                    await this.fetchRelease(this.slug); // Fetch from API if missing
+                    this.initializeForm();
+                } catch (error) {
+                    console.error('Error fetching release:', error);
+                    alert('Failed to load release details.');
+                }
+            } else {
+                this.initializeForm(release);
             }
-        } else {
-            this.initializeForm(release);
-        }
-    },
+        },  
 
-    initializeForm(release) {
-        if (!release) {
-            release = this.$store.getters.getReleaseBySlug(this.slug);
-        }
-        if (release) {
-            this.form = {
-                name: release.name || '',
-                artist_name: release.artist_name || '',
-                release_date: release.release_date || '',
-                release_type: release.release_type || '',
-                download_link: release.download_link || '',
-                cover: release.cover?.join(', ') || '',
-                label: release.label?.join(', ') || '',
-                format: release.format?.join(', ') || '',
-                credits: Object.entries(release.credits || {}).map(([key, value]) => ({ key, value })),
-                notes: release.notes?.join(', ') || '',
-                tracks: release.tracks || [],
-                links: Object.entries(release.links || {}).map(([key, value]) => ({ key, value }))
-            };
-        } else {
-            console.error('Release not found for slug:', this.slug);
-        }
-    },
+        initializeForm(release) {
+            if (!release) {
+                release = this.$store.getters.getReleaseBySlug(this.slug);
+            }
+            if (release) {
+                this.form = {
+                    name: release.name || '',
+                    artist_name: release.artist_name || '',
+                    release_date: release.release_date || '',
+                    release_type: release.release_type || '',
+                    download_link: release.download_link || '',
+                    cover: release.cover?.join(', ') || '',
+                    label: release.label?.join(', ') || '',
+                    format: release.format?.join(', ') || '',
+                    credits: Object.entries(release.credits || {}).map(([key, value]) => ({ key, value })),
+                    notes: release.notes?.join(', ') || '',
+                    tracks: release.tracks || [],
+                    links: Object.entries(release.links || {}).map(([key, value]) => ({ key, value }))
+                };
+            } else {
+                console.error('Release not found for slug:', this.slug);
+            }
+        },
+
 
         updateArray(field, value) {
             this.form[field] = value.split(',').map(item => item.trim());

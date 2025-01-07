@@ -285,6 +285,35 @@ const store = createStore({
         },
 
 
+        async updateRelease({ commit, state }, { slug, data }) {
+            try {
+                // Make the PUT request to update the release
+                const response = await axios.put(`${API_BASE_URL}/api/v1/releases/${slug}`, data, {
+                    headers: {
+                        Username: state.user?.username,
+                        Password: state.user?.password,
+                    },
+                });
+    
+                // Get the updated release from the response
+                const updatedRelease = response.data;
+    
+                // Update the releases array in the Vuex state
+                const updatedReleases = state.releases.map((release) =>
+                    release.slug === slug ? updatedRelease : release
+                );
+    
+                commit('setReleases', updatedReleases);
+    
+                return updatedRelease; // Optionally return the updated release
+            } catch (error) {
+                console.error('Error updating release:', error.response?.data || error.message);
+                commit('setError', 'Failed to update the release.');
+                throw error; // Rethrow the error to handle it in the calling component
+            }
+        },
+
+
 
         async deleteRelease({ commit, state }, slug) {
             try {
