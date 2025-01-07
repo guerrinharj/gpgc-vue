@@ -215,10 +215,10 @@ export default {
                 cover: release.cover?.join(', ') || '',
                 label: release.label?.join(', ') || '',
                 format: release.format?.join(', ') || '',
-                credits: release.credits || [],
+                credits: Object.entries(release.credits || {}).map(([key, value]) => ({ key, value })),
                 notes: release.notes?.join(', ') || '',
                 tracks: release.tracks || [],
-                links: release.links || [],
+                links: Object.entries(release.links || {}).map(([key, value]) => ({ key, value }))
             };
         } else {
             console.error('Release not found for slug:', this.slug);
