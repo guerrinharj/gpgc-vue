@@ -419,6 +419,10 @@ const store = createStore({
         currentTrack(state) {
             return state.playlist[state.currentTrackIndex] || null;
         },
+        getReleaseBySlug: (state) => (slug) => {
+            // Search for the release in the state.releases array by its slug
+            return state.releases.find((release) => release.slug === slug) || null;
+        },
     },
 });
 

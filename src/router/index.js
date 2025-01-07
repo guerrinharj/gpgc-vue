@@ -10,10 +10,13 @@ import CreateReleasePage from '@/pages/CreateReleasePage.vue';
 import CreateFeaturingPage from '@/pages/CreateFeaturingPage.vue';
 import CreateSoundtrackPage from '@/pages/CreateSoundtrackPage.vue';
 import CreateArtistPage from '@/pages/CreateArtistPage.vue';
+import UpdateReleasePage from '@/pages/UpdateReleasePage.vue';
+
 
 const routes = [
     { path: '/', component: ReleasesPage },
-    { path: '/releases/:slug', component: ReleasePage }, // Add dynamic route for ReleasePage
+    { path: '/releases/:slug', component: ReleasePage }, 
+    { path: '/update-release/:slug', component: UpdateReleasePage, props: true },
     { path: '/artists', component: ArtistsPage },
     { path: '/featurings', component: FeaturingsPage },
     { path: '/soundtracks', component: SoundtracksPage },

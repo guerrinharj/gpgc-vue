@@ -11,6 +11,13 @@
 
         <div v-if="isAuthenticated" class="release-actions">
             <p>
+                <router-link 
+                    class="edit" 
+                    :to="{ path: `/update-release/${release.slug}` }">
+                    edit
+                </router-link>
+            </p>
+            <p>
                 <a class="delete" @click="deleteRelease">delete</a>
             </p>
         </div>
@@ -124,6 +131,13 @@ export default {
     },
     methods: {
         ...mapActions(['playTrack']),
+
+        async editRelease() {
+            this.$router.push({ 
+                path: `/update-release/${this.release.slug}` 
+            });
+        },
+
         async deleteRelease() {
             const confirmed = confirm(`Are you sure you want to delete "${this.release.name}"?`);
             if (!confirmed) return;
@@ -216,6 +230,10 @@ export default {
 
 .release-actions {
     font-size: 1.1rem;
+}
+
+.edit {
+    color: blue
 }
 
 .delete {
