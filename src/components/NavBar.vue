@@ -129,7 +129,7 @@ export default {
 
     .navbar a,
     .radio-button {
-        font-size: 1.1rem;
+        font-size: 1.4rem;
         padding: 0.5rem;
     }
 

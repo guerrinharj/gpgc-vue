@@ -1,15 +1,17 @@
 <template>
     <div class="release-page">
+        <!-- Title Section -->
         <div class="release-titles">
-            <h1 class="release-name">
+            <h1 class="release-name" v-if="release">
                 <a :href="release.download_link" download>
                     {{ release.name }}
                 </a>
             </h1>
-            <h1>{{ release.artist_name }}</h1>
+            <h1 v-if="release">{{ release.artist_name }}</h1>
         </div>
 
-        <div v-if="isAuthenticated" class="release-actions">
+        <!-- Actions Section -->
+        <div v-if="isAuthenticated && release" class="release-actions">
             <p>
                 <router-link 
                     class="edit" 
@@ -22,8 +24,8 @@
             </p>
         </div>
 
-        <!-- Display Cover Images -->
-        <div class="release-cover" v-if="release.cover && release.cover.length > 0">
+        <!-- Cover Images Section -->
+        <div class="release-cover" v-if="release?.cover?.length > 0">
             <div v-if="release.cover.length === 1" class="cover-image">
                 <img :src="release.cover[0]" :alt="`${release.name} cover`" />
             </div>
@@ -40,8 +42,8 @@
             </div>
         </div>
 
-                <!-- Display Track List -->
-        <div class="release-tracks" v-if="release.tracks && release.tracks.length > 0">
+        <!-- Tracklist Section -->
+        <div class="release-tracks" v-if="release?.tracks?.length > 0">
             <h4>Tracklist</h4>
             <ul>
                 <li v-for="(track, index) in release.tracks" :key="index">
@@ -55,19 +57,20 @@
             </ul>
         </div>
 
-        <div id="release-date" v-if="release.release_date" class="release-info">
+        <!-- Additional Information Sections -->
+        <div id="release-date" v-if="release?.release_date" class="release-info">
             <b>Release date</b>
             <span>{{ release.release_date }}</span>
         </div>
 
-        <div id="label" v-if="release.label && release.label.length > 0" class="release-info">
+        <div id="label" v-if="release?.label?.length > 0" class="release-info">
             <b>Label</b>
             <ul>
                 <li v-for="label in release.label" :key="label">{{ label }}</li>
             </ul>
         </div>
 
-        <div id="formats" v-if="release.format && release.format.length > 0" class="release-info">
+        <div id="formats" v-if="release?.format?.length > 0" class="release-info">
             <b>Formats</b>
             <ul>
                 <li v-for="format in release.format" :key="format">{{ format }}</li>
@@ -83,7 +86,7 @@
             </ul>
         </div>
 
-        <div id="notes" v-if="release.notes && release.notes.length > 0" class="release-info">
+        <div id="notes" v-if="release?.notes?.length > 0" class="release-info">
             <b>Notes</b>
             <ul>
                 <li v-for="notes in release.notes" :key="notes">{{ notes }}</li>
@@ -98,10 +101,9 @@
                 </li>
             </ul>
         </div>
-
-
     </div>
 </template>
+
 
 <script>
 import { mapGetters, mapActions } from 'vuex';
