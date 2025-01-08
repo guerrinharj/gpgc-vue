@@ -77,6 +77,29 @@ const store = createStore({
         },
     },
     actions: {
+
+        async startRadio({ commit }) {
+            try {
+                const response = await axios.get(`${API_BASE_URL}/api/v1/songs`);
+                const songs = response.data;
+    
+                // Shuffle the songs array
+                const shuffledSongs = songs.sort(() => Math.random() - 0.5);
+    
+                // Set the shuffled playlist in the store
+                commit('setPlaylist', shuffledSongs);
+    
+                // Start playing the first song
+                if (shuffledSongs.length > 0) {
+                    commit('setCurrentTrackIndex', 0);
+                    commit('setPlayerVisible', shuffledSongs[0]);
+                }
+            } catch (error) {
+                console.error('Error starting radio:', error);
+            }
+        },
+
+        
         async fetchArtists({ commit }) {
             try {
                 const response = await axios.get(`${API_BASE_URL}/api/v1/artists`);

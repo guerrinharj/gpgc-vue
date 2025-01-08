@@ -1,10 +1,11 @@
 <template>
     <nav class="navbar" ref="navbar">
         <ul>
+            <li><a @click="startRadio" class="radio-button">radio</a></li>
             <li><router-link to="/artists">Artists</router-link></li>
             <li><router-link to="/">Releases</router-link></li>
-            <li><router-link to="/featurings">Featurings</router-link></li>
-            <li><router-link to="/soundtracks">Soundtracks</router-link></li>
+            <li id="featurings-li"><router-link to="/featurings">Featurings</router-link></li>
+            <li id="soundtracks-li"><router-link to="/soundtracks">Soundtracks</router-link></li>
             <li><router-link to="/about">About</router-link></li>
         </ul>
     </nav>
@@ -19,7 +20,7 @@ export default {
         ...mapGetters(['isAuthenticated']),
     },
     methods: {
-        ...mapActions(['logout']),
+        ...mapActions(['logout', 'startRadio']),
         handleScroll() {
             const navbar = this.$refs.navbar;
             const offset = navbar.offsetTop;
@@ -57,42 +58,56 @@ export default {
     position: fixed;
     top: 0;
     left: 50%;
-    transform: translateX(-50%); /* Center the navbar horizontally */
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5); /* Optional: Add a shadow for better visibility */
+    transform: translateX(-50%);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
     z-index: 1000;
-    width: 100%; /* Ensure it spans the full width */
+    width: 100%;
     border-bottom: solid 1px white;
 }
-
 
 .navbar ul {
     list-style: none;
     padding: 0;
     margin: 0;
-    display: flex; /* Use flexbox for horizontal layout */
-    justify-content: center; /* Center the items in the navbar */
-    align-items: center; /* Align items vertically */
-    gap: 1rem; /* Add consistent spacing between items */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
 }
 
 .navbar li {
-    display: inline-block; /* Keeps list items inline */
+    display: inline-block;
     margin: 0;
 }
 
-.navbar a {
+/* Common styles for links and the button */
+.navbar a,
+.radio-button {
     color: white;
     text-decoration: none;
     font-size: 1.6rem;
+    background: none;
+    border: none;
+    cursor: pointer;
     transition: color 0.3s;
+    letter-spacing: inherit;
+}
+
+.radio-button {
+    color: white;
+    background: transparent;
+}
+
+/* Gradient text styling */
+.radio-button:hover {
+    background: linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent; /* Makes the text take on the gradient */
 }
 
 .navbar a:hover {
-    color: #ccc; /* Optional hover effect */
-}
-
-.logout {
-    color: red !important;
+    color: #ccc; /* Hover effect */
 }
 
 /* Mobile View */
@@ -102,21 +117,27 @@ export default {
     }
 
     .navbar ul {
-        flex-direction: row; /* Keep items in a row for mobile view */
-        flex-wrap: wrap; /* Allow wrapping if space is limited */
-        gap: 0.5rem; /* Reduce spacing for mobile */
-        justify-content: center; /* Ensure the items are centered */
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        justify-content: center;
     }
 
     .navbar li {
-        margin: 0; /* Remove unnecessary vertical margin */
+        margin: 0;
     }
 
-    .navbar a {
-        font-size: 1.1rem; /* Reduce font size for mobile */
-        padding: 0.5rem; /* Optional: Add padding for touch-friendly links */
+    .navbar a,
+    .radio-button {
+        font-size: 1.1rem;
+        padding: 0.5rem;
+    }
+
+    #featurings-li, #soundtracks-li {
+        display: none;
     }
 }
 
-
 </style>
+
+
