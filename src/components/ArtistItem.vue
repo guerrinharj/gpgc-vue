@@ -3,7 +3,7 @@
         <!-- Artist Name -->
         <div>
             <a @click="toggleReleases">
-                <h2><b>{{ artist.name }}</b></h2>
+                <h2 :class="{ active: isActive }"><b>{{ artist.name }}</b></h2>
             </a>
 
             <div v-if="isAuthenticated" class="artist-actions">
@@ -46,8 +46,8 @@
                             :to="`/releases/${single.slug}`" 
                             @click="handleLinkClick(single.slug)">
                             {{ single.name }} 
-                            <span class="year">({{ single.release_date.slice(0, 4) }})</span>
                         </router-link>
+                        <span class="year">({{ single.release_date.slice(0, 4) }})</span>
                     </li>
                 </ul>
             </div>
@@ -127,10 +127,15 @@ export default {
     margin: 0.1rem;
 }
 
+.artist-item h2.active {
+    text-decoration: underline;
+}
+
 .artist-item a {
     text-decoration: none;
     color: white;
     cursor: pointer;
+    font-weight: 600;
 }
 
 .artist-item a:hover {
@@ -158,9 +163,10 @@ export default {
 }
 
 .artist-releases h3 {
-    font-size: 1.4rem;
-    font-weight: 600;
+    font-size: 1.3rem;
+    font-weight: 400;
     padding: 0.8rem;
+    font-style: italic;
 }
 
 .year {

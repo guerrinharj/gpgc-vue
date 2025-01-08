@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import ReleasesPage from '@/pages/ReleasesPage.vue';
-import ReleasePage from '@/pages/ReleasePage.vue'; // Import the ReleasePage component
+import ReleasePage from '@/pages/ReleasePage.vue';
 import FeaturingsPage from '@/pages/FeaturingsPage.vue';
 import SoundtracksPage from '@/pages/SoundtracksPage.vue';
 import ArtistsPage from '@/pages/ArtistsPage.vue';
@@ -12,6 +12,8 @@ import CreateSoundtrackPage from '@/pages/CreateSoundtrackPage.vue';
 import CreateArtistPage from '@/pages/CreateArtistPage.vue';
 import UpdateReleasePage from '@/pages/UpdateReleasePage.vue';
 import UpdateArtistPage from '@/pages/UpdateArtistPage.vue';
+import UpdateFeaturingPage from '@/pages/UpdateFeaturingPage.vue';
+import UpdateSoundtrackPage from '@/pages/UpdateSoundtrackPage.vue';
 
 
 const routes = [
@@ -28,7 +30,8 @@ const routes = [
     { path: '/create-artist', component: CreateArtistPage },
     { path: '/update-release/:slug', component: UpdateReleasePage, props: true },
     { path: '/update-artist/:slug', component: UpdateArtistPage, props: true },
-    
+    { path: '/update-featuring/:slug', component: UpdateFeaturingPage, props: true },
+    { path: '/update-soundtrack/:slug', component: UpdateSoundtrackPage, props: true },     
 ];
 
 const router = createRouter({

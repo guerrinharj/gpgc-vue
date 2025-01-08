@@ -340,6 +340,58 @@ const store = createStore({
         },
 
 
+        async updateFeaturing({ commit, state }, { slug, data }) {
+            try {
+                const response = await axios.put(`${API_BASE_URL}/api/v1/featurings/${slug}`, data, {
+                    headers: {
+                        Username: state.user?.username,
+                        Password: state.user?.password,
+                    },
+                });
+    
+                const updatedFeaturing = response.data;
+    
+                const updatedFeaturings = state.featurings.map((featuring) =>
+                    featuring.slug === slug ? updatedFeaturing : featuring
+                );
+    
+                commit('setFeaturings', updatedFeaturings);
+    
+                return updatedFeaturing;
+            } catch (error) {
+                console.error('Error updating featuring:', error.response?.data || error.message);
+                commit('setError', 'Failed to update the featuring.');
+                throw error; 
+            }
+        },
+
+
+        async updateSoundtrack({ commit, state }, { slug, data }) {
+            try {
+                const response = await axios.put(`${API_BASE_URL}/api/v1/soundtracks/${slug}`, data, {
+                    headers: {
+                        Username: state.user?.username,
+                        Password: state.user?.password,
+                    },
+                });
+    
+                const updatedSoundtrack = response.data;
+    
+                const updatedSoundtracks = state.soundtracks.map((soundtrack) =>
+                    soundtrack.slug === slug ? updatedSoundtrack : soundtrack
+                );
+    
+                commit('setSoundtracks', updatedSoundtracks);
+    
+                return updatedSoundtrack;
+            } catch (error) {
+                console.error('Error updating soundtrack:', error.response?.data || error.message);
+                commit('setError', 'Failed to update the soundtrack.');
+                throw error; 
+            }
+        },
+
+
 
         async deleteRelease({ commit, state }, slug) {
             try {
@@ -479,6 +531,12 @@ const store = createStore({
         },
         getArtistBySlug: (state) => (slug) => {
             return state.artists.find((artist) => artist.slug === slug) || null;
+        },
+        getFeaturingBySlug: (state) => (slug) => {
+            return state.featurings.find((featuring) => featuring.slug === slug) || null;
+        },
+        getSoundtrackBySlug: (state) => (slug) => {
+            return state.soundtracks.find((soundtrack) => soundtrack.slug === slug) || null;
         },
     },
 });

@@ -1,11 +1,11 @@
 <template>
-    <div class="update-artist-page">
-        <UpdateArtist :slug="slug" />
+    <div class="update-soundtrack-page">
+        <UpdateSoundtrack :slug="slug" />
     </div>
 </template>
 
 <script>
-import UpdateArtist from '@/components/UpdateArtistForm.vue';
+import UpdateSoundtrack from '@/components/UpdateSoundtrackForm.vue';
 
 export default {
     props: {
@@ -15,13 +15,13 @@ export default {
         },
     },
     components: {
-        UpdateArtist,
+        UpdateSoundtrack,
     },
 };
 </script>
 
 <style>
-.update-artist-page {
+.update-soundtrack-page {
     padding: 2rem;
     background: black;
     color: white;
