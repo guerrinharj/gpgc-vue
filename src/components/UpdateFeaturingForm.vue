@@ -138,7 +138,7 @@ export default {
     align-items: center;
 }
 
-button {
+.update-featuring-form button {
     text-transform: inherit;
     padding: 0.5rem 1rem;
     font-size: 1rem;
