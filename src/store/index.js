@@ -78,17 +78,36 @@ const store = createStore({
     },
     actions: {
 
-        async startRadio({ commit }) {
+        async startRadio({ commit, state }) {
             try {
                 const response = await axios.get(`${API_BASE_URL}/api/v1/songs`);
                 const songs = response.data;
-    
+        
+                // Ensure releases are loaded
+                if (state.releases.length === 0) {
+                    const releasesResponse = await axios.get(`${API_BASE_URL}/api/v1/releases`);
+                    commit('setReleases', releasesResponse.data);
+                }
+        
+                // Map songs to include releaseSlug
+                const formattedSongs = songs.map((song) => {
+                    const release = state.releases.find((r) => r.id === song.release_id);
+        
+                    return {
+                        url: song.url,
+                        name: song.name,
+                        artist: release ? release.artist_name : 'Unknown Artist', // Replace with artist name if necessary
+                        releaseSlug: release ? release.slug : null, // Add releaseSlug
+                        slug: song.slug,
+                    };
+                });
+        
                 // Shuffle the songs array
-                const shuffledSongs = songs.sort(() => Math.random() - 0.5);
-    
+                const shuffledSongs = formattedSongs.sort(() => Math.random() - 0.5);
+        
                 // Set the shuffled playlist in the store
                 commit('setPlaylist', shuffledSongs);
-    
+        
                 // Start playing the first song
                 if (shuffledSongs.length > 0) {
                     commit('setCurrentTrackIndex', 0);
@@ -98,8 +117,11 @@ const store = createStore({
                 console.error('Error starting radio:', error);
             }
         },
-
         
+        
+        
+
+
         async fetchArtists({ commit }) {
             try {
                 const response = await axios.get(`${API_BASE_URL}/api/v1/artists`);
