@@ -8,7 +8,7 @@
             <label for="group">Group</label>
             <input id="group" type="checkbox" v-model="form.group" /> 
         </div>
-        <button type="submit">Create</button>
+        <button type="submit">update</button>
     </form>
 </template>
 

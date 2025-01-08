@@ -97,7 +97,7 @@ export default {
             if (featuring) {
                 this.form = {
                     name: featuring.name || '',
-                    is_group: featuring.artist || '',
+                    artist: featuring.artist || '',
                     release_date: featuring.release_date || '',
                     label: featuring.label || '',
                     info: featuring.info || '',
@@ -136,5 +136,16 @@ export default {
     flex-direction: column;
     gap: 1rem;
     align-items: center;
+}
+
+button {
+    text-transform: inherit;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    color: white;
+    background-color: black;
+    border: 1px solid white;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 </style>
