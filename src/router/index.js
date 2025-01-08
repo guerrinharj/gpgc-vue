@@ -14,6 +14,7 @@ import UpdateReleasePage from '@/pages/UpdateReleasePage.vue';
 import UpdateArtistPage from '@/pages/UpdateArtistPage.vue';
 import UpdateFeaturingPage from '@/pages/UpdateFeaturingPage.vue';
 import UpdateSoundtrackPage from '@/pages/UpdateSoundtrackPage.vue';
+import NotFoundPage from '@/pages/NotFoundPage.vue';
 
 
 const routes = [
@@ -31,7 +32,8 @@ const routes = [
     { path: '/update-release/:slug', component: UpdateReleasePage, props: true },
     { path: '/update-artist/:slug', component: UpdateArtistPage, props: true },
     { path: '/update-featuring/:slug', component: UpdateFeaturingPage, props: true },
-    { path: '/update-soundtrack/:slug', component: UpdateSoundtrackPage, props: true },     
+    { path: '/update-soundtrack/:slug', component: UpdateSoundtrackPage, props: true },
+    { path: '/:pathMatch(.*)*', component: NotFoundPage },     
 ];
 
 const router = createRouter({
