@@ -14,6 +14,7 @@ import UpdateReleasePage from '@/pages/UpdateReleasePage.vue';
 import UpdateArtistPage from '@/pages/UpdateArtistPage.vue';
 import UpdateFeaturingPage from '@/pages/UpdateFeaturingPage.vue';
 import UpdateSoundtrackPage from '@/pages/UpdateSoundtrackPage.vue';
+import NotFoundPage from '@/pages/NotFoundPage.vue';
 
 
 const routes = [
@@ -24,19 +25,19 @@ const routes = [
     { path: '/soundtracks', component: SoundtracksPage },
     { path: '/about', component: AboutPage },
     { path: '/login', component: LoginPage },
-    { path: '/create-release', component: CreateReleasePage },
-    { path: '/create-featuring', component: CreateFeaturingPage },
-    { path: '/create-soundtrack', component: CreateSoundtrackPage },
-    { path: '/create-artist', component: CreateArtistPage },
-    { path: '/update-release/:slug', component: UpdateReleasePage, props: true },
-    { path: '/update-artist/:slug', component: UpdateArtistPage, props: true },
-    { path: '/update-featuring/:slug', component: UpdateFeaturingPage, props: true },
-    { path: '/update-soundtrack/:slug', component: UpdateSoundtrackPage, props: true },     
+    { path: '/create-release', component: CreateReleasePage, meta: { requiresAuth: true } },
+    { path: '/create-featuring', component: CreateFeaturingPage, meta: { requiresAuth: true } },
+    { path: '/create-soundtrack', component: CreateSoundtrackPage, meta: { requiresAuth: true } },
+    { path: '/create-artist', component: CreateArtistPage, meta: { requiresAuth: true } },
+    { path: '/update-release/:slug', component: UpdateReleasePage, props: true, meta: { requiresAuth: true } },
+    { path: '/update-artist/:slug', component: UpdateArtistPage, props: true, meta: { requiresAuth: true } },
+    { path: '/update-featuring/:slug', component: UpdateFeaturingPage, props: true, meta: { requiresAuth: true } },
+    { path: '/update-soundtrack/:slug', component: UpdateSoundtrackPage, props: true, meta: { requiresAuth: true } },
+    { path: '/:pathMatch(.*)*', component: NotFoundPage },     
 ];
 
 const router = createRouter({
     history: createWebHistory(),
     routes,
 });
-
 export default router;
