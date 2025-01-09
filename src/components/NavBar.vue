@@ -43,72 +43,72 @@ export default {
 
 
 <style>
-.navbar {
-    background: black;
-    color: white;
-    text-align: center;
-    padding: 1rem;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
+    .navbar {
+        background: black;
+        color: white;
+        text-align: center;
+        padding: 1rem;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
 
-.navbar.fixed {
-    position: fixed;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
-    z-index: 1000;
-    width: 100%;
-    border-bottom: solid 1px white;
-}
+    .navbar.fixed {
+        position: fixed;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+        z-index: 1000;
+        width: 100%;
+        border-bottom: solid 1px white;
+    }
 
-.navbar ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 1rem;
-}
+    .navbar ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 1rem;
+    }
 
-.navbar li {
-    display: inline-block;
-    margin: 0;
-}
+    .navbar li {
+        display: inline-block;
+        margin: 0;
+    }
 
-/* Common styles for links and the button */
-.navbar a,
-.radio-button {
-    color: white;
-    text-decoration: none;
-    font-size: 1.6rem;
-    background: none;
-    border: none;
-    cursor: pointer;
-    transition: color 0.3s;
-    letter-spacing: inherit;
-}
+    /* Common styles for links and the button */
+    .navbar a,
+    .radio-button {
+        color: white;
+        text-decoration: none;
+        font-size: 1.6rem;
+        background: none;
+        border: none;
+        cursor: pointer;
+        transition: color 0.3s;
+        letter-spacing: inherit;
+    }
 
-.radio-button {
-    color: white;
-    background: transparent;
-}
+    .radio-button {
+        color: white;
+        background: transparent;
+    }
 
-/* Gradient text styling */
-.radio-button:hover {
-    background: linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent; /* Makes the text take on the gradient */
-}
+    /* Gradient text styling */
+    .radio-button:hover {
+        background: linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent; /* Makes the text take on the gradient */
+    }
 
-.navbar a:hover {
-    color: #ccc; /* Hover effect */
-}
+    .navbar a:hover {
+        color: #ccc; /* Hover effect */
+    }
 
 /* Mobile View */
 @media (max-width: 600px) {
