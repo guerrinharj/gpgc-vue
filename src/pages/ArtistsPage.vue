@@ -40,5 +40,6 @@ export default {
     background: black;
     color: white;
     text-align: center;
+    margin-bottom: 90px;
 }
 </style>
