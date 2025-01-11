@@ -21,9 +21,9 @@ export default {
 </script>
 
 <style>
-.update-featuring-page {
-    padding: 2rem;
-    background: black;
-    color: white;
-}
+    .update-featuring-page {
+        padding: 2rem;
+        background: black;
+        color: white;
+    }
 </style>
