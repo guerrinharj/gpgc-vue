@@ -1,7 +1,9 @@
 <template>
     <nav class="navbar" ref="navbar">
         <ul>
-            <li><a @click="startRadio" class="radio-button">radio</a></li>
+            <span id="disable-radio">
+                <li><a @click="startRadio" class="radio-button">radio</a></li>
+            </span>
             <li><router-link to="/artists">Artists</router-link></li>
             <li><router-link to="/">Releases</router-link></li>
             <li id="featurings-li"><router-link to="/featurings">Featurings</router-link></li>
@@ -108,6 +110,12 @@ export default {
 
     .navbar a:hover {
         color: #ccc; /* Hover effect */
+    }
+
+
+
+    #disable-radio {
+        display: none;
     }
 
 /* Mobile View */
