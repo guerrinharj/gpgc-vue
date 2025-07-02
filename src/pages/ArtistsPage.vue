@@ -52,8 +52,8 @@ export default {
                 const distance = Math.abs(centerY - itemCenterY);
                 const maxDistance = window.innerHeight / 2;
                 const ratio = Math.min(distance / maxDistance, 1);
-                const scale = 1 - ratio * 0.2;
-                const opacity = 1 - ratio * 0.5;
+                const scale = 1 - ratio * 0.4;        // Shrinks more when far
+                const opacity = 1 - ratio * 0.95;     // Almost invisible when far
 
                 el.style.transform = `scale(${scale}) translateY(${ratio * 20}px)`;
                 el.style.opacity = opacity;
