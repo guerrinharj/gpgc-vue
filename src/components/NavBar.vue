@@ -46,7 +46,6 @@ export default {
 
 <style>
     .navbar {
-        background: black;
         color: white;
         text-align: center;
         padding: 1rem;
@@ -64,7 +63,6 @@ export default {
         box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
         z-index: 1000;
         width: 100%;
-        border-bottom: solid 1px white;
     }
 
     .navbar ul {
