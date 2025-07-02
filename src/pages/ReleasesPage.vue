@@ -60,7 +60,7 @@ export default {
     background: black;
     color: white;
     text-align: center;
-    padding: 50px 0;
+    padding: 0 0 50px 0;
 }
 
 .release-wrapper {
