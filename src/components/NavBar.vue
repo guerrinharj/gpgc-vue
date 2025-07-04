@@ -5,7 +5,7 @@
                 <li><a @click="startRadio" class="radio-button">radio</a></li>
             </span>
             <li><router-link to="/artists">Artists</router-link></li>
-            <li><router-link to="/">Releases</router-link></li>
+            <li><router-link to="/releases">Releases</router-link></li>
             <li id="featurings-li"><router-link to="/featurings">Featurings</router-link></li>
             <li id="soundtracks-li"><router-link to="/soundtracks">Soundtracks</router-link></li>
             <li><router-link to="/about">About</router-link></li>
@@ -53,9 +53,6 @@ export default {
         display: flex;
         align-items: center;
         justify-content: center;
-    }
-
-    .navbar.fixed {
         position: fixed;
         top: 0;
         left: 50%;
