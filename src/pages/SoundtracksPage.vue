@@ -20,25 +20,31 @@ export default {
     components: { SoundtrackItem },
     data() {
         return {
-            itemRefs: []
+            itemRefs: [],
+            hasScrolled: false
         };
     },
     computed: mapState(['soundtracks']),
     mounted() {
         this.$store.dispatch('fetchSoundtracks').then(() => {
             this.$nextTick(() => {
-                setTimeout(this.applyEffects, 0); // garante DOM e refs prontos
-                window.addEventListener('scroll', this.applyEffects, { passive: true });
+                window.addEventListener('scroll', this.handleScroll, { passive: true });
                 window.addEventListener('resize', this.applyEffects);
             });
         });
     },
     beforeUnmount() {
-        window.removeEventListener('scroll', this.applyEffects);
+        window.removeEventListener('scroll', this.handleScroll);
         window.removeEventListener('resize', this.applyEffects);
     },
     methods: {
+        handleScroll() {
+            if (!this.hasScrolled) this.hasScrolled = true;
+            this.applyEffects();
+        },
         applyEffects() {
+            if (!this.hasScrolled) return;
+
             const centerY = window.innerHeight / 2;
             this.itemRefs.forEach((el) => {
                 if (!el) return;
@@ -48,7 +54,7 @@ export default {
                 const maxDistance = window.innerHeight / 2;
                 const ratio = Math.min(distance / maxDistance, 1);
 
-                const scale = 1 - ratio * 0.4;
+                const scale = 1 - ratio * 0.2;
                 const opacity = 1 - ratio * 0.95;
 
                 el.style.transform = `scale(${scale}) translateY(${ratio * 20}px)`;
@@ -64,12 +70,14 @@ export default {
     background: black;
     color: white;
     text-align: center;
-    padding: 0 50px 0;
+    padding: 0 50px;
     min-height: 100vh;
 }
 
 .soundtrack-wrapper {
     transition: transform 0.2s ease-out, opacity 0.2s ease-out;
-    margin: 40px 0;
+    margin: 20px 0;
+    transform: scale(0.8);
+    opacity: 0.6;
 }
 </style>
