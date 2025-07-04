@@ -100,4 +100,10 @@ export default {
     .mute {
         display: none
     }
+
+    @media (max-width: 500px) {
+        .featuring-item {
+            font-size: 5vw
+        }
+    }
 </style>

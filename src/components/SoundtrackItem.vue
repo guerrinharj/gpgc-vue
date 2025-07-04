@@ -89,4 +89,11 @@ export default {
 .delete {
     color: red!important
 }
+
+
+@media (max-width: 500px) {
+    .soundtrack-item {
+        font-size: 5vw
+    }
+}
 </style>

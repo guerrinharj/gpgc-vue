@@ -44,4 +44,10 @@ export default {
 .release-item div:hover {
     text-decoration: underline;
 }
+
+@media (max-width: 500px) {
+    .release-item {
+        font-size: 5vw
+    }
+}
 </style>
