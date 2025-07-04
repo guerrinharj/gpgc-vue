@@ -5,7 +5,6 @@
                 <p><b>{{ soundtrack.name }}</b></p>
                 <p>{{ soundtrack.company }}</p>
             </a>
-                <p class="year">({{ soundtrack.year }})</p>
         </div>
         <div v-else>
             <p><b>{{ soundtrack.name }}</b></p>
