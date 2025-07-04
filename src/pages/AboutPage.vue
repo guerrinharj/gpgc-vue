@@ -1,16 +1,15 @@
 <template>
-    <div class="about-page" ref="aboutPage">
-        <p
-            v-for="(text, i) in paragraphs"
-            :key="i"
-            :ref="el => paragraphRefs[i] = el"
-            class="paragraph"
-        >
-            <span v-html="text"></span>
-        </p>
+    <div class="about-page" ref="aboutPage" @wheel.passive="handleScroll">
+        <transition name="fade" mode="out-in">
+            <p
+                v-if="currentParagraph !== null"
+                :key="currentParagraph"
+                class="paragraph"
+                v-html="paragraphs[currentParagraph]"
+            ></p>
+        </transition>
     </div>
 </template>
-
 
 <script>
 export default {
@@ -24,57 +23,57 @@ export default {
                 `This website was built with Vue, powered by a Ruby on Rails API (<a href="http://gpgc-api.onrender.com">here's the documentation</a>). You can check the source codes from the front <a href="https://github.com/guerrinharj/gpgc-vue">here</a> and the back <a href="https://github.com/guerrinharj/gpgc-api">here</a>.`,
                 `If you’d like to contact me, please send an email to <a href="mailto:gabrielpessoaguerracavalcanti@gmail.com">gabrielpessoaguerracavalcanti@gmail.com</a>.`
             ],
-            paragraphRefs: [],
+            currentParagraph: 0,
+            isThrottled: false
         };
     },
-    mounted() {
-        window.addEventListener('scroll', this.handleScroll, { passive: true });
-        this.handleScroll(); 
-    },
-    beforeUnmount() {
-        window.removeEventListener('scroll', this.handleScroll);
-    },
     methods: {
-        handleScroll() {
-            const centerY = window.innerHeight / 2;
+        handleScroll(e) {
+            if (this.isThrottled) return;
 
-            this.paragraphRefs.forEach((el) => {
-                if (!el) return;
+            this.isThrottled = true;
+            setTimeout(() => (this.isThrottled = false), 800); // throttle scroll
 
-                const rect = el.getBoundingClientRect();
-                const elCenter = rect.top + rect.height / 0.5;
-                const distance = Math.abs(centerY - elCenter);
-                const maxDistance = window.innerHeight / 1.5; // make more dramatic
-
-                const ratio = Math.min(distance / maxDistance, 1);
-                const scale = 0.5 + (1 - ratio) * 0.3;
-                const opacity = 0.4 + (1 - ratio) * 0.6;
-
-                el.style.transform = `scale(${scale})`;
-                el.style.opacity = opacity;
-            });
+            if (e.deltaY > 0 && this.currentParagraph < this.paragraphs.length - 1) {
+                this.currentParagraph++;
+            } else if (e.deltaY < 0 && this.currentParagraph > 0) {
+                this.currentParagraph--;
+            }
         }
     }
 };
 </script>
-
 
 <style>
 .about-page {
     background: black;
     color: white;
     text-align: center;
-    margin: auto;
-    max-width: 50%;
-    cursor: pointer;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    font-size: 1.6rem;
+    padding: 2rem;
 }
 
 .paragraph {
-    transform: scale(0.1); /* initial small */
-    opacity: 0.1;           /* initial faded */
-    transition: transform 0.3s ease-out, opacity 0.3s ease-out;
-    transform-origin: center;
-    margin-bottom: 3rem;
+    max-width: 60%;
+    margin: auto;
+    transition: all 0.6s ease;
+}
+
+/* Smooth fade & scale */
+.fade-enter-active,
+.fade-leave-active {
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+    opacity: 0;
+    transform: scale(0.95);
 }
 
 .about-page a {
@@ -83,20 +82,15 @@ export default {
 }
 
 .about-page a:hover {
-    text-decoration: underline !important;
+    text-decoration: underline;
 }
 
 @media (max-width: 768px) {
     .about-page {
-        max-width: 70%;
-        font-size: 1.6rem;
+        font-size: 1.4rem;
     }
-}
-
-@media (max-width: 500px) {
-    .about-page {
-        max-width: 78%;
-        font-size: 1.5rem;
+    .paragraph {
+        max-width: 80%;
     }
 }
 </style>
