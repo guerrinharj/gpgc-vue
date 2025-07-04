@@ -5,7 +5,7 @@
                 <p><b>{{ featuring.name }}</b></p>
                 <p>{{ featuring.artist }}</p>
             </a>
-                <p><em>{{ formattedCredit }}</em></p>
+                <p class="mute"><em>{{ formattedCredit }}</em></p>
             
         </div>
         <div v-else>
@@ -63,8 +63,8 @@ export default {
     .featuring-item {
         color: white;
         text-align: center;
-        margin: 1rem;
-        padding: 1rem;
+        margin: 1.3rem;
+        padding: 1.3rem;
         font-size: 3vw;
     }
 
@@ -95,5 +95,9 @@ export default {
 
     .delete {
         color: red!important
+    }
+
+    .mute {
+        display: none
     }
 </style>
