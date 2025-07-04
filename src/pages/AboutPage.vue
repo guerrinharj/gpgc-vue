@@ -61,7 +61,7 @@ export default {
     background: black;
     color: white;
     text-align: center;
-    padding: 2rem;
+    padding: 20vh 2rem 0;
     margin: auto;
     max-width: 50%;
 }
