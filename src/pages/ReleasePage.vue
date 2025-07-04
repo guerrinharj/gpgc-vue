@@ -30,7 +30,7 @@
                             {{ release.name }}
                         </a>
                     </h1>
-                    <h1 v-if="release">{{ release.artist_name }}</h1>
+                    <h1 class="release-artist" v-if="release">{{ release.artist_name }}</h1>
                 </div>
 
                 <!-- Actions Section -->
@@ -49,7 +49,7 @@
 
                 <!-- Tracklist Section -->
                 <div class="release-tracks" v-if="release?.tracks?.length > 0">
-                    <ul>
+                    <ol>
                         <li v-for="(track, index) in release.tracks" :key="index">
                             <button 
                                 v-if="track.url" 
@@ -58,59 +58,50 @@
                                 {{ track.name }}
                             </button>
                         </li>
-                    </ul>
+                    </ol>
                 </div>
+
+
             </div>
 
         </div>
 
     
         <div class="down-box">
-            <!-- Additional Information Sections -->
-            <div id="release-date" v-if="release?.release_date" class="release-info">
-                <b>Release date</b>
-                <span>{{ release.release_date }}</span>
-            </div>
+            <ul class="info-list">
 
-            <div id="label" v-if="release?.label?.length > 0" class="release-info">
-                <b>Label</b>
-                <ul>
-                    <li v-for="label in release.label" :key="label">{{ label }}</li>
-                </ul>
-            </div>
+                <li v-if="release?.release_date">
+                    <b>Release date</b>
+                    <span>{{ release.release_date }}</span>
+                </li>
 
-            <div id="formats" v-if="release?.format?.length > 0" class="release-info">
-                <b>Formats</b>
-                <ul>
-                    <li v-for="format in release.format" :key="format">{{ format }}</li>
-                </ul>
-            </div>
+                <li v-if="release?.label?.length > 0">
+                    <b>Label</b>
+                    <span v-for="label in release.label" :key="label">{{ label }}</span>
+                </li>
 
-            <div id="credits" v-if="filteredCredits.length > 0" class="release-info">
-                <b>Credits</b>
-                <ul>
-                    <li v-for="({ name, credit }) in filteredCredits" :key="name">
-                        <strong>{{ credit }}</strong>: {{ name }}
-                    </li>
-                </ul>
-            </div>
+                <li v-if="release?.format?.length > 0">
+                    <b>Formats</b>
+                        <span v-for="format in release.format" :key="format">{{ format }}</span>
+                </li>
 
-            <div id="notes" v-if="release?.notes?.length > 0" class="release-info">
-                <b>Notes</b>
-                <ul>
-                    <li v-for="notes in release.notes" :key="notes">{{ notes }}</li>
-                </ul>
-            </div>
+                <li v-if="filteredCredits.length > 0">
+                    <b>Credits</b>
+                        <span v-for="({ name, credit }) in filteredCredits" :key="name">
+                            <strong>{{ credit }}</strong>: {{ name }}
+                        </span>
+                </li>
 
-            <div id="links" v-if="filteredLinks.length > 0" class="release-info">
-                <b>Links</b>
-                <ul>
-                    <li v-for="({ platform, url }) in filteredLinks" :key="platform">
-                        <a :href="url" target="_blank" rel="noopener noreferrer">{{ platform }}</a>
-                    </li>
-                </ul>
-            </div>
+                <li v-if="release?.notes?.length > 0">
+                    <b>Notes</b>
+                        <span v-for="notes in release.notes" :key="notes">{{ notes }}</span>
+                </li>
+
+            </ul>
         </div>
+
+
+
     </div>
 </template>
 
@@ -254,6 +245,7 @@ export default {
 
 .release-titles {
     margin-bottom: 10px;
+    text-align: left;
 }
 
 .release-name {
@@ -261,6 +253,11 @@ export default {
     display: inline-block;
     text-decoration: underline;
     cursor: pointer;
+    font-size: 1.3em
+}
+
+.release-artist {
+    font-size: 1.3em
 }
 
 .release-name:hover {
@@ -327,10 +324,6 @@ export default {
     text-align: center;
 }
 
-.release-info b {
-    display: block;
-    margin-bottom: 0.5rem;
-}
 
 .release-tracks {
     display: flex;
@@ -346,15 +339,18 @@ export default {
     margin: 0;
 }
 
-.release-tracks ul {
-    list-style-type: none;
-    padding: 0;
-    text-align: center;
+.release-tracks ol {
+    list-style-type: decimal;
+    padding-left: 1.5rem; /* Indent numbers */
+    margin: 0;
+    text-align: left;
+    width: 100%;
+    max-width: 600px;
 }
 
 .release-tracks li {
-    margin: 0;
-    text-align: center;
+    text-align: left;
+    margin-bottom: 0.5rem;
 }
 
 .release-tracks a {
@@ -417,6 +413,40 @@ export default {
 #links {
     display: none;
 }
+
+.down-box {
+    display: flex;
+    justify-content: center;
+    margin-top: 3rem;
+}
+
+.info-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    max-width: 800px;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.info-list > li {
+    text-align: left;
+}
+
+.info-list > li > ul {
+    list-style: none;
+    padding: 0;
+    margin: 0.5rem 0 0 0;
+}
+
+.info-list b {
+    display: block;
+    text-decoration: underline;
+    margin-bottom: 0.5rem;
+}
+
 
 #credits, #notes, #label, #formats, #release-date {
     font-size: 1.2rem;
