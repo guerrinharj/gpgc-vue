@@ -32,8 +32,8 @@ export default {
     cursor: pointer;
     color: white;
     text-align: center;
-    margin: 1.3rem;
-    padding: 1.3rem;
+    margin: 1.7rem;
+    padding: 1.7rem;
     font-size: 3vw;
 }
 
