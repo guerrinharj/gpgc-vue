@@ -11,7 +11,6 @@
         <div v-else>
             <p><b>{{ featuring.name }}</b></p>
             <p>{{ featuring.artist }}</p>
-            <p><em>{{ formattedCredit }}</em></p>
         </div>
 
         <div v-if="isAuthenticated" class="featuring-actions">
@@ -66,7 +65,7 @@ export default {
         text-align: center;
         margin: 1rem;
         padding: 1rem;
-        font-size: 3rem;
+        font-size: 3vw;
     }
 
     .featuring-item p {
