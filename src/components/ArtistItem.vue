@@ -3,7 +3,7 @@
         <!-- Artist Name -->
         <div>
             <a @click="toggleReleases">
-                <h2 :class="{ active: isActive }"><b>{{ artist.name }}</b></h2>
+                <h3 :class="{ active: isActive }"><b>{{ artist.name }}</b></h3>
             </a>
 
             <div v-if="isAuthenticated" class="artist-actions">
@@ -20,34 +20,17 @@
             </div>
         </div>
 
-        <!-- Release Lists -->
+        <!-- All Releases Chronologically -->
         <div v-if="isActive" class="artist-releases">
-            <!-- Albums -->
-            <div v-if="albums.length > 0">
-                <h3>Albums:</h3>
+            <div v-if="sortedReleases.length > 0">
                 <ul>
-                    <li v-for="album in albums" :key="album.id">
+                    <li v-for="release in sortedReleases" :key="release.id">
                         <router-link 
-                            :to="`/releases/${album.slug}`" 
-                            @click="navigateToRelease(album.slug)">
-                            {{ album.name }} 
+                            :to="`/releases/${release.slug}`" 
+                            @click="navigateToRelease(release.slug)">
+                            {{ release.name }}
                         </router-link>
-                        <span class="year">({{ album.release_date.slice(0, 4) }})</span>
-                    </li>
-                </ul>
-            </div>
-
-            <!-- Singles / EPs -->
-            <div v-if="singlesAndEPs.length > 0">
-                <h3>Singles / EPs:</h3>
-                <ul>
-                    <li v-for="single in singlesAndEPs" :key="single.id">
-                        <router-link 
-                            :to="`/releases/${single.slug}`" 
-                            @click="handleLinkClick(single.slug)">
-                            {{ single.name }} 
-                        </router-link>
-                        <span class="year">({{ single.release_date.slice(0, 4) }})</span>
+                        <span class="year">({{ release.release_date.slice(0, 4) }})</span>
                     </li>
                 </ul>
             </div>
@@ -55,12 +38,11 @@
     </div>
 </template>
 
-
 <script>
 import { mapGetters } from 'vuex';
 
 export default {
-    props: ['artist', 'isActive'], // Accept isActive to determine visibility
+    props: ['artist', 'isActive'],
     data() {
         return {
             releases: [],
@@ -68,18 +50,13 @@ export default {
     },
     computed: {
         ...mapGetters(['isAuthenticated']),
-        albums() {
-            return this.releases.filter(release => release.release_type === 'Album');
-        },
-        singlesAndEPs() {
-            return this.releases.filter(
-                release => release.release_type === 'Single' || release.release_type === 'EP'
-            );
+        sortedReleases() {
+            return [...this.releases].sort((a, b) => new Date(b.release_date) - new Date(a.release_date));
         },
     },
     methods: {
         async toggleReleases() {
-            this.$emit('toggle'); // Notify the parent to toggle the active artist
+            this.$emit('toggle');
             if (this.releases.length === 0) {
                 try {
                     const response = await this.$store.dispatch('fetchArtistReleases', this.artist.slug);
@@ -91,11 +68,9 @@ export default {
             }
         },
         navigateToRelease(slug) {
-            console.log('Navigating to slug:', slug); // Debugging
-            this.$emit('toggle'); // Close the current list
-            this.$router.push(`/releases/${slug}`); // Navigate to the release page
+            this.$emit('toggle');
+            this.$router.push(`/releases/${slug}`);
         },
-
         async deleteArtist() {
             const confirmed = confirm(`Are you sure you want to delete "${this.artist.name}"?`);
             if (!confirmed) return;
@@ -113,14 +88,10 @@ export default {
 };
 </script>
 
-
-
 <style>
 .artist-item {
     color: white;
     text-align: center;
-    margin: 1rem;
-    padding: 0.5rem;
 }
 
 .artist-item h2 {
