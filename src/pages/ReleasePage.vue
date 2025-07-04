@@ -1,105 +1,115 @@
 <template>
     <div class="release-page">
-        <!-- Title Section -->
-        <div class="release-titles">
-            <h1 class="release-name" v-if="release">
-                <a :href="release.download_link" download>
-                    {{ release.name }}
-                </a>
-            </h1>
-            <h1 v-if="release">{{ release.artist_name }}</h1>
-        </div>
 
-        <!-- Actions Section -->
-        <div v-if="isAuthenticated && release" class="release-actions">
-            <p>
-                <router-link 
-                    class="edit" 
-                    :to="{ path: `/update-release/${release.slug}` }">
-                    edit
-                </router-link>
-            </p>
-            <p>
-                <a class="delete" @click="deleteRelease">delete</a>
-            </p>
-        </div>
+        <div class="up-box">
 
-        <!-- Cover Images Section -->
-        <div class="release-cover" v-if="release?.cover?.length > 0">
-            <div v-if="release.cover.length === 1" class="cover-image">
-                <img :src="release.cover[0]" :alt="`${release.name} cover`" />
+            <!-- Cover Images Section -->
+            <div class="release-cover" v-if="release?.cover?.length > 0">
+                <div v-if="release.cover.length === 1" class="cover-image">
+                    <img :src="release.cover[0]" :alt="`${release.name} cover`" />
+                </div>
+                <div v-else class="cover-slider">
+                    <img
+                        v-for="(image, index) in release.cover"
+                        :key="index"
+                        :src="image"
+                        :alt="`${release.name} cover ${index + 1}`"
+                        loading="lazy"
+                        class="cover-image"
+                        :style="{ opacity: currentCoverIndex === index ? 1 : 0 }"
+                    />
+                </div>
             </div>
-            <div v-else class="cover-slider">
-                <img
-                    v-for="(image, index) in release.cover"
-                    :key="index"
-                    :src="image"
-                    :alt="`${release.name} cover ${index + 1}`"
-                    loading="lazy"
-                    class="cover-image"
-                    :style="{ opacity: currentCoverIndex === index ? 1 : 0 }"
-                />
+
+
+            <div class="title-and-tracklist">
+            <!-- Title Section -->
+                <div class="release-titles">
+                    <h1 class="release-name" v-if="release">
+                        <a :href="release.download_link" download>
+                            {{ release.name }}
+                        </a>
+                    </h1>
+                    <h1 v-if="release">{{ release.artist_name }}</h1>
+                </div>
+
+                <!-- Actions Section -->
+                <div v-if="isAuthenticated && release" class="release-actions">
+                    <p>
+                        <router-link 
+                            class="edit" 
+                            :to="{ path: `/update-release/${release.slug}` }">
+                            edit
+                        </router-link>
+                    </p>
+                    <p>
+                        <a class="delete" @click="deleteRelease">delete</a>
+                    </p>
+                </div>
+
+                <!-- Tracklist Section -->
+                <div class="release-tracks" v-if="release?.tracks?.length > 0">
+                    <ul>
+                        <li v-for="(track, index) in release.tracks" :key="index">
+                            <button 
+                                v-if="track.url" 
+                                @click="playTrackHandler(track)"
+                                class="track-button">
+                                {{ track.name }}
+                            </button>
+                        </li>
+                    </ul>
+                </div>
             </div>
+
         </div>
 
-        <!-- Tracklist Section -->
-        <div class="release-tracks" v-if="release?.tracks?.length > 0">
-            <h4>Tracklist</h4>
-            <ul>
-                <li v-for="(track, index) in release.tracks" :key="index">
-                    <button 
-                        v-if="track.url" 
-                        @click="playTrackHandler(track)"
-                        class="track-button">
-                        {{ track.name }}
-                    </button>
-                </li>
-            </ul>
-        </div>
+    
+        <div class="down-box">
+            <!-- Additional Information Sections -->
+            <div id="release-date" v-if="release?.release_date" class="release-info">
+                <b>Release date</b>
+                <span>{{ release.release_date }}</span>
+            </div>
 
-        <!-- Additional Information Sections -->
-        <div id="release-date" v-if="release?.release_date" class="release-info">
-            <b>Release date</b>
-            <span>{{ release.release_date }}</span>
-        </div>
+            <div id="label" v-if="release?.label?.length > 0" class="release-info">
+                <b>Label</b>
+                <ul>
+                    <li v-for="label in release.label" :key="label">{{ label }}</li>
+                </ul>
+            </div>
 
-        <div id="label" v-if="release?.label?.length > 0" class="release-info">
-            <b>Label</b>
-            <ul>
-                <li v-for="label in release.label" :key="label">{{ label }}</li>
-            </ul>
-        </div>
+            <div id="formats" v-if="release?.format?.length > 0" class="release-info">
+                <b>Formats</b>
+                <ul>
+                    <li v-for="format in release.format" :key="format">{{ format }}</li>
+                </ul>
+            </div>
 
-        <div id="formats" v-if="release?.format?.length > 0" class="release-info">
-            <b>Formats</b>
-            <ul>
-                <li v-for="format in release.format" :key="format">{{ format }}</li>
-            </ul>
-        </div>
+            <div id="credits" v-if="filteredCredits.length > 0" class="release-info">
+                <b>Credits</b>
+                <ul>
+                    <li v-for="({ name, credit }) in filteredCredits" :key="name">
+                        <strong>{{ credit }}</strong>: {{ name }}
+                    </li>
+                </ul>
+            </div>
 
-        <div id="credits" v-if="filteredCredits.length > 0" class="release-info">
-            <b>Credits</b>
-            <ul>
-                <li v-for="({ name, credit }) in filteredCredits" :key="name">
-                    <strong>{{ credit }}</strong>: {{ name }}
-                </li>
-            </ul>
-        </div>
+            <div id="notes" v-if="release?.notes?.length > 0" class="release-info">
+                <b>Notes</b>
+                <ul>
+                    <li v-for="notes in release.notes" :key="notes">{{ notes }}</li>
+                </ul>
+            </div>
 
-        <div id="notes" v-if="release?.notes?.length > 0" class="release-info">
-            <b>Notes</b>
-            <ul>
-                <li v-for="notes in release.notes" :key="notes">{{ notes }}</li>
-            </ul>
-        </div>
-
-        <div id="links" v-if="filteredLinks.length > 0" class="release-info">
-            <b>Links</b>
-            <ul>
-                <li v-for="({ platform, url }) in filteredLinks" :key="platform">
-                    <a :href="url" target="_blank" rel="noopener noreferrer">{{ platform }}</a>
-                </li>
-            </ul>
+            <div id="links" v-if="filteredLinks.length > 0" class="release-info">
+                <b>Links</b>
+                <ul>
+                    <li v-for="({ platform, url }) in filteredLinks" :key="platform">
+                        <a :href="url" target="_blank" rel="noopener noreferrer">{{ platform }}</a>
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
 </template>
@@ -212,6 +222,34 @@ export default {
 
 .release-page h1 {
     margin: 0.1rem;
+}
+
+.up-box {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 2rem;
+    padding-top: 10vh;
+    margin-bottom: 2rem;
+}
+
+.title-tracklist {
+    flex: 1;
+    text-align: left;
+}
+
+.down-box {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2rem;
+}
+
+.information-box {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    justify-content: center;
 }
 
 .release-titles {
@@ -388,6 +426,20 @@ export default {
 
     .release-page h1 {
         font-size: 26px;
+    }
+
+    .up-box {
+        display: block; /* Disable flex on mobile */
+        text-align: center;
+        padding-top: 2vh;
+    }
+
+    .title-tracklist {
+        text-align: center;
+    }
+
+    .down-box {
+        display: block; /* Hide in mobile */
     }
 
     .cover-image img {
