@@ -158,7 +158,7 @@ export default {
 
     @media (max-width: 500px) {
         .artist-item {
-            font-size: 3vw
+            font-size: 2vw
         }
     }
 </style>
