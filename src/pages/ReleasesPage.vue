@@ -72,14 +72,14 @@ export default {
     background: black;
     color: white;
     text-align: center;
-    padding: 0 50px 0;
+    padding: 10vh 50px 5vh;
     min-height: 100vh;
 }
 
 .release-wrapper {
     transition: transform 0.2s ease-out, opacity 0.2s ease-out;
     margin: 40px 0;
-    transform: scale(0.8);
-    opacity: 0.6;
+    transform: scale(0.9);
+    opacity: 0.9;
 }
 </style>

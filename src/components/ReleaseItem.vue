@@ -32,8 +32,9 @@ export default {
     cursor: pointer;
     color: white;
     text-align: center;
-    margin: 1rem;
-    padding: 1rem;
+    margin: 1.3rem;
+    padding: 1.3rem;
+    font-size: 4vw;
 }
 
 .release-item p {

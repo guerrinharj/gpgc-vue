@@ -207,7 +207,7 @@ export default {
 }
 
 .release-page b, h4 {
-    text-decoration: underline;
+    text-decoration: underline
 }
 
 .release-page h1 {

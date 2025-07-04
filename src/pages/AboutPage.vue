@@ -59,7 +59,7 @@ export default {
     height: 100vh;
     background: black;
     color: white;
-    font-size: 1.6rem;
+    font-size: 3vw;
     overflow: hidden;
     display: flex;
     align-items: center;

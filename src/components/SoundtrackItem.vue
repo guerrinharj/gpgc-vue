@@ -60,6 +60,7 @@ export default {
     text-align: center;
     margin: 1rem;
     padding: 1rem;
+    font-size: 3vw
 }
 
 .soundtrack-item p {

@@ -79,7 +79,7 @@ export default {
     background: black;
     color: white;
     text-align: center;
-    padding: 0 50px;
+    padding: 10vh 50px 5vh;
     margin-bottom: 90px;
     min-height: 100vh;
 }
@@ -88,6 +88,6 @@ export default {
     transition: transform 0.2s ease-out, opacity 0.2s ease-out;
     margin: 20px 0;
     transform: scale(0.8);
-    opacity: 0.6;
+    opacity: 0.9;
 }
 </style>

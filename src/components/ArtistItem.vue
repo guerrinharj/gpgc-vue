@@ -92,6 +92,11 @@ export default {
 .artist-item {
     color: white;
     text-align: center;
+    font-size: 1.5rem;
+}
+
+.artist-item b {
+    font-size: 4rem!important;
 }
 
 .artist-item h3.active {
@@ -103,7 +108,6 @@ export default {
     text-decoration: none;
     color: white;
     cursor: pointer;
-    font-weight: 600;
 }
 
 .artist-item a:hover {
@@ -131,7 +135,7 @@ export default {
 }
 
 .artist-releases h3 {
-    font-size: 1.3rem;
+    font-size: 1.6rem;
     font-weight: 400;
     padding: 0.8rem;
     font-style: italic;
