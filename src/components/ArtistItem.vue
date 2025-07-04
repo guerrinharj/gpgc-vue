@@ -94,13 +94,10 @@ export default {
     text-align: center;
 }
 
-.artist-item h2 {
-    margin: 0.1rem;
-}
-
-.artist-item h2.active {
+.artist-item h3.active {
     text-decoration: underline;
 }
+
 
 .artist-item a {
     text-decoration: none;
