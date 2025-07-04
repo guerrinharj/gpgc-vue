@@ -1,105 +1,109 @@
 <template>
     <div class="release-page">
-        <!-- Title Section -->
-        <div class="release-titles">
-            <h1 class="release-name" v-if="release">
-                <a :href="release.download_link" download>
-                    {{ release.name }}
-                </a>
-            </h1>
-            <h1 v-if="release">{{ release.artist_name }}</h1>
-        </div>
+        <div class="box-wrapper">
+            <div class="upper-box">
 
-        <!-- Actions Section -->
-        <div v-if="isAuthenticated && release" class="release-actions">
-            <p>
-                <router-link 
-                    class="edit" 
-                    :to="{ path: `/update-release/${release.slug}` }">
-                    edit
-                </router-link>
-            </p>
-            <p>
-                <a class="delete" @click="deleteRelease">delete</a>
-            </p>
-        </div>
+                <!-- Cover Images Section -->
+                <div class="release-cover" v-if="release?.cover?.length > 0">
+                    <div v-if="release.cover.length === 1" class="cover-image">
+                        <img :src="release.cover[0]" :alt="`${release.name} cover`" />
+                    </div>
+                    <div v-else class="cover-slider">
+                        <img
+                            v-for="(image, index) in release.cover"
+                            :key="index"
+                            :src="image"
+                            :alt="`${release.name} cover ${index + 1}`"
+                            loading="lazy"
+                            class="cover-image"
+                            :style="{ opacity: currentCoverIndex === index ? 1 : 0 }"
+                        />
+                    </div>
+                </div>
 
-        <!-- Cover Images Section -->
-        <div class="release-cover" v-if="release?.cover?.length > 0">
-            <div v-if="release.cover.length === 1" class="cover-image">
-                <img :src="release.cover[0]" :alt="`${release.name} cover`" />
+
+                <div class="title-and-tracklist">
+                <!-- Title Section -->
+                    <div class="release-titles">
+                        <h1 class="release-name" v-if="release">
+                            <a :href="release.download_link" download>
+                                {{ release.name }}
+                            </a>
+                        </h1>
+                        <h1 class="release-artist" v-if="release">{{ release.artist_name }}</h1>
+                    </div>
+
+                    <!-- Actions Section -->
+                    <div v-if="isAuthenticated && release" class="release-actions">
+                        <p>
+                            <router-link 
+                                class="edit" 
+                                :to="{ path: `/update-release/${release.slug}` }">
+                                edit
+                            </router-link>
+                        </p>
+                        <p>
+                            <a class="delete" @click="deleteRelease">delete</a>
+                        </p>
+                    </div>
+
+                    <!-- Tracklist Section -->
+                    <div class="release-tracks" v-if="release?.tracks?.length > 0">
+                        <ol>
+                            <li v-for="(track, index) in release.tracks" :key="index">
+                                <button 
+                                    v-if="track.url" 
+                                    @click="playTrackHandler(track)"
+                                    class="track-button">
+                                    {{ track.name }}
+                                </button>
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+
             </div>
-            <div v-else class="cover-slider">
-                <img
-                    v-for="(image, index) in release.cover"
-                    :key="index"
-                    :src="image"
-                    :alt="`${release.name} cover ${index + 1}`"
-                    loading="lazy"
-                    class="cover-image"
-                    :style="{ opacity: currentCoverIndex === index ? 1 : 0 }"
-                />
+
+
+            <div class="lower-box">
+                <p class="info-toggle" @click="showInfo = !showInfo">
+                    info
+                </p>
+
+                <div class="lower-wrapper">
+                    <transition name="dropdown">
+                        <div class="info-box" v-show="showInfo">
+                            <div v-if="release?.release_date" class="info-item">
+                                <b>Release date</b>
+                                <span>{{ release.release_date }}</span>
+                            </div>
+
+                            <div v-if="release?.label?.length > 0" class="info-item">
+                                <b>Label</b>
+                                <span v-for="label in release.label" :key="label">{{ label }}</span>
+                            </div>
+
+                            <div v-if="release?.format?.length > 0" class="info-item">
+                                <b>Formats</b>
+                                <span v-for="format in release.format" :key="format">{{ format }}</span>
+                            </div>
+
+                            <div v-if="filteredCredits.length > 0" class="info-item">
+                                <b>Credits</b>
+                                <span v-for="({ name, credit }) in filteredCredits" :key="name">
+                                    <strong>{{ credit }}</strong>: {{ name }}
+                                </span>
+                            </div>
+
+                            <div v-if="release?.notes?.length > 0" class="info-item">
+                                <b>Notes</b>
+                                <span v-for="notes in release.notes" :key="notes">{{ notes }}</span>
+                            </div>
+                        </div>
+                    </transition>
+                </div>
+
             </div>
-        </div>
-
-        <!-- Tracklist Section -->
-        <div class="release-tracks" v-if="release?.tracks?.length > 0">
-            <h4>Tracklist</h4>
-            <ul>
-                <li v-for="(track, index) in release.tracks" :key="index">
-                    <button 
-                        v-if="track.url" 
-                        @click="playTrackHandler(track)"
-                        class="track-button">
-                        {{ track.name }}
-                    </button>
-                </li>
-            </ul>
-        </div>
-
-        <!-- Additional Information Sections -->
-        <div id="release-date" v-if="release?.release_date" class="release-info">
-            <b>Release date</b>
-            <span>{{ release.release_date }}</span>
-        </div>
-
-        <div id="label" v-if="release?.label?.length > 0" class="release-info">
-            <b>Label</b>
-            <ul>
-                <li v-for="label in release.label" :key="label">{{ label }}</li>
-            </ul>
-        </div>
-
-        <div id="formats" v-if="release?.format?.length > 0" class="release-info">
-            <b>Formats</b>
-            <ul>
-                <li v-for="format in release.format" :key="format">{{ format }}</li>
-            </ul>
-        </div>
-
-        <div id="credits" v-if="filteredCredits.length > 0" class="release-info">
-            <b>Credits</b>
-            <ul>
-                <li v-for="({ name, credit }) in filteredCredits" :key="name">
-                    <strong>{{ credit }}</strong>: {{ name }}
-                </li>
-            </ul>
-        </div>
-
-        <div id="notes" v-if="release?.notes?.length > 0" class="release-info">
-            <b>Notes</b>
-            <ul>
-                <li v-for="notes in release.notes" :key="notes">{{ notes }}</li>
-            </ul>
-        </div>
-
-        <div id="links" v-if="filteredLinks.length > 0" class="release-info">
-            <b>Links</b>
-            <ul>
-                <li v-for="({ platform, url }) in filteredLinks" :key="platform">
-                    <a :href="url" target="_blank" rel="noopener noreferrer">{{ platform }}</a>
-                </li>
-            </ul>
         </div>
     </div>
 </template>
@@ -111,6 +115,7 @@ import { mapGetters, mapActions } from 'vuex';
 export default {
     data() {
         return {
+            showInfo: false,
             currentCoverIndex: 0, // Track the current index of the displayed cover
         };
     },
@@ -203,8 +208,19 @@ export default {
     color: white;
     text-align: center;
     padding: 2rem;
-    margin-bottom: 50px
+    width: 90vw;
+    margin-bottom: 50px;
+    margin-left: auto;
+    margin-right: auto;
+    box-sizing: border-box;
 }
+
+.box-wrapper {
+    display: block;
+    margin: auto;
+    width: 100%
+}
+
 
 .release-page b, h4 {
     text-decoration: underline
@@ -214,8 +230,68 @@ export default {
     margin: 0.1rem;
 }
 
+.upper-box {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: flex-start;
+    gap: 2rem;
+    padding-top: 10vh;
+    margin-bottom: 2rem;
+    width:100%
+}
+
+.title-tracklist {
+    flex: 1;
+    text-align: left;
+}
+
+.lower-box {
+    padding-bottom: 20px;
+}
+
+.lower-wrapper {
+    display: flex;
+    justify-content: center;
+    padding-bottom: 10px;
+}
+
+.info-box {
+    width: 100%;
+    margin-top: 3rem;
+    padding: 0 1rem;
+    text-align: center;
+    margin: auto;
+}
+
+
+.info-item {
+    text-align: center;
+    font-size: 1.3rem;
+    margin-top: 20px;
+}
+
+.info-item b {
+    display: block;
+    text-decoration: underline;
+    margin-bottom: 0.5rem;
+}
+
+.info-item span {
+    display: block;
+    margin-bottom: 0.3rem;
+}
+
+
+.information-box {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    justify-content: center;
+}
+
 .release-titles {
     margin-bottom: 10px;
+    text-align: left;
 }
 
 .release-name {
@@ -223,6 +299,11 @@ export default {
     display: inline-block;
     text-decoration: underline;
     cursor: pointer;
+    font-size: 1.3em
+}
+
+.release-artist {
+    font-size: 1.3em
 }
 
 .release-name:hover {
@@ -245,7 +326,6 @@ export default {
 /* Cover images are stacked on top of each other */
 .release-cover {
     display: block;
-    margin: auto;
     padding: 1rem;
 }
 
@@ -289,10 +369,6 @@ export default {
     text-align: center;
 }
 
-.release-info b {
-    display: block;
-    margin-bottom: 0.5rem;
-}
 
 .release-tracks {
     display: flex;
@@ -308,15 +384,18 @@ export default {
     margin: 0;
 }
 
-.release-tracks ul {
-    list-style-type: none;
-    padding: 0;
-    text-align: center;
+.release-tracks ol {
+    list-style-type: decimal;
+    padding-left: 1.5rem; /* Indent numbers */
+    margin: 0;
+    text-align: left;
+    width: 100%;
+    max-width: 600px;
 }
 
 .release-tracks li {
-    margin: 0;
-    text-align: center;
+    text-align: left;
+    margin-bottom: 0.5rem;
 }
 
 .release-tracks a {
@@ -380,6 +459,55 @@ export default {
     display: none;
 }
 
+.info-toggle {
+    cursor: pointer;
+    text-decoration: underline;
+    font-weight: bold;
+    margin-top: 1rem;
+    display: inline-block;
+}
+
+.dropdown-enter-active,
+.dropdown-leave-active {
+    transition: all 0.5s ease;
+    overflow: hidden;
+}
+
+.dropdown-enter-from,
+.dropdown-leave-to {
+    max-height: 0;
+    opacity: 0;
+}
+
+.dropdown-enter-to,
+.dropdown-leave-from {
+    max-height: 500px;
+    opacity: 1;
+}
+
+
+.info-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    max-width: 800px;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.info-list > li {
+    text-align: left;
+}
+
+
+.info-list b {
+    text-decoration: underline;
+    margin-bottom: 0.5rem;
+}
+
+
 #credits, #notes, #label, #formats, #release-date {
     font-size: 1.2rem;
 }
@@ -388,6 +516,28 @@ export default {
 
     .release-page h1 {
         font-size: 26px;
+    }
+
+    .upper-box {
+        display: block; /* Disable flex on mobile */
+        text-align: center;
+        padding-top: 2vh;
+    }
+
+    .title-tracklist {
+        text-align: center;
+    }
+
+    .release-tracks ol {
+        list-style-type: none;
+    }
+
+    .release-titles, .release-tracks li {
+        text-align: center;
+    }
+
+    .info-box {
+        display: block; /* Hide in mobile */
     }
 
     .cover-image img {
