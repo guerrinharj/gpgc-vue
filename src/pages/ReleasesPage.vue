@@ -58,7 +58,7 @@ export default {
                 const scale = 1 - ratio * 0.2;
                 const opacity = 1 - ratio * 0.95;
 
-                el.style.transform = `scale(${scale}) translateY(${ratio * 20}px)`;
+                el.style.transform = `scale(${scale * 1.1}) translateY(${ratio * 20}px)`;
                 el.style.opacity = opacity;
             });
         }
