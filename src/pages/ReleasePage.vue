@@ -544,6 +544,10 @@ export default {
         max-width: 240px;
     }
 
+    .release-tracks ol {
+        padding-left: 0;
+    }
+
     .release-tracks li {
         font-size: 0.8rem;
     }
