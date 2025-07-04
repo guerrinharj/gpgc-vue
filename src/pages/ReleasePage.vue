@@ -66,40 +66,44 @@
 
         </div>
 
+        <p class="info-toggle" @click="showInfo = !showInfo">
+            info
+        </p>
+
+
     
-        <div class="down-box">
-            <ul class="info-list">
+        <transition name="dropdown">
+            <div class="down-box" v-show="showInfo">
+                <ul class="info-list">
+                    <li v-if="release?.release_date">
+                        <b>Release date</b>
+                        <span>{{ release.release_date }}</span>
+                    </li>
 
-                <li v-if="release?.release_date">
-                    <b>Release date</b>
-                    <span>{{ release.release_date }}</span>
-                </li>
+                    <li v-if="release?.label?.length > 0">
+                        <b>Label</b>
+                        <span v-for="label in release.label" :key="label">{{ label }}</span>
+                    </li>
 
-                <li v-if="release?.label?.length > 0">
-                    <b>Label</b>
-                    <span v-for="label in release.label" :key="label">{{ label }}</span>
-                </li>
-
-                <li v-if="release?.format?.length > 0">
-                    <b>Formats</b>
+                    <li v-if="release?.format?.length > 0">
+                        <b>Formats</b>
                         <span v-for="format in release.format" :key="format">{{ format }}</span>
-                </li>
+                    </li>
 
-                <li v-if="filteredCredits.length > 0">
-                    <b>Credits</b>
+                    <li v-if="filteredCredits.length > 0">
+                        <b>Credits</b>
                         <span v-for="({ name, credit }) in filteredCredits" :key="name">
                             <strong>{{ credit }}</strong>: {{ name }}
                         </span>
-                </li>
+                    </li>
 
-                <li v-if="release?.notes?.length > 0">
-                    <b>Notes</b>
+                    <li v-if="release?.notes?.length > 0">
+                        <b>Notes</b>
                         <span v-for="notes in release.notes" :key="notes">{{ notes }}</span>
-                </li>
-
-            </ul>
-        </div>
-
+                    </li>
+                </ul>
+            </div>
+        </transition>
 
 
     </div>
@@ -112,6 +116,7 @@ import { mapGetters, mapActions } from 'vuex';
 export default {
     data() {
         return {
+            showInfo: false,
             currentCoverIndex: 0, // Track the current index of the displayed cover
         };
     },
@@ -413,6 +418,33 @@ export default {
 #links {
     display: none;
 }
+
+.info-toggle {
+    cursor: pointer;
+    text-decoration: underline;
+    font-weight: bold;
+    margin-top: 1rem;
+    display: inline-block;
+}
+
+.dropdown-enter-active,
+.dropdown-leave-active {
+    transition: all 0.5s ease;
+    overflow: hidden;
+}
+
+.dropdown-enter-from,
+.dropdown-leave-to {
+    max-height: 0;
+    opacity: 0;
+}
+
+.dropdown-enter-to,
+.dropdown-leave-from {
+    max-height: 500px;
+    opacity: 1;
+}
+
 
 .down-box {
     display: flex;
