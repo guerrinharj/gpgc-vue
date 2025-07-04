@@ -92,7 +92,7 @@ export default {
 .artist-item {
     color: white;
     text-align: center;
-    font-size: 5vw;
+    font-size: 4vw;
 }
 
 .artist-item b {
@@ -158,7 +158,7 @@ export default {
 
     @media (max-width: 500px) {
         .featuring-item {
-            font-size: 4vw
+            font-size: 3vw
         }
     }
 </style>
