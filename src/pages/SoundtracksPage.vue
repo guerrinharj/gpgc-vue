@@ -1,5 +1,5 @@
 <template>
-    <div class="soundtracks-page" @scroll.passive="handleScroll" ref="container">
+    <div class="soundtracks-page" ref="container">
         <div
             v-for="(soundtrack, index) in soundtracks"
             :key="soundtrack.id"
@@ -25,17 +25,20 @@ export default {
     },
     computed: mapState(['soundtracks']),
     mounted() {
-        window.addEventListener('scroll', this.handleScroll, { passive: true });
-        this.handleScroll(); // run once on load
+        this.$store.dispatch('fetchSoundtracks').then(() => {
+            this.$nextTick(() => {
+                setTimeout(this.applyEffects, 0); // garante DOM e refs prontos
+                window.addEventListener('scroll', this.applyEffects, { passive: true });
+                window.addEventListener('resize', this.applyEffects);
+            });
+        });
     },
     beforeUnmount() {
-        window.removeEventListener('scroll', this.handleScroll);
-    },
-    created() {
-        this.$store.dispatch('fetchSoundtracks');
+        window.removeEventListener('scroll', this.applyEffects);
+        window.removeEventListener('resize', this.applyEffects);
     },
     methods: {
-        handleScroll() {
+        applyEffects() {
             const centerY = window.innerHeight / 2;
             this.itemRefs.forEach((el) => {
                 if (!el) return;
@@ -44,8 +47,9 @@ export default {
                 const distance = Math.abs(centerY - itemCenterY);
                 const maxDistance = window.innerHeight / 2;
                 const ratio = Math.min(distance / maxDistance, 1);
-                const scale = 1 - ratio * 0.4;        // Shrinks more when far
-                const opacity = 1 - ratio * 0.95;     // Almost invisible when far
+
+                const scale = 1 - ratio * 0.4;
+                const opacity = 1 - ratio * 0.95;
 
                 el.style.transform = `scale(${scale}) translateY(${ratio * 20}px)`;
                 el.style.opacity = opacity;
@@ -61,6 +65,7 @@ export default {
     color: white;
     text-align: center;
     padding: 0 0 50px 0;
+    min-height: 100vh;
 }
 
 .soundtrack-wrapper {
