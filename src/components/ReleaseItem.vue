@@ -34,7 +34,7 @@ export default {
     text-align: center;
     margin: 1.3rem;
     padding: 1.3rem;
-    font-size: 4vw;
+    font-size: 3vw;
 }
 
 .release-item p {
