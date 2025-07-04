@@ -47,7 +47,7 @@ export default {
 
 @media (max-width: 500px) {
     .release-item {
-        font-size: 6vw
+        font-size: 5vw
     }
 }
 </style>
