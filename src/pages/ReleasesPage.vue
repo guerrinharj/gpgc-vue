@@ -65,7 +65,7 @@ export default {
     background: black;
     color: white;
     text-align: center;
-    padding: 20vh 0 50px 0;
+    padding: 0 50px 0;
     min-height: 100vh;
 }
 
