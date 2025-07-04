@@ -10,7 +10,6 @@
         <div v-else>
             <p><b>{{ soundtrack.name }}</b></p>
             <p>{{ soundtrack.company }}</p>
-            <p class="year">({{ soundtrack.year }})</p>
         </div>
 
         <div v-if="isAuthenticated" class="soundtrack-actions">
