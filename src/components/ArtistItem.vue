@@ -92,7 +92,7 @@ export default {
 .artist-item {
     color: white;
     text-align: center;
-    font-size: 1.5rem;
+    font-size: 5vw;
 }
 
 .artist-item b {
@@ -155,4 +155,10 @@ export default {
 .delete {
     color: red;
 }
+
+    @media (max-width: 500px) {
+        .featuring-item {
+            font-size: 6vw
+        }
+    }
 </style>

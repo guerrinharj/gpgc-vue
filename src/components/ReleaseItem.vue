@@ -34,7 +34,7 @@ export default {
     text-align: center;
     margin: 1.7rem;
     padding: 1.7rem;
-    font-size: 3vw;
+    font-size: 2vw;
 }
 
 .release-item p {
@@ -47,7 +47,7 @@ export default {
 
 @media (max-width: 500px) {
     .release-item {
-        font-size: 5vw
+        font-size: 6vw
     }
 }
 </style>
