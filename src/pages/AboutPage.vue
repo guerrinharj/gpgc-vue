@@ -65,6 +65,7 @@ export default {
     align-items: center;
     justify-content: center;
     z-index: 1;
+    font-size: 1.5rem;
 }
 
 .content-wrapper {
@@ -104,7 +105,7 @@ export default {
 
 @media (max-width: 768px) {
     .about-page {
-        font-size: 1.4rem;
+        font-size: 0.9rem;
     }
 
     .paragraph {
