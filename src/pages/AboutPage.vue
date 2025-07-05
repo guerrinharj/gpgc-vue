@@ -29,7 +29,7 @@ export default {
             ],
             currentParagraph: 0,
             isThrottled: false,
-            scrollThreshold: 40 // adjust this as needed
+            scrollThreshold: 40
         };
     },
     methods: {
