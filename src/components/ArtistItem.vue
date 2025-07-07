@@ -108,6 +108,7 @@ export default {
     text-decoration: none;
     color: white;
     cursor: pointer;
+    font-size: 32px;
 }
 
 .artist-item a:hover {
