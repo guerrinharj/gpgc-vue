@@ -158,8 +158,18 @@ export default {
 
     @media (max-width: 500px) {
         .artist-item b {
-            font-size: 6vw!important;
+            font-size: 7vw!important;
             margin-bottom: 10px;
         }
+
+        .artist-item a {
+            font-size: 1.4rem
+        }
+
+        .year {
+            display: none;
+        }
+
+
     }
 </style>
