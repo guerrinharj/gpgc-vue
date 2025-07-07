@@ -29,22 +29,52 @@ export default {
             ],
             currentParagraph: 0,
             isThrottled: false,
-            scrollThreshold: 40
+            scrollThreshold: 40,
+            touchStartY: null
         };
     },
     methods: {
         handleScroll(e) {
             if (this.isThrottled || Math.abs(e.deltaY) < this.scrollThreshold) return;
 
-            this.isThrottled = true;
-            setTimeout(() => (this.isThrottled = false), 400); // 800ms delay between scrolls
+            this.scrollStep(e.deltaY);
+        },
+        handleTouchStart(e) {
+            this.touchStartY = e.touches[0].clientY;
+        },
+        handleTouchEnd(e) {
+            if (this.touchStartY === null) return;
+            const touchEndY = e.changedTouches[0].clientY;
+            const deltaY = this.touchStartY - touchEndY;
 
-            if (e.deltaY > 0 && this.currentParagraph < this.paragraphs.length - 1) {
+            if (Math.abs(deltaY) > this.scrollThreshold) {
+                this.scrollStep(deltaY);
+            }
+
+            this.touchStartY = null;
+        },
+        scrollStep(deltaY) {
+            if (this.isThrottled) return;
+
+            this.isThrottled = true;
+            setTimeout(() => (this.isThrottled = false), 400);
+
+            if (deltaY > 0 && this.currentParagraph < this.paragraphs.length - 1) {
                 this.currentParagraph++;
-            } else if (e.deltaY < 0 && this.currentParagraph > 0) {
+            } else if (deltaY < 0 && this.currentParagraph > 0) {
                 this.currentParagraph--;
             }
         }
+    },
+    mounted() {
+        const el = this.$refs.aboutPage;
+        el.addEventListener('touchstart', this.handleTouchStart, { passive: true });
+        el.addEventListener('touchend', this.handleTouchEnd, { passive: true });
+    },
+    beforeUnmount() {
+        const el = this.$refs.aboutPage;
+        el.removeEventListener('touchstart', this.handleTouchStart);
+        el.removeEventListener('touchend', this.handleTouchEnd);
     }
 };
 </script>
