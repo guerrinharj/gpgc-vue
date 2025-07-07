@@ -573,7 +573,7 @@ export default {
     color: #fff;
     text-align: center;
     padding:0;
-    width: 90vw;
+    width: 100%;
     margin-bottom: 50px;
     margin-left: auto;
     margin-right: auto;
@@ -584,7 +584,7 @@ export default {
 .release-cover {
     display: block;
     padding: 0;
-    width: 198px;
+    width: 200px;
     margin: auto;
 }
 
