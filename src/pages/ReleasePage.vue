@@ -233,7 +233,7 @@ export default {
 .box-wrapper {
     display: block;
     margin: auto;
-    width: 60%
+    width: 70%
 }
 
 
@@ -492,8 +492,8 @@ export default {
     border: none; /* Remove default button border */
     color: white; /* Match the link color */
     font-family: inherit; /* Use the page's font */
-    letter-spacing: -2px;
-    font-size: 16px; /* Adjust font size for readability */
+    letter-spacing: -1px;
+    font-size: 20px; /* Adjust font size for readability */
     cursor: pointer; /* Show a pointer cursor */
     text-decoration: none; /* Remove underline */
     transition: color 0.3s ease, text-decoration 0.3s ease; /* Add smooth hover effect */
