@@ -627,7 +627,7 @@ export default {
     }
 
     .release-tracks .track-button {
-        font-size: 1.4rem;
+        font-size: 15px;
     }
     
 }
