@@ -92,7 +92,6 @@ export default {
 .artist-item {
     color: white;
     text-align: center;
-    font-size: 3.5vw;
     padding: 10px;
 }
 
