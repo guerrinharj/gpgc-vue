@@ -95,8 +95,8 @@ export default {
     padding: 10px;
 }
 
-.artist-item b {
-    font-size: 4rem!important;
+.year {
+    display: none;
 }
 
 .artist-item h3.active {
