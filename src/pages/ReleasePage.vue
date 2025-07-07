@@ -5,21 +5,36 @@
 
                 <!-- Cover Images Section -->
                 <div class="release-cover" v-if="release?.cover?.length > 0">
-                    <div v-if="release.cover.length === 1" class="cover-image">
-                        <img :src="release.cover[0]" :alt="`${release.name} cover`" />
+                    <div v-if="release.cover.length === 1" class="cover-download-wrapper">
+                        <a 
+                            :href="release.download_link" 
+                            download 
+                            class="download-cover"
+                        >
+                            <img :src="release.cover[0]" :alt="`${release.name} cover`" />
+                            <div class="download-overlay">Download</div>
+                        </a>
                     </div>
                     <div v-else class="cover-slider">
-                        <img
-                            v-for="(image, index) in release.cover"
-                            :key="index"
-                            :src="image"
-                            :alt="`${release.name} cover ${index + 1}`"
-                            loading="lazy"
-                            class="cover-image"
-                            :style="{ opacity: currentCoverIndex === index ? 1 : 0 }"
-                        />
+                        <a 
+                            :href="release.download_link" 
+                            download 
+                            class="download-cover"
+                        >
+                            <img
+                                v-for="(image, index) in release.cover"
+                                :key="index"
+                                :src="image"
+                                :alt="`${release.name} cover ${index + 1}`"
+                                loading="lazy"
+                                class="cover-image"
+                                :style="{ opacity: currentCoverIndex === index ? 1 : 0 }"
+                            />
+                            <div class="download-overlay">download</div>
+                        </a>
                     </div>
                 </div>
+
 
 
                 <div class="title-and-tracklist">
@@ -328,6 +343,43 @@ export default {
     display: block;
     padding: 1rem;
 }
+
+.cover-download-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+.download-cover {
+    position: relative;
+    display: block;
+}
+
+.download-cover img {
+    display: block;
+    max-width: 100%;
+    border-radius: 8px;
+}
+
+.download-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 1rem 2rem;
+    border-radius: 8px;
+    font-size: 1.2rem;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+    pointer-events: none;
+    text-transform: lowercase;
+}
+
+.download-cover:hover .download-overlay {
+    opacity: 1;
+}
+
 
 .cover-image {
     margin-bottom: 1rem;

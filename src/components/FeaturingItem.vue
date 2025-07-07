@@ -5,28 +5,32 @@
                 <p><b>{{ featuring.name }}</b></p>
                 <p>{{ featuring.artist }}</p>
             </a>
-                <p class="mute"><em>{{ formattedCredit }}</em></p>
-            
         </div>
         <div v-else>
             <p><b>{{ featuring.name }}</b></p>
             <p>{{ featuring.artist }}</p>
         </div>
 
+        <p class="mute">
+            <em>{{ formattedCredit }}</em>
+        </p>
+
         <div v-if="isAuthenticated" class="featuring-actions">
             <p>
                 <router-link 
                     class="edit" 
-                    :to="{ path: `/update-featuring/${featuring.slug}` }">
+                    :to="{ path: `/update-featuring/${featuring.slug}` }"
+                >
                     edit
                 </router-link>
             </p>
             <p>
-                <a class="delete" @click="deleteFeaturing">delete</a>
+                <a class="delete" @click.stop="deleteFeaturing">delete</a>
             </p>
         </div>
     </div>
 </template>
+
 
 <script>
 import { mapGetters } from 'vuex';
@@ -36,8 +40,8 @@ export default {
     computed: {
         ...mapGetters(['isAuthenticated']),
         formattedCredit() {
-            return Array.isArray(this.featuring.credit) 
-                ? this.featuring.credit.join(', ') 
+            return Array.isArray(this.featuring.credit)
+                ? this.featuring.credit.join(', ')
                 : this.featuring.credit;
         }
     },
@@ -59,51 +63,55 @@ export default {
 };
 </script>
 
+
+
 <style>
+.featuring-item {
+    position: relative;
+    color: white;
+    text-align: center;
+    margin: 1.7rem;
+    padding: 1.7rem;
+    font-size: 2vw;
+}
+
+.featuring-item p {
+    margin: 0.1rem;
+}
+
+.mute {
+    position: absolute;
+    bottom: -18px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(0, 0, 0, 0.8);
+    padding: 0.5rem;
+    border-radius: 4px;
+    font-size: 1.1rem;
+    white-space: nowrap;
+    pointer-events: none;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.featuring-item:hover .mute {
+    opacity: 1;
+    visibility: visible;
+}
+
+.featuring-actions {
+    padding: 10px;
+    font-size: 0.8rem;
+}
+
+.delete {
+    color: red !important;
+}
+
+@media (max-width: 500px) {
     .featuring-item {
-        color: white;
-        text-align: center;
-        margin: 1.7rem;
-        padding: 1.7rem;
-        font-size: 2vw;
+        font-size: 5vw;
     }
-
-    .featuring-item p {
-        margin: 0.1rem;
-    }
-
-    .featuring-item em {
-        font-style: italic; /* Ensure italic styling */
-        font-size: 1.1rem
-    }
-
-    /* Style for anchor tags in featuring items */
-    .featuring-item a {
-        text-decoration: none; /* Remove underline */
-        color: white; /* Match the color of the text */
-        cursor: pointer;
-    }
-
-    .featuring-item a:hover {
-        text-decoration: underline; /* Add underline on hover */
-    }
-
-    .featuring-actions {
-        padding: 10px;
-        font-size: 0.8rem;
-    }
-
-    .delete {
-        color: red!important
-    }
-
-    .mute {
-        display: none
-    }
-
-    @media (max-width: 500px) {
-        .featuring-item {
-            font-size: 5vw
-        }
-    }
+}
 </style>
