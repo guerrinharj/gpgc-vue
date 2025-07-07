@@ -307,6 +307,7 @@ export default {
 .release-titles {
     margin-bottom: 10px;
     text-align: left;
+    font-size: 32px;
 }
 
 .release-name {
@@ -492,7 +493,7 @@ export default {
     color: white; /* Match the link color */
     font-family: inherit; /* Use the page's font */
     letter-spacing: -2px;
-    font-size: 1.5rem; /* Adjust font size for readability */
+    font-size: 16px; /* Adjust font size for readability */
     cursor: pointer; /* Show a pointer cursor */
     text-decoration: none; /* Remove underline */
     transition: color 0.3s ease, text-decoration 0.3s ease; /* Add smooth hover effect */
@@ -566,6 +567,26 @@ export default {
 }
 
 @media (max-width: 500px) {
+
+    .release-page {
+    background: #000;
+    color: #fff;
+    text-align: center;
+    padding:0;
+    width: 90vw;
+    margin-bottom: 50px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 31px;
+    box-sizing: border-box;
+}
+
+.release-cover {
+    display: block;
+    padding: 0;
+    width: 198px;
+    margin: auto;
+}
 
     .release-page h1 {
         font-size: 32px;
