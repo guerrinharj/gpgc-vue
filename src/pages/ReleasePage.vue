@@ -281,7 +281,7 @@ export default {
 
 .info-item {
     text-align: center;
-    font-size: 1.3rem;
+    font-size: 16px;
     margin-top: 20px;
 }
 
