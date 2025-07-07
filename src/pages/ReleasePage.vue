@@ -233,7 +233,7 @@ export default {
 .box-wrapper {
     display: block;
     margin: auto;
-    width: 70%
+    width: 100%
 }
 
 
@@ -307,7 +307,7 @@ export default {
 .release-titles {
     margin-bottom: 10px;
     text-align: left;
-    font-size: 32px;
+    font-size: 36px;
 }
 
 .release-name {
@@ -315,11 +315,11 @@ export default {
     display: inline-block;
     text-decoration: underline;
     cursor: pointer;
-    font-size: 1.3em
 }
 
+.release-name,
 .release-artist {
-    font-size: 1.3em
+    font-size: 28px;
 }
 
 .release-name:hover {
@@ -328,7 +328,7 @@ export default {
 }
 
 .release-actions {
-    font-size: 1.1rem;
+    font-size: 20px;
 }
 
 .edit {
@@ -562,9 +562,54 @@ export default {
 }
 
 
-#credits, #notes, #label, #formats, #release-date {
-    font-size: 1.2rem;
+
+@media (max-width: 1024px) {
+    .release-titles {
+        font-size: 30px;
+    }
+
+    .release-name,
+    .release-artist {
+        font-size: 24px;
+    }
+
+    .release-actions {
+        font-size: 18px;
+    }
+
+    .release-tracks .track-button {
+        font-size: 18px;
+    }
+
+    .info-item {
+        font-size: 14px;
+    }
 }
+
+@media (max-width: 600px) {
+    .release-titles {
+        font-size: 24px;
+    }
+
+    .release-name,
+    .release-artist {
+        font-size: 20px;
+    }
+
+    .release-actions {
+        font-size: 16px;
+    }
+
+    .release-tracks .track-button {
+        font-size: 16px;
+    }
+
+    .info-item {
+        font-size: 15px;
+        letter-spacing: -1px;
+    }
+}
+
 
 @media (max-width: 500px) {
 
