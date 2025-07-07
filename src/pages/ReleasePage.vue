@@ -342,6 +342,7 @@ export default {
 .release-cover {
     display: block;
     padding: 1rem;
+    width: 600px;
 }
 
 .cover-download-wrapper {
