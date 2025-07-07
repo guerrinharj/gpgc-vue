@@ -233,7 +233,7 @@ export default {
 .box-wrapper {
     display: block;
     margin: auto;
-    width: 100%
+    width: 60%
 }
 
 
