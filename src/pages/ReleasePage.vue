@@ -515,7 +515,7 @@ export default {
 @media (max-width: 500px) {
 
     .release-page h1 {
-        font-size: 26px;
+        font-size: 32px;
     }
 
     .upper-box {
