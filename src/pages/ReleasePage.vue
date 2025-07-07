@@ -492,7 +492,7 @@ export default {
     border: none; /* Remove default button border */
     color: white; /* Match the link color */
     font-family: inherit; /* Use the page's font */
-    letter-spacing: -1px;
+    letter-spacing: -2px;
     font-size: 20px; /* Adjust font size for readability */
     cursor: pointer; /* Show a pointer cursor */
     text-decoration: none; /* Remove underline */
@@ -605,8 +605,7 @@ export default {
     }
 
     .info-item {
-        font-size: 15px;
-        letter-spacing: -1px;
+        font-size: 16px;
     }
 }
 
@@ -672,7 +671,7 @@ export default {
     }
 
     .release-tracks .track-button {
-        font-size: 18px;
+        font-size: 20px;
     }
     
 }
