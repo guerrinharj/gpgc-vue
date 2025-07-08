@@ -38,6 +38,7 @@ export default {
     justify-content: center;
     gap: 1rem;
     margin: 1rem 0;
+    transform: translateY(100%);
 }
 
 .create-button {
