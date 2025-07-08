@@ -10,6 +10,7 @@
             </a>
 
 
+
             <div v-if="isAuthenticated" class="artist-actions">
                 <p>
                     <router-link 
@@ -164,28 +165,37 @@ export default {
     color: red;
 }
 
+.artist-name-wrapper {
+  display: inline-block;
+  position: relative;
+}
+
 .artist-name-wrapper h3 {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
     position: relative;
+    display: inline-block;
+    font-size: 2rem;
+    margin: 0;
 }
 
 .formatted-type {
+    position: absolute;
+    left: -100px; /* adjust this value as needed */
+    top: 50%;
+    transform: translateY(-50%);
     opacity: 0;
-    transform: translateX(-5px);
-    transition: opacity 0.3s ease, transform 0.3s ease;
-    font-size: 1rem;
+    transition: opacity 0.3s ease;
     background-color: rgba(0, 0, 0, 0.8);
-    padding: 0.2rem 0.4rem;
+    padding: 0.3rem 0.6rem;
     border-radius: 4px;
     white-space: nowrap;
+    font-size: 1rem;
+    pointer-events: none;
 }
 
 .artist-name-wrapper:hover .formatted-type {
     opacity: 1;
-    transform: translateX(0);
 }
+
 
 
     @media (max-width: 500px) {
