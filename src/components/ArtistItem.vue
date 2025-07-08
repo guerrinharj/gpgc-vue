@@ -2,11 +2,12 @@
     <div class="artist-item">
         <!-- Artist Name -->
         <div>
-            <a @click="toggleReleases">
-                <h3 :class="{ active: isActive }"><b>{{ artist.name }}</b></h3>
+            <a @click="toggleReleases" class="artist-name-wrapper">
+                <h3 :class="{ active: isActive }">
+                    <span class="formatted-type"><em>{{ formattedType }}</em></span>
+                    <b>{{ artist.name }}</b>
+                </h3>
             </a>
-
-            <p class="mute"><em>{{ formattedType }}</em></p>
 
 
             <div v-if="isAuthenticated" class="artist-actions">
@@ -163,26 +164,29 @@ export default {
     color: red;
 }
 
-.mute {
-    position: absolute;
-    bottom: -34px;
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: rgba(0, 0, 0, 0.8);
-    padding: 0.5rem;
-    border-radius: 4px;
-    font-size: 1.1rem;
-    white-space: nowrap;
-    pointer-events: none;
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.3s ease, visibility 0.3s ease;
+.artist-name-wrapper h3 {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    position: relative;
 }
 
-.artist-item:hover .mute {
-    opacity: 1;
-    visibility: visible;
+.formatted-type {
+    opacity: 0;
+    transform: translateX(-5px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    font-size: 1rem;
+    background-color: rgba(0, 0, 0, 0.8);
+    padding: 0.2rem 0.4rem;
+    border-radius: 4px;
+    white-space: nowrap;
 }
+
+.artist-name-wrapper:hover .formatted-type {
+    opacity: 1;
+    transform: translateX(0);
+}
+
 
     @media (max-width: 500px) {
     .artist-item b {

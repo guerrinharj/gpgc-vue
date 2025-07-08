@@ -83,15 +83,13 @@ export default {
     opacity: 0.9;
 }
 
-/* Page transition animation */
 .page-enter-active,
 .page-leave-active {
-    transition: opacity 1.6s ease, transform 1.6s ease;
+    transition: opacity 1.6s ease;
 }
 
 .page-enter-from,
 .page-leave-to {
     opacity: 0;
-    transform: translateY(-30px);
 }
 </style>
