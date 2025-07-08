@@ -1,14 +1,16 @@
 <template>
-    <div class="soundtracks-page" ref="container">
-        <div
-            v-for="(soundtrack, index) in soundtracks"
-            :key="soundtrack.id"
-            :ref="el => itemRefs[index] = el"
-            class="soundtrack-wrapper"
-        >
-            <SoundtrackItem :soundtrack="soundtrack" />
+    <transition name="page" appear>
+        <div class="soundtracks-page" ref="container">
+            <div
+                v-for="(soundtrack, index) in soundtracks"
+                :key="soundtrack.id"
+                :ref="el => itemRefs[index] = el"
+                class="soundtrack-wrapper"
+            >
+                <SoundtrackItem :soundtrack="soundtrack" />
+            </div>
         </div>
-    </div>
+    </transition>
 </template>
 
 <script>
@@ -79,5 +81,17 @@ export default {
     margin: 20px 0;
     transform: scale(0.9);
     opacity: 0.9;
+}
+
+/* Page transition animation */
+.page-enter-active,
+.page-leave-active {
+    transition: opacity 1.6s ease, transform 1.6s ease;
+}
+
+.page-enter-from,
+.page-leave-to {
+    opacity: 0;
+    transform: translateY(-30px);
 }
 </style>

@@ -1,14 +1,16 @@
 <template>
-    <div class="featurings-page" ref="container">
-        <div
-            v-for="(featuring, index) in featurings"
-            :key="featuring.id"
-            :ref="el => itemRefs[index] = el"
-            class="featuring-wrapper"
-        >
-            <FeaturingItem :featuring="featuring" />
+    <transition name="page" appear>
+        <div class="featurings-page" ref="container">
+            <div
+                v-for="(featuring, index) in featurings"
+                :key="featuring.id"
+                :ref="el => itemRefs[index] = el"
+                class="featuring-wrapper"
+            >
+                <FeaturingItem :featuring="featuring" />
+            </div>
         </div>
-    </div>
+    </transition>
 </template>
 
 <script>
@@ -80,5 +82,17 @@ export default {
     margin: 20px 0;
     transform: scale(0.9);
     opacity: 0.9;
+}
+
+/* Page transition animation */
+.page-enter-active,
+.page-leave-active {
+    transition: opacity 1.6s ease, transform 1.6s ease;
+}
+
+.page-enter-from,
+.page-leave-to {
+    opacity: 0;
+    transform: translateY(-30px);
 }
 </style>

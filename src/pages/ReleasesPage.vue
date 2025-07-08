@@ -1,14 +1,16 @@
 <template>
-    <div class="releases-page" ref="container">
-        <div
-            v-for="(release, index) in releases"
-            :key="release.id"
-            :ref="el => itemRefs[index] = el"
-            class="release-wrapper"
-        >
-            <ReleaseItem :release="release" />
+    <transition name="page" appear>
+        <div class="releases-page" ref="container">
+            <div
+                v-for="(release, index) in releases"
+                :key="release.id"
+                :ref="el => itemRefs[index] = el"
+                class="release-wrapper"
+            >
+                <ReleaseItem :release="release" />
+            </div>
         </div>
-    </div>
+    </transition>
 </template>
 
 <script>
@@ -43,7 +45,7 @@ export default {
             this.applyEffects();
         },
         applyEffects() {
-            if (!this.hasScrolled) return; // Only run after user scrolls
+            if (!this.hasScrolled) return;
 
             const centerY = window.innerHeight / 2;
 
@@ -64,7 +66,6 @@ export default {
         }
     }
 };
-
 </script>
 
 <style scoped>
@@ -81,5 +82,17 @@ export default {
     margin: 40px 0;
     transform: scale(0.9);
     opacity: 0.9;
+}
+
+/* Page transition animation */
+.page-enter-active,
+.page-leave-active {
+    transition: opacity 1.6s ease, transform 1.6s ease;
+}
+
+.page-enter-from,
+.page-leave-to {
+    opacity: 0;
+    transform: translateY(-30px);
 }
 </style>
