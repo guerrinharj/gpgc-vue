@@ -6,6 +6,9 @@
                 <h3 :class="{ active: isActive }"><b>{{ artist.name }}</b></h3>
             </a>
 
+            <p class="mute"><em>{{ formattedType }}</em></p>
+
+
             <div v-if="isAuthenticated" class="artist-actions">
                 <p>
                     <router-link 
@@ -53,6 +56,9 @@ export default {
         sortedReleases() {
             return [...this.releases].sort((a, b) => new Date(b.release_date) - new Date(a.release_date));
         },
+        formattedType() {
+            return this.artist.group ? 'group' : 'solo';
+        }
     },
     methods: {
         async toggleReleases() {
@@ -157,19 +163,41 @@ export default {
     color: red;
 }
 
+.mute {
+    position: absolute;
+    bottom: -34px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(0, 0, 0, 0.8);
+    padding: 0.5rem;
+    border-radius: 4px;
+    font-size: 1.1rem;
+    white-space: nowrap;
+    pointer-events: none;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.artist-item:hover .mute {
+    opacity: 1;
+    visibility: visible;
+}
+
     @media (max-width: 500px) {
-        .artist-item b {
-            font-size: 7vw!important;
-            margin-bottom: 10px;
-        }
+    .artist-item b {
+        font-size: 7vw!important;
+        margin-bottom: 10px;
+    }
 
-        .artist-item a {
-            font-size: 1.4rem
-        }
+    .artist-item a {
+        font-size: 1.4rem
+    }
 
-        .year {
-            display: none;
-        }
+    .year {
+        display: none;
+    }
+
 
 
     }
