@@ -26,20 +26,23 @@
         </div>
 
         <!-- All Releases Chronologically -->
-        <div v-if="isActive" class="artist-releases">
-            <div v-if="sortedReleases.length > 0">
-                <ul>
-                    <li v-for="release in sortedReleases" :key="release.id">
-                        <router-link 
-                            :to="`/releases/${release.slug}`" 
-                            @click="navigateToRelease(release.slug)">
-                            {{ release.name }}
-                        </router-link>
-                        <span class="year">({{ release.release_date.slice(0, 4) }})</span>
-                    </li>
-                </ul>
+        <transition name="spiral-fade">
+            <div v-if="isActive" class="artist-releases">
+                <div v-if="sortedReleases.length > 0">
+                    <ul>
+                        <li v-for="release in sortedReleases" :key="release.id">
+                            <router-link 
+                                :to="`/releases/${release.slug}`" 
+                                @click="navigateToRelease(release.slug)">
+                                {{ release.name }}
+                            </router-link>
+                            <span class="year">({{ release.release_date.slice(0, 4) }})</span>
+                        </li>
+                    </ul>
+                </div>
             </div>
-        </div>
+        </transition>
+
     </div>
 </template>
 
@@ -166,14 +169,18 @@ export default {
 }
 
 .artist-name-wrapper {
-  display: inline-block;
-  position: relative;
+    display: inline-block;
+    position: relative;
+}
+
+.artist-name-wrapper b {
+    font-size: 48px;
 }
 
 .artist-name-wrapper h3 {
     position: relative;
     display: inline-block;
-    font-size: 2rem;
+    font-size: 28px;
     margin: 0;
 }
 
@@ -195,6 +202,37 @@ export default {
 .artist-name-wrapper:hover .formatted-type {
     opacity: 1;
 }
+
+/* Transition classes */
+.spiral-fade-enter-active {
+    animation: spiralDown 0.6s ease-out forwards;
+}
+.spiral-fade-leave-active {
+    opacity: 0;
+    transition: opacity 0.3s ease-out;
+}
+.spiral-fade-enter-from,
+.spiral-fade-leave-to {
+    opacity: 0;
+    transform: scale(0.8) rotate(-10deg);
+}
+
+/* Keyframes for spiral down effect */
+@keyframes spiralDown {
+    0% {
+        opacity: 0;
+        transform: scale(0.8) rotate(-10deg) translateY(-20px);
+    }
+    50% {
+        opacity: 0.5;
+        transform: scale(1.05) rotate(3deg) translateY(10px);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1) rotate(0deg) translateY(0);
+    }
+}
+
 
 
 
