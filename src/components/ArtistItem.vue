@@ -179,7 +179,7 @@ export default {
 }
 
 .artist-name-wrapper b {
-    font-size: 48px;
+    font-size: 52px;
 }
 
 .artist-name-wrapper h3 {
