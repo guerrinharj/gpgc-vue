@@ -26,8 +26,12 @@
         </div>
 
         <!-- All Releases Chronologically -->
-        <transition name="spiral-fade">
-            <div v-if="isActive" class="artist-releases">
+        <transition name="dropdown">
+            <div 
+                v-if="isActive" 
+                class="artist-releases dropdown-box"
+                ref="dropdownContent"
+            >
                 <div v-if="sortedReleases.length > 0">
                     <ul>
                         <li v-for="release in sortedReleases" :key="release.id">
@@ -42,6 +46,7 @@
                 </div>
             </div>
         </transition>
+
 
     </div>
 </template>
@@ -203,34 +208,20 @@ export default {
     opacity: 1;
 }
 
-/* Transition classes */
-.spiral-fade-enter-active {
-    animation: spiralDown 0.6s ease-out forwards;
-}
-.spiral-fade-leave-active {
-    opacity: 0;
-    transition: opacity 0.3s ease-out;
-}
-.spiral-fade-enter-from,
-.spiral-fade-leave-to {
-    opacity: 0;
-    transform: scale(0.8) rotate(-10deg);
+/* Smooth dropdown animation */
+.dropdown-enter-active, .dropdown-leave-active {
+    transition: max-height 0.5s ease, opacity 0.3s ease;
+    overflow: hidden;
 }
 
-/* Keyframes for spiral down effect */
-@keyframes spiralDown {
-    0% {
-        opacity: 0;
-        transform: scale(0.8) rotate(-10deg) translateY(-20px);
-    }
-    50% {
-        opacity: 0.5;
-        transform: scale(1.05) rotate(3deg) translateY(10px);
-    }
-    100% {
-        opacity: 1;
-        transform: scale(1) rotate(0deg) translateY(0);
-    }
+.dropdown-enter-from, .dropdown-leave-to {
+    max-height: 0;
+    opacity: 0;
+}
+
+.dropdown-enter-to, .dropdown-leave-from {
+    max-height: 500px; /* You can adjust this value if needed */
+    opacity: 1;
 }
 
 
