@@ -229,7 +229,7 @@ export default {
 
     @media (max-width: 500px) {
     .artist-item b {
-        font-size: 7vw!important;
+        font-size: 32px;
         margin-bottom: 10px;
     }
 

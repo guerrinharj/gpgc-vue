@@ -58,7 +58,7 @@ export default {
     text-align: center;
     margin: 1.7rem;
     padding: 1.7rem;
-    font-size: 2vw
+    font-size: 32px;
 }
 
 .soundtrack-item p {
@@ -93,7 +93,7 @@ export default {
 
 @media (max-width: 500px) {
     .soundtrack-item {
-        font-size: 4vw
+        font-size: 22px
     }
 }
 </style>
