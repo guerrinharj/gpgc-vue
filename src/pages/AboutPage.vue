@@ -116,7 +116,6 @@ export default {
 .fade-enter-from,
 .fade-leave-to {
     opacity: 0;
-    transform: scale(0.95);
 }
 
 .page-enter-active,

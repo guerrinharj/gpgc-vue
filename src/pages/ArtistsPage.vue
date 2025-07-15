@@ -65,10 +65,8 @@ export default {
                 const maxDistance = window.innerHeight / 2;
                 const ratio = Math.min(distance / maxDistance, 1);
 
-                const scale = 1 - ratio * 0.2;
                 const opacity = 1 - ratio * 0.95;
 
-                el.style.transform = `scale(${scale}) translateY(${ratio * 20}px)`;
                 el.style.opacity = opacity;
             });
         }
@@ -89,7 +87,6 @@ export default {
 .artist-wrapper {
     transition: transform 0.2s ease-out, opacity 0.2s ease-out;
     margin: 20px 0;
-    transform: scale(0.8);
     opacity: 0.9;
 }
 
