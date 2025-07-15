@@ -72,7 +72,7 @@ export default {
     text-align: center;
     margin: 1.7rem;
     padding: 1.7rem;
-    font-size: 32px;
+    font-size: 24px;
 }
 
 .featuring-item p {

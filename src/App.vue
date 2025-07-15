@@ -36,7 +36,6 @@ body {
   text-transform: lowercase;
   -webkit-font-smoothing: antialiased; /* Smooth fonts for WebKit browsers */
   -moz-osx-font-smoothing: grayscale; /* Smooth fonts for macOS */
-  font-size: 23px;
   max-width: 100vw;
 }
 

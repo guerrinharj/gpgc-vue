@@ -652,7 +652,7 @@ export default {
 }
 
     .release-page h1 {
-        font-size: 32px;
+        font-size: 24px;
     }
 
     .upper-box {
