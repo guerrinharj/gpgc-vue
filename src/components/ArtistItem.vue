@@ -124,7 +124,7 @@ export default {
     text-decoration: none;
     color: white;
     cursor: pointer;
-    font-size: 32px;
+    font-size: 24px;
 }
 
 .artist-item a:hover {
@@ -229,7 +229,7 @@ export default {
 
     @media (max-width: 500px) {
     .artist-item b {
-        font-size: 32px;
+        font-size: 24px;
         margin-bottom: 10px;
     }
 
