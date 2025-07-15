@@ -25,7 +25,8 @@ export default {
                 `I'm a musician, producer and web developer.`,
                 `The purpose of this site is to catalog and serve as a streaming player to everything I’ve done related to <b>"music"</b>.`,
                 `You can also download it.`,
-                `As the years went by, and I got more and more cursed by this abstract entity called <b>"music"</b> I've made the questionable choice to constantly release stuff under different groups, pseudonyms, aliases, featurings, soundtracks etc. Making things harder to catalog.`,
+                `As the years went by, and I got more and more cursed by this abstract entity called <b>"music"</b>`,
+                `I've made the questionable choice to constantly release stuff under different groups, pseudonyms, aliases, featurings, soundtracks etc. Making things harder to catalog.`,
                 `So we're gonna <b>clarify it</b>.`,
                 `This website was built with <b>Vue</b>, powered by a <b>Ruby on Rails API</b> (<a href="http://gpgc-api.onrender.com">here's the documentation</a>). You can check the source codes from the front <a href="https://github.com/guerrinharj/gpgc-vue">here</a> and the back <a href="https://github.com/guerrinharj/gpgc-api">here</a>.`,
                 `If you’d like to contact me, please <b><a href="mailto:gabrielpessoaguerracavalcanti@gmail.com">send an email</a></b>.`
