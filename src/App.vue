@@ -36,6 +36,11 @@ body {
   -webkit-font-smoothing: antialiased; /* Smooth fonts for WebKit browsers */
   -moz-osx-font-smoothing: grayscale; /* Smooth fonts for macOS */
   max-width: 100vw;
+  background-image: url('/scan%203.jpeg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-attachment: fixed;
 }
 
 body::-webkit-scrollbar {
