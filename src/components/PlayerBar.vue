@@ -255,6 +255,7 @@ export default {
     display: flex; /* Use flexbox to layout the children */
     align-items: center; /* Align items vertically */
     justify-content: space-between; /* Space out items equally */
+    font-size: 24px;
 }
 
 .track-info span  {
@@ -369,7 +370,6 @@ export default {
         overflow: hidden; /* Hide overflow content */
         text-overflow: ellipsis; /* Add ellipsis for overflowing text */
         white-space: nowrap; /* Prevent text wrapping */
-        font-size: 24px;
     }
 
     .controls {

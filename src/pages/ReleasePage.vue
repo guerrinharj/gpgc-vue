@@ -283,7 +283,7 @@ export default {
 
 .info-item {
     text-align: center;
-    font-size: 16px;
+    font-size: 22px;
     margin-top: 20px;
 }
 
@@ -495,7 +495,7 @@ export default {
     color: white; /* Match the link color */
     font-family: inherit; /* Use the page's font */
     letter-spacing: -2px;
-    font-size: 20px; /* Adjust font size for readability */
+    font-size: 22px; /* Adjust font size for readability */
     cursor: pointer; /* Show a pointer cursor */
     text-decoration: none; /* Remove underline */
     transition: color 0.3s ease, text-decoration 0.3s ease; /* Add smooth hover effect */
