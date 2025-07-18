@@ -18,7 +18,7 @@ import NotFoundPage from '@/pages/NotFoundPage.vue';
 
 
 const routes = [
-    { path: '/', component: AboutPage },
+    { path: '/', component: ReleasesPage },
     { path: '/releases', component: ReleasesPage },
     { path: '/releases/:slug', component: ReleasePage }, 
     { path: '/artists', component: ArtistsPage },
