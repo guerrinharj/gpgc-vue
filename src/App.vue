@@ -26,9 +26,8 @@ export default {
 </script>
 
 <style>
-/* Add global styles here if needed */
 body {
-  font-family: 'Helvetica', sans-serif;
+  font-family: math, 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
   letter-spacing: -2px;
   background-color: black;
   padding: 0;

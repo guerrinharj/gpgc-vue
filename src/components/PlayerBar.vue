@@ -369,6 +369,7 @@ export default {
         overflow: hidden; /* Hide overflow content */
         text-overflow: ellipsis; /* Add ellipsis for overflowing text */
         white-space: nowrap; /* Prevent text wrapping */
+        font-size: 24px;
     }
 
     .controls {
