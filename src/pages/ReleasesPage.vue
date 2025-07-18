@@ -70,7 +70,7 @@ export default {
     background: black;
     color: white;
     text-align: center;
-    padding: 10vh 50px 5vh;
+    padding: 10vh 5px 5vh;
     min-height: 100vh;
 }
 
