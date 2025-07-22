@@ -111,7 +111,7 @@ export default {
 
 @media (max-width: 500px) {
     .featuring-item {
-        font-size: 22px;
+        font-size: 20px;
     }
 }
 </style>

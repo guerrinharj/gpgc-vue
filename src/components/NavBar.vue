@@ -4,7 +4,7 @@
             <span id="disable-radio">
                 <li><a @click="startRadio" class="radio-button">radio</a></li>
             </span>
-            <li><router-link to="/artists">Artists</router-link></li>
+            <li id="artists-li"><router-link to="/artists">Artists</router-link></li>
             <li><router-link to="/releases">Releases</router-link></li>
             <li id="featurings-li"><router-link to="/featurings">Featurings</router-link></li>
             <li id="soundtracks-li"><router-link to="/soundtracks">Soundtracks</router-link></li>
@@ -116,6 +116,7 @@ export default {
 @media (max-width: 600px) {
     .navbar {
         padding: 0.5rem;
+        top: 2%;
     }
 
     .navbar ul {
@@ -131,8 +132,12 @@ export default {
 
     .navbar a,
     .radio-button {
-        font-size: 1rem;
+        font-size: 1.2rem;
         padding: 0.5rem;
+    }
+
+    #artists-li {
+        display: none;
     }
 }
 
