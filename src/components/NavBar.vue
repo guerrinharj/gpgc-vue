@@ -131,12 +131,8 @@ export default {
 
     .navbar a,
     .radio-button {
-        font-size: 1.4rem;
+        font-size: 1.2rem;
         padding: 0.5rem;
-    }
-
-    #featurings-li, #soundtracks-li {
-        display: none;
     }
 }
 
