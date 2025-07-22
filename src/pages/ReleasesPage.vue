@@ -89,4 +89,10 @@ export default {
 .page-leave-to {
     opacity: 0;
 }
+
+@media (width: 500px) {
+    .releases-page {
+        padding-top: 3vh;
+    }
+}
 </style>
