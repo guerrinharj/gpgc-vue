@@ -29,7 +29,7 @@
                                     :alt="`${release.name} cover ${index + 1}`"
                                     loading="lazy"
                                     class="cover-image"
-                                    :style="{ opacity: currentCoverIndex === index ? 1 : 0 }"
+                                    v-show="currentCoverIndex === index"
                                 />
                                 <div class="download-overlay">download</div>
                             </a>
@@ -134,6 +134,7 @@ export default {
         return {
             showInfo: false,
             currentCoverIndex: 0, // Track the current index of the displayed cover
+            coverInterval: null,
         };
     },
     computed: {
@@ -194,13 +195,13 @@ export default {
         },
 
         startCoverTransition() {
-            if (this.release.cover && this.release.cover.length > 1) {
-                setInterval(() => {
+            clearInterval(this.coverInterval);
+                this.coverInterval = setInterval(() => {
                     this.currentCoverIndex =
-                        (this.currentCoverIndex + 1) % this.release.cover.length;
-                }, 3000); // Change cover every 3 seconds
-            }
-        },
+                    (this.currentCoverIndex + 1) % this.release.cover.length;
+                }, 3000);
+            },
+
     },
     
     created() {
@@ -216,6 +217,18 @@ export default {
         this.startCoverTransition();
         window.scrollTo(0, 0);
     },
+    watch: {
+        release(newVal) {
+            if (newVal?.cover?.length > 1) {
+                this.startCoverTransition();
+            }
+        },
+    },
+
+    beforeDestroy() {
+        clearInterval(this.coverInterval);
+    },
+
 };
 </script>
 
@@ -416,9 +429,23 @@ export default {
     transition: opacity 1s ease-in-out;
 }
 
-.cover-slider img[v-show="true"] {
-    opacity: 1; /* Make the currently active image visible */
+.cover-image {
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 8px;
 }
+
+.cover-image[v-show="true"] {
+    opacity: 1 !important;
+    z-index: 1;
+}
+
 
 .release-info {
     margin: 2rem 0;
