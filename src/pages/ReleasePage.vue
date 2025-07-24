@@ -225,7 +225,7 @@ export default {
         },
     },
 
-    beforeDestroy() {
+    beforeUnmount() {
         clearInterval(this.coverInterval);
     },
 
