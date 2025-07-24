@@ -89,6 +89,11 @@
                     <div class="lower-wrapper">
                         <transition name="dropdown">
                             <div class="info-box" v-show="showInfo">
+                                <div v-if="release?.release_type" class="info-item">
+                                    <b>Type</b>
+                                    <span>{{ release.release_type }}</span>
+                                </div>
+
                                 <div v-if="release?.release_date" class="info-item">
                                     <b>Release date</b>
                                     <span>{{ release.release_date }}</span>
@@ -225,7 +230,7 @@ export default {
         },
     },
 
-    beforeDestroy() {
+    beforeUnmount() {
         clearInterval(this.coverInterval);
     },
 

@@ -34,13 +34,14 @@
             >
                 <div v-if="sortedReleases.length > 0">
                     <ul>
-                        <li v-for="release in sortedReleases" :key="release.id">
+                        <li v-for="release in sortedReleases" :key="release.id" class="release-item">
                             <router-link 
                                 :to="`/releases/${release.slug}`" 
                                 @click="navigateToRelease(release.slug)">
                                 {{ release.name }}
                             </router-link>
-                            <span class="year">({{ release.release_date.slice(0, 4) }})</span>
+                            <span class="release-type">{{ release.release_type }}</span>
+                            <span class="release-year">({{ release.release_date.slice(0, 4) }})</span>
                         </li>
                     </ul>
                 </div>
@@ -111,9 +112,6 @@ export default {
     padding: 10px;
 }
 
-.year {
-    display: none;
-}
 
 .artist-item h3.active {
     text-decoration: underline;
@@ -207,6 +205,43 @@ export default {
 .artist-name-wrapper:hover .formatted-type {
     opacity: 1;
 }
+
+.release-item {
+    position: relative;
+    display: block;
+    margin: 0.5rem 0;
+    text-align: center;
+}
+
+
+.release-type,
+.release-year {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    font-size: 0.9rem;
+    background-color: rgba(0, 0, 0, 0.8);
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    white-space: nowrap;
+    pointer-events: none;
+}
+
+.release-type {
+    left: 10%;
+}
+
+.release-year {
+    right: 10%;
+}
+
+.release-item:hover .release-type,
+.release-item:hover .release-year {
+    opacity: 1;
+}
+
 
 /* Smooth dropdown animation */
 .dropdown-enter-active, .dropdown-leave-active {
