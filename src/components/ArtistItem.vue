@@ -206,6 +206,13 @@ export default {
     opacity: 1;
 }
 
+.artist-release-item {
+    position: relative;
+    display: block;
+    margin: .5rem 0;
+    text-align: center;
+}
+
 .release-type,
 .release-year {
     position: absolute;
