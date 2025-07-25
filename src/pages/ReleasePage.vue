@@ -38,7 +38,7 @@
 
 
 
-                    <div class="title-and-tracklist">
+                    <div class="right-box">
                     <!-- Title Section -->
                         <div class="release-titles">
                             <h1 class="release-name" v-if="release">
