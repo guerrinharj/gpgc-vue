@@ -35,6 +35,7 @@
                             </a>
                         </div>
                     </div>
+                </div>
 
 
 
@@ -80,8 +81,6 @@
 
                 </div>
 
-
-                <div class="lower-box">
                     <p class="info-toggle" @click="showInfo = !showInfo">
                         info
                     </p>
@@ -123,10 +122,7 @@
                             </div>
                         </transition>
                     </div>
-
                 </div>
-            </div>
-        </div>
     </transition>
 </template>
 
@@ -251,9 +247,13 @@ export default {
 }
 
 .box-wrapper {
-    display: block;
+    display: flex;
     margin: auto;
     width: 100%
+}
+
+.box-wrapper div {
+    width: 50%;
 }
 
 
