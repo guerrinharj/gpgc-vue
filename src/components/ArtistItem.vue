@@ -34,7 +34,7 @@
             >
                 <div v-if="sortedReleases.length > 0">
                     <ul>
-                        <li v-for="release in sortedReleases" :key="release.id" class="release-item">
+                        <li v-for="release in sortedReleases" :key="release.id" class="artist-release-item">
                             <router-link 
                                 :to="`/releases/${release.slug}`" 
                                 @click="navigateToRelease(release.slug)">
@@ -206,14 +206,6 @@ export default {
     opacity: 1;
 }
 
-.release-item {
-    position: relative;
-    display: block;
-    margin: 0.5rem 0;
-    text-align: center;
-}
-
-
 .release-type,
 .release-year {
     position: absolute;
@@ -237,8 +229,8 @@ export default {
     right: 10%;
 }
 
-.release-item:hover .release-type,
-.release-item:hover .release-year {
+.artist-release-item:hover .release-type,
+.artist-release-item:hover .release-year {
     opacity: 1;
 }
 
