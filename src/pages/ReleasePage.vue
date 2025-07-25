@@ -2,7 +2,7 @@
     <transition name="fade" appear>
         <div class="release-page">
             <div class="box-wrapper">
-                <div class="upper-box">
+                <div class="left-box">
 
                     <!-- Cover Images Section -->
                     <div class="release-cover" v-if="release?.cover?.length > 0">
@@ -265,7 +265,7 @@ export default {
     margin: 0.1rem;
 }
 
-.upper-box {
+.left-box {
     display: flex;
     align-items: flex-start;
     gap: 2rem;
@@ -274,7 +274,7 @@ export default {
     width:100%
 }
 
-.title-tracklist {
+.right-box {
     flex: 1;
     text-align: left;
 }
@@ -684,13 +684,13 @@ export default {
         font-size: 24px;
     }
 
-    .upper-box {
+    .left-box {
         display: block; /* Disable flex on mobile */
         text-align: center;
         padding-top: 2vh;
     }
 
-    .title-tracklist {
+    .right-box {
         text-align: center;
     }
 
