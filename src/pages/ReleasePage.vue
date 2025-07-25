@@ -359,7 +359,6 @@ export default {
     color: red
 }
 
-/* Cover images are stacked on top of each other */
 .release-cover {
     display: block;
     padding: 1rem;
@@ -416,21 +415,21 @@ export default {
 .cover-slider {
     position: relative;
     width: 100%;
-    max-width: 400px; /* Ensure the max width is consistent */
-    margin: auto; /* Center the slider horizontally */
-    overflow: hidden; /* Prevent content overflow */
-    aspect-ratio: 1 / 1; /* Maintain a square aspect ratio (adjust as needed) */
+    max-width: 400px; 
+    margin: auto; 
+    overflow: hidden; 
+    aspect-ratio: 1 / 1;
 }
 
 .cover-slider img {
     position: absolute;
     top: 0;
     left: 0;
-    width: 100%; /* Ensure images take the full width of the container */
-    height: 100%; /* Ensure images take the full height of the container */
-    object-fit: cover; /* Maintain aspect ratio and crop the image if necessary */
-    border-radius: 8px; /* Optional: Keep rounded corners */
-    opacity: 0; /* Default to invisible */
+    width: 100%; 
+    height: 100%; 
+    object-fit: cover;
+    border-radius: 8px;
+    opacity: 0; 
     transition: opacity 1s ease-in-out;
 }
 
@@ -474,7 +473,7 @@ export default {
 
 .release-tracks ol {
     list-style-type: decimal;
-    padding-left: 1.5rem; /* Indent numbers */
+    padding-left: 1.5rem;
     margin: 0;
     text-align: left;
     width: 100%;
@@ -522,25 +521,25 @@ export default {
 
 
 .release-tracks .track-button {
-    background: none; /* Remove default button background */
-    border: none; /* Remove default button border */
-    color: white; /* Match the link color */
-    font-family: inherit; /* Use the page's font */
-    letter-spacing: -2px;
-    font-size: 22px; /* Adjust font size for readability */
-    cursor: pointer; /* Show a pointer cursor */
-    text-decoration: none; /* Remove underline */
-    transition: color 0.3s ease, text-decoration 0.3s ease; /* Add smooth hover effect */
-    text-transform: lowercase; /* Match the page's text style */
+    background: none;
+    border: none; 
+    color: white; 
+    font-family: inherit; 
+    letter-spacing: -1px;
+    font-size: 22px; 
+    cursor: pointer;
+    text-decoration: none;
+    transition: color 0.3s ease, text-decoration 0.3s ease; 
+    text-transform: lowercase;
 }
 
 .release-tracks .track-button:hover {
-    color: white; /* Change color on hover */
-    text-decoration: underline; /* Optional: Add underline on hover */
+    color: white; 
+    text-decoration: underline; 
 }
 
 .release-tracks .track-button:active {
-    color: gray; /* Add feedback for active state */
+    color: gray; 
 }
 
 #links {
@@ -706,7 +705,7 @@ export default {
     }
 
     .info-box {
-        display: block; /* Hide in mobile */
+        display: block; 
     }
 
     .cover-image img {
