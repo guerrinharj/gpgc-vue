@@ -267,10 +267,9 @@ export default {
 
 .upper-box {
     display: flex;
-    justify-content: space-evenly;
     align-items: flex-start;
     gap: 2rem;
-    padding-top: 10vh;
+    padding-top: 6vh;
     margin-bottom: 2rem;
     width:100%
 }
@@ -378,7 +377,6 @@ export default {
 .download-cover img {
     display: block;
     max-width: 100%;
-    border-radius: 8px;
 }
 
 .download-overlay {
