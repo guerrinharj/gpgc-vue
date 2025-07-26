@@ -2,90 +2,79 @@
     <transition name="fade" appear>
         <div class="release-page">
             <div class="box-wrapper">
-                <div class="upper-box">
-
+                <div class="left-box">
                     <!-- Cover Images Section -->
-                    <div class="release-cover" v-if="release?.cover?.length > 0">
-                        <div v-if="release.cover.length === 1" class="cover-download-wrapper">
-                            <a 
-                                :href="release.download_link" 
-                                download 
-                                class="download-cover"
-                            >
-                                <img :src="release.cover[0]" :alt="`${release.name} cover`" />
-                                <div class="download-overlay">Download</div>
-                            </a>
-                        </div>
-                        <div v-else class="cover-slider">
-                            <a 
-                                :href="release.download_link" 
-                                download 
-                                class="download-cover"
-                            >
-                                <img
-                                    v-for="(image, index) in release.cover"
-                                    :key="index"
-                                    :src="image"
-                                    :alt="`${release.name} cover ${index + 1}`"
-                                    loading="lazy"
-                                    class="cover-image"
-                                    v-show="currentCoverIndex === index"
-                                />
-                                <div class="download-overlay">download</div>
-                            </a>
-                        </div>
+                    <div class="release-cover" v-if="release?.cover?.length > 0">                      
+                        <img :src="release.cover[0]" :alt="`${release.name} cover`" />
+                    </div>
+
+                    <!-- Actions Section -->
+                    <div v-if="isAuthenticated && release" class="release-actions">
+                        <p>
+                            <router-link class="edit" :to="{ path: `/update-release/${release.slug}` }">
+                                edit
+                            </router-link>
+                        </p>
+                        <p>
+                            <a class="delete" @click="deleteRelease">delete</a>
+                        </p>
                     </div>
 
 
+                    <!-- Download Button -->
+                    <div class="download-button-wrapper">
+                        <a
+                            v-if="release?.tracks?.length > 0 && release.tracks[0].url"
+                            @click="playTrackHandler(release.tracks[0])"
+                            class="inline-button"
+                        >
+                            play
+                        </a>
 
-                    <div class="title-and-tracklist">
-                    <!-- Title Section -->
-                        <div class="release-titles">
-                            <h1 class="release-name" v-if="release">
-                                <a :href="release.download_link" download>
-                                    {{ release.name }}
-                                </a>
-                            </h1>
-                            <h1 class="release-artist" v-if="release">{{ release.artist_name }}</h1>
-                        </div>
+                        <span class="inline-separator"> &nbsp;  &nbsp; / &nbsp;  &nbsp;  </span>
 
-                        <!-- Actions Section -->
-                        <div v-if="isAuthenticated && release" class="release-actions">
-                            <p>
-                                <router-link 
-                                    class="edit" 
-                                    :to="{ path: `/update-release/${release.slug}` }">
-                                    edit
-                                </router-link>
-                            </p>
-                            <p>
-                                <a class="delete" @click="deleteRelease">delete</a>
-                            </p>
-                        </div>
-
-                        <!-- Tracklist Section -->
-                        <div class="release-tracks" v-if="release?.tracks?.length > 0">
-                            <ol>
-                                <li v-for="(track, index) in release.tracks" :key="index">
-                                    <button 
-                                        v-if="track.url" 
-                                        @click="playTrackHandler(track)"
-                                        class="track-button">
-                                        {{ track.name }}
-                                    </button>
-                                </li>
-                            </ol>
-                        </div>
-                    </div>
+                        <a
+                            v-if="release.download_link"
+                            :href="release.download_link"
+                            download
+                            class="inline-button"
+                        >
+                            download
+                        </a>
+</div>
 
                 </div>
 
+                <div class="right-box">
+                    <!-- Title Section -->
+                    <div class="release-titles">
+                        <h1 class="release-name" v-if="release">
+                            {{ release.name }}
+                        </h1>
+                        <h1 class="release-artist" v-if="release">{{ release.artist_name }}</h1>
+                    </div>
 
-                <div class="lower-box">
-                    <p class="info-toggle" @click="showInfo = !showInfo">
-                        info
-                    </p>
 
+                    <!-- Tracklist Section -->
+                    <div class="release-tracks" v-if="release?.tracks?.length > 0">
+                        <div class="info-item">
+                            <b>Tracks</b>
+                        </div>
+
+                        <ol>
+                            <li v-for="(track, index) in release.tracks" :key="index">
+                                <button
+                                    v-if="track.url"
+                                    @click="playTrackHandler(track)"
+                                    class="track-button"
+                                >
+                                    {{ track.name }}
+                                </button>
+                            </li>
+                        </ol>
+                    </div>
+
+                    <!-- Info Section -->
                     <div class="lower-wrapper">
                         <transition name="dropdown">
                             <div class="info-box" v-show="showInfo">
@@ -123,12 +112,12 @@
                             </div>
                         </transition>
                     </div>
-
                 </div>
             </div>
         </div>
     </transition>
 </template>
+
 
 
 <script>
@@ -137,8 +126,8 @@ import { mapGetters, mapActions } from 'vuex';
 export default {
     data() {
         return {
-            showInfo: false,
-            currentCoverIndex: 0, // Track the current index of the displayed cover
+            showInfo: true,
+            currentCoverIndex: 0,
             coverInterval: null,
         };
     },
@@ -147,25 +136,20 @@ export default {
         release() {
             return this.getSelectedRelease;
         },
-        filteredLinks() { 
-            if (!this.release.links) return []; // In case "links" is null, return an empty array to avoid errors. 
-            return Object.entries(this.release.links) // Transform the array of objects "release.links" into an array that follow the pattern ["key", "value"]
-                .map(([platform, url]) => ({ platform, url })); // Use `platform` and `url` in the final result
+        filteredLinks() {
+            if (!this.release.links) return [];
+            return Object.entries(this.release.links).map(([platform, url]) => ({ platform, url }));
         },
         filteredCredits() {
             if (!this.release.credits) return [];
-            return Object.entries(this.release.credits) 
-                .map(([credit, name]) => ({ credit, name }));
-            
+            return Object.entries(this.release.credits).map(([credit, name]) => ({ credit, name }));
         }
     },
     methods: {
         ...mapActions(['playTrack']),
 
         async editRelease() {
-            this.$router.push({ 
-                path: `/update-release/${this.release.slug}` 
-            });
+            this.$router.push({ path: `/update-release/${this.release.slug}` });
         },
 
         async deleteRelease() {
@@ -181,8 +165,6 @@ export default {
                 alert('Failed to delete the release. Please try again.');
             }
         },
-
-
 
         playTrackHandler(track) {
             const playlist = this.release.tracks.map((t) => ({
@@ -201,14 +183,13 @@ export default {
 
         startCoverTransition() {
             clearInterval(this.coverInterval);
-                this.coverInterval = setInterval(() => {
-                    this.currentCoverIndex =
+            this.coverInterval = setInterval(() => {
+                this.currentCoverIndex =
                     (this.currentCoverIndex + 1) % this.release.cover.length;
-                }, 3000);
-            },
-
+            }, 3000);
+        },
     },
-    
+
     created() {
         const slug = this.$route.params.slug;
 
@@ -222,6 +203,7 @@ export default {
         this.startCoverTransition();
         window.scrollTo(0, 0);
     },
+
     watch: {
         release(newVal) {
             if (newVal?.cover?.length > 1) {
@@ -233,16 +215,16 @@ export default {
     beforeUnmount() {
         clearInterval(this.coverInterval);
     },
-
 };
 </script>
+
 
 <style>
 .release-page {
     background: black;
     color: white;
     text-align: center;
-    padding: 2rem;
+    padding: 5rem 1rem;
     width: 90vw;
     margin-bottom: 50px;
     margin-left: auto;
@@ -251,9 +233,13 @@ export default {
 }
 
 .box-wrapper {
-    display: block;
+    display: flex;
     margin: auto;
     width: 100%
+}
+
+.box-wrapper .left-box, .box-wrapper .right-box {
+    width: 50%;
 }
 
 
@@ -265,17 +251,16 @@ export default {
     margin: 0.1rem;
 }
 
-.upper-box {
-    display: flex;
-    justify-content: space-evenly;
-    align-items: flex-start;
-    gap: 2rem;
-    padding-top: 10vh;
-    margin-bottom: 2rem;
-    width:100%
+.left-box {
+
+    display: block;
 }
 
-.title-tracklist {
+.left-box .release-cover {
+    width: 100%
+}
+
+.right-box {
     flex: 1;
     text-align: left;
 }
@@ -293,14 +278,13 @@ export default {
 .info-box {
     width: 100%;
     margin-top: 3rem;
-    padding: 0 1rem;
-    text-align: center;
+    text-align: left;
     margin: auto;
 }
 
 
 .info-item {
-    text-align: center;
+    text-align: left;
     font-size: 22px;
     margin-top: 20px;
 }
@@ -325,7 +309,7 @@ export default {
 }
 
 .release-titles {
-    margin-bottom: 10px;
+    margin-bottom: 36px;
     text-align: left;
     font-size: 36px;
 }
@@ -337,7 +321,9 @@ export default {
     cursor: pointer;
 }
 
-.release-name,
+.release-name {
+    font-size: 48px;
+}
 .release-artist {
     font-size: 28px;
 }
@@ -345,6 +331,11 @@ export default {
 .release-name:hover {
     opacity: 0.8;
     transition: ease-in-out 0.3s all;
+}
+
+
+.info-toggle {
+    font-size: 30px;
 }
 
 .release-actions {
@@ -362,54 +353,12 @@ export default {
 .release-cover {
     display: block;
     padding: 1rem;
-    width: 600px;
-}
-
-.cover-download-wrapper {
-    position: relative;
-    display: inline-block;
-}
-
-.download-cover {
-    position: relative;
-    display: block;
-}
-
-.download-cover img {
-    display: block;
-    max-width: 100%;
-    border-radius: 8px;
-}
-
-.download-overlay {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: rgba(0, 0, 0, 0.7);
-    color: white;
-    padding: 1rem 2rem;
-    border-radius: 8px;
-    font-size: 1.2rem;
-    opacity: 0;
-    transition: opacity 0.3s ease-in-out;
-    pointer-events: none;
-    text-transform: lowercase;
-}
-
-.download-cover:hover .download-overlay {
-    opacity: 1;
 }
 
 
-.cover-image {
-    margin-bottom: 1rem;
-}
-
-.cover-image img {
-    max-width: 400px;
+.release-cover img {
+    max-width: 90%;
     height: auto;
-    border-radius: 8px;
 }
 
 .cover-slider {
@@ -456,28 +405,19 @@ export default {
     text-align: center;
 }
 
-
-.release-tracks {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+.download-button-wrapper {
+    margin: 10px;
 }
 
-.release-tracks {
-    padding: 0.2rem;
-}
-
-.release-tracks h4 {
-    margin: 0;
+.download-button-wrapper a {
+    font-size: 28px;
+    cursor: pointer;
 }
 
 .release-tracks ol {
-    list-style-type: decimal;
-    padding-left: 1.5rem;
+    list-style-type: none;
     margin: 0;
-    text-align: left;
-    width: 100%;
-    max-width: 600px;
+    padding: 0;
 }
 
 .release-tracks li {
@@ -527,6 +467,7 @@ export default {
     font-family: inherit; 
     letter-spacing: -1px;
     font-size: 22px; 
+    padding: 0;
     cursor: pointer;
     text-decoration: none;
     transition: color 0.3s ease, text-decoration 0.3s ease; 
@@ -656,6 +597,7 @@ export default {
 
     .info-item {
         font-size: 16px;
+        letter-spacing: -1px;
     }
 }
 
@@ -675,54 +617,59 @@ export default {
     box-sizing: border-box;
 }
 
+.box-wrapper {
+    display: block;
+    width: 80%
+}
+
+.box-wrapper .left-box, .box-wrapper .right-box {
+    width: 100%;
+}
+
+
+.release-page h1 {
+    font-size: 28px;
+}
+
+
+.left-box {
+    display: block; /* Disable flex on mobile */
+    text-align: center;
+    padding-top: 2vh;
+}
+
+.download-button-wrapper a {
+    font-size: 18px;
+}
+
 .release-cover {
     display: block;
     padding: 0;
-    width: 200px;
     margin: auto;
 }
 
-    .release-page h1 {
-        font-size: 24px;
-    }
+.release-cover img {
+    max-width: 100%;
+    height: auto;
+}
 
-    .upper-box {
-        display: block; /* Disable flex on mobile */
-        text-align: center;
-        padding-top: 2vh;
-    }
 
-    .title-tracklist {
-        text-align: center;
-    }
+.info-box {
+    display: block; 
+}
 
-    .release-tracks ol {
-        list-style-type: none;
-    }
 
-    .release-titles, .release-tracks li {
-        text-align: center;
-    }
+.release-tracks ol {
+    padding-left: 0;
+}
 
-    .info-box {
-        display: block; 
-    }
+.release-tracks li {
+    font-size: 0.8rem;
+}
 
-    .cover-image img {
-        max-width: 240px;
-    }
+.release-tracks .track-button {
+    font-size: 20px;
+}
 
-    .release-tracks ol {
-        padding-left: 0;
-    }
-
-    .release-tracks li {
-        font-size: 0.8rem;
-    }
-
-    .release-tracks .track-button {
-        font-size: 20px;
-    }
-    
 }
 </style>
