@@ -239,7 +239,7 @@ export default {
 }
 
 .box-wrapper .left-box, .box-wrapper .right-box {
-    width: 50%;
+    width: 100%;
 }
 
 
