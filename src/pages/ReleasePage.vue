@@ -638,6 +638,10 @@ export default {
     padding-top: 2vh;
 }
 
+.download-button-wrapper a {
+    font-size: 18px;
+}
+
 .release-cover {
     display: block;
     padding: 0;
