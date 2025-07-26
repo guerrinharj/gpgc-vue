@@ -95,7 +95,7 @@
 
                                 <div v-if="release?.format?.length > 0" class="info-item">
                                     <b>Formats</b>
-                                    <span v-for="format in release.format" :key="format">{{ format }}</span>
+                                    <span>{{ release.format.join(', ') }}</span>
                                 </div>
 
                                 <div v-if="filteredCredits.length > 0" class="info-item">
