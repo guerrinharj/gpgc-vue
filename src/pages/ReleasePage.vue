@@ -24,14 +24,25 @@
                     <!-- Download Button -->
                     <div class="download-button-wrapper">
                         <a
+                            v-if="release?.tracks?.length > 0 && release.tracks[0].url"
+                            @click="playTrackHandler(release.tracks[0])"
+                            class="inline-button"
+                        >
+                            play
+                        </a>
+
+                        <span class="inline-separator"> &nbsp;  &nbsp; / &nbsp;  &nbsp;  </span>
+
+                        <a
                             v-if="release.download_link"
                             :href="release.download_link"
                             download
-                            class="download-btn"
+                            class="inline-button"
                         >
                             download
                         </a>
-                    </div>
+</div>
+
                 </div>
 
                 <div class="right-box">
@@ -396,6 +407,11 @@ export default {
 
 .download-button-wrapper {
     margin: 10px;
+}
+
+.download-button-wrapper a {
+    font-size: 28px;
+    cursor: pointer;
 }
 
 .release-tracks ol {
