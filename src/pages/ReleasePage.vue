@@ -396,7 +396,9 @@ export default {
     text-align: center;
 }
 
-
+.download-button-wrapper {
+    margin: 10px;
+}
 
 .release-tracks ol {
     list-style-type: none;
