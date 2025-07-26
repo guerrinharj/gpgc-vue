@@ -352,7 +352,6 @@ export default {
 
 .release-cover {
     display: block;
-    padding: 1rem;
 }
 
 
