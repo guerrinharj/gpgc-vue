@@ -2,15 +2,17 @@
     <transition name="fade" appear>
         <div class="release-page">
             <div class="box-wrapper">
-                <div class="left-box">
 
-                    <!-- Title Section -->
-                    <div class="release-titles">
-                        <h1 class="release-name" v-if="release">
-                            {{ release.name }}
-                        </h1>
-                        <h1 class="release-artist" v-if="release">{{ release.artist_name }}</h1>
-                    </div>
+                <!-- Title Section -->
+                <div class="release-titles">
+                    <h1 class="release-name" v-if="release">
+                        {{ release.name }}
+                    </h1>
+                    <h1 class="release-artist" v-if="release">{{ release.artist_name }}</h1>
+                </div>
+
+
+                <div class="left-box">
 
 
                     <!-- Cover Images Section -->
@@ -238,7 +240,7 @@ export default {
 .box-wrapper {
     display: flex;
     margin: auto;
-    width: 50%
+    width: 90%
 }
 
 .box-wrapper .left-box, .box-wrapper .right-box {
@@ -289,7 +291,7 @@ export default {
 .info-item {
     text-align: left;
     font-size: 22px;
-    margin-top: 20px;
+    margin-bottom: 20px;
 }
 
 .info-item b {
@@ -423,7 +425,7 @@ export default {
 }
 
 .release-tracks li {
-    text-align: center;
+    text-align: left;
     margin-bottom: 0.5rem;
 }
 
@@ -473,6 +475,7 @@ export default {
     cursor: pointer;
     text-decoration: none;
     transition: color 0.3s ease, text-decoration 0.3s ease; 
+    text-transform: lowercase;
     text-align:left
 }
 
