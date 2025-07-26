@@ -38,9 +38,7 @@
                     <!-- Title Section -->
                     <div class="release-titles">
                         <h1 class="release-name" v-if="release">
-                            <a :href="release.download_link" download>
-                                {{ release.name }}
-                            </a>
+                            {{ release.name }}
                         </h1>
                         <h1 class="release-artist" v-if="release">{{ release.artist_name }}</h1>
                     </div>
