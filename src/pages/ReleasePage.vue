@@ -48,6 +48,10 @@
 
                     <!-- Tracklist Section -->
                     <div class="release-tracks" v-if="release?.tracks?.length > 0">
+                        <div class="info-item">
+                            <b>Tracks</b>
+                        </div>
+
                         <ol>
                             <li v-for="(track, index) in release.tracks" :key="index">
                                 <button
@@ -62,10 +66,6 @@
                     </div>
 
                     <!-- Info Section -->
-                    <p class="info-toggle" @click="showInfo = !showInfo">
-                        info
-                    </p>
-
                     <div class="lower-wrapper">
                         <transition name="dropdown">
                             <div class="info-box" v-show="showInfo">
@@ -117,7 +117,7 @@ import { mapGetters, mapActions } from 'vuex';
 export default {
     data() {
         return {
-            showInfo: false,
+            showInfo: true,
             currentCoverIndex: 0,
             coverInterval: null,
         };
