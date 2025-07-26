@@ -1,10 +1,11 @@
 <template>
     <transition name="fade" appear>
         <div class="release-page">
+
             <div class="box-wrapper">
 
                 <!-- Title Section -->
-                <div class="release-titles">
+                <div class="release-title-box release-titles">
                     <h1 class="release-name" v-if="release">
                         {{ release.name }}
                     </h1>
@@ -13,8 +14,6 @@
 
 
                 <div class="left-box">
-
-
                     <!-- Cover Images Section -->
                     <div class="release-cover" v-if="release?.cover?.length > 0">                      
                         <img :src="release.cover[0]" :alt="`${release.name} cover`" />
@@ -238,9 +237,9 @@ export default {
 }
 
 .box-wrapper {
-    display: flex;
+    display: block;
     margin: auto;
-    width: 90%
+    width: 60%
 }
 
 .box-wrapper .left-box, .box-wrapper .right-box {
@@ -267,7 +266,7 @@ export default {
 
 .right-box {
     flex: 1;
-    text-align: left;
+    text-align: center;
 }
 
 .lower-box {
@@ -283,13 +282,13 @@ export default {
 .info-box {
     width: 100%;
     margin-top: 3rem;
-    text-align: left;
+    text-align: center;
     margin: auto;
 }
 
 
 .info-item {
-    text-align: left;
+    text-align: center;
     font-size: 22px;
     margin-bottom: 20px;
 }
@@ -425,7 +424,7 @@ export default {
 }
 
 .release-tracks li {
-    text-align: left;
+    text-align: center;
     margin-bottom: 0.5rem;
 }
 
