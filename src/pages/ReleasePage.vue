@@ -313,7 +313,6 @@ export default {
 }
 
 .release-titles {
-    margin-bottom: 36px;
     text-align: center;
     font-size: 36px;
 }
@@ -623,7 +622,8 @@ export default {
 
 .box-wrapper {
     display: block;
-    width: 80%
+    width: 80%;
+    padding: 20px 0;
 }
 
 .box-wrapper .left-box, .box-wrapper .right-box {
