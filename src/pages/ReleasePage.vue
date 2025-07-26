@@ -236,7 +236,7 @@ export default {
 }
 
 .box-wrapper {
-    display: block;
+    display: flex;
     margin: auto;
     width: 50%
 }
@@ -265,7 +265,7 @@ export default {
 
 .right-box {
     flex: 1;
-    text-align: center;
+    text-align: left;
 }
 
 .lower-box {
@@ -281,13 +281,13 @@ export default {
 .info-box {
     width: 100%;
     margin-top: 3rem;
-    text-align: center;
+    text-align: left;
     margin: auto;
 }
 
 
 .info-item {
-    text-align: center;
+    text-align: left;
     font-size: 22px;
     margin-top: 20px;
 }
@@ -473,7 +473,7 @@ export default {
     cursor: pointer;
     text-decoration: none;
     transition: color 0.3s ease, text-decoration 0.3s ease; 
-    text-transform: lowercase;
+    text-align:left
 }
 
 .release-tracks .track-button:hover {
