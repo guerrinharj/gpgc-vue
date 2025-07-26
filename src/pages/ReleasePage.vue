@@ -8,6 +8,18 @@
                         <img :src="release.cover[0]" :alt="`${release.name} cover`" />
                     </div>
 
+                    <!-- Actions Section -->
+                    <div v-if="isAuthenticated && release" class="release-actions">
+                        <p>
+                            <router-link class="edit" :to="{ path: `/update-release/${release.slug}` }">
+                                edit
+                            </router-link>
+                        </p>
+                        <p>
+                            <a class="delete" @click="deleteRelease">delete</a>
+                        </p>
+                    </div>
+
 
                     <!-- Download Button -->
                     <div class="download-button-wrapper">
@@ -33,17 +45,6 @@
                         <h1 class="release-artist" v-if="release">{{ release.artist_name }}</h1>
                     </div>
 
-                    <!-- Actions Section -->
-                    <div v-if="isAuthenticated && release" class="release-actions">
-                        <p>
-                            <router-link class="edit" :to="{ path: `/update-release/${release.slug}` }">
-                                edit
-                            </router-link>
-                        </p>
-                        <p>
-                            <a class="delete" @click="deleteRelease">delete</a>
-                        </p>
-                    </div>
 
                     <!-- Tracklist Section -->
                     <div class="release-tracks" v-if="release?.tracks?.length > 0">
@@ -299,7 +300,7 @@ export default {
 }
 
 .release-titles {
-    margin-bottom: 10px;
+    margin-bottom: 36px;
     text-align: left;
     font-size: 36px;
 }
@@ -321,6 +322,11 @@ export default {
 .release-name:hover {
     opacity: 0.8;
     transition: ease-in-out 0.3s all;
+}
+
+
+.info-toggle {
+    font-size: 30px;
 }
 
 .release-actions {
@@ -391,27 +397,11 @@ export default {
 }
 
 
-.release-tracks {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.release-tracks {
-    padding: 0.2rem;
-}
-
-.release-tracks h4 {
-    margin: 0;
-}
 
 .release-tracks ol {
-    list-style-type: decimal;
-    padding-left: 1.5rem;
+    list-style-type: none;
     margin: 0;
-    text-align: left;
-    width: 100%;
-    max-width: 600px;
+    padding: 0;
 }
 
 .release-tracks li {
@@ -461,6 +451,7 @@ export default {
     font-family: inherit; 
     letter-spacing: -1px;
     font-size: 22px; 
+    padding: 0;
     cursor: pointer;
     text-decoration: none;
     transition: color 0.3s ease, text-decoration 0.3s ease; 
