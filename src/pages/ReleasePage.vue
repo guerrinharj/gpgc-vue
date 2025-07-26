@@ -235,7 +235,7 @@ export default {
 .box-wrapper {
     display: flex;
     margin: auto;
-    width: 100%
+    width: 50%
 }
 
 .box-wrapper .left-box, .box-wrapper .right-box {
@@ -262,7 +262,7 @@ export default {
 
 .right-box {
     flex: 1;
-    text-align: left;
+    text-align: center;
 }
 
 .lower-box {
@@ -278,13 +278,13 @@ export default {
 .info-box {
     width: 100%;
     margin-top: 3rem;
-    text-align: left;
+    text-align: center;
     margin: auto;
 }
 
 
 .info-item {
-    text-align: left;
+    text-align: center;
     font-size: 22px;
     margin-top: 20px;
 }
@@ -310,7 +310,7 @@ export default {
 
 .release-titles {
     margin-bottom: 36px;
-    text-align: left;
+    text-align: center;
     font-size: 36px;
 }
 
@@ -420,7 +420,7 @@ export default {
 }
 
 .release-tracks li {
-    text-align: left;
+    text-align: center;
     margin-bottom: 0.5rem;
 }
 
@@ -525,7 +525,7 @@ export default {
 }
 
 .info-list > li {
-    text-align: left;
+    text-align: center;
 }
 
 
