@@ -4,34 +4,21 @@
             <div class="box-wrapper">
                 <div class="left-box">
                     <!-- Cover Images Section -->
-                    <div class="release-cover" v-if="release?.cover?.length > 0">
-                        <div v-if="release.cover.length === 1" class="cover-download-wrapper">
-                            <img :src="release.cover[0]" :alt="`${release.name} cover`" />
-                        </div>
+                    <div class="release-cover" v-if="release?.cover?.length > 0">                      
+                        <img :src="release.cover[0]" :alt="`${release.name} cover`" />
+                    </div>
 
-                        <div v-else class="cover-slider">
-                            <img
-                                v-for="(image, index) in release.cover"
-                                :key="index"
-                                :src="image"
-                                :alt="`${release.name} cover ${index + 1}`"
-                                loading="lazy"
-                                class="cover-image"
-                                v-show="currentCoverIndex === index"
-                            />
-                        </div>
 
-                        <!-- Download Button -->
-                        <div class="download-button-wrapper">
-                            <a
-                                v-if="release.download_link"
-                                :href="release.download_link"
-                                download
-                                class="download-btn"
-                            >
-                                download
-                            </a>
-                        </div>
+                    <!-- Download Button -->
+                    <div class="download-button-wrapper">
+                        <a
+                            v-if="release.download_link"
+                            :href="release.download_link"
+                            download
+                            class="download-btn"
+                        >
+                            download
+                        </a>
                     </div>
                 </div>
 
@@ -255,11 +242,8 @@ export default {
 }
 
 .left-box {
-    display: flex;
-    align-items: flex-start;
-    gap: 2rem;
-    margin-bottom: 2rem;
-    width:100%
+
+    display: block;
 }
 
 .left-box .release-cover {
@@ -327,7 +311,9 @@ export default {
     cursor: pointer;
 }
 
-.release-name,
+.release-name {
+    font-size: 48px;
+}
 .release-artist {
     font-size: 28px;
 }
@@ -356,7 +342,7 @@ export default {
 
 
 .release-cover img {
-    max-width: 100%;
+    max-width: 90%;
     height: auto;
 }
 
@@ -623,54 +609,55 @@ export default {
     box-sizing: border-box;
 }
 
+.box-wrapper {
+    display: block;
+    width: 80%
+}
+
+.box-wrapper .left-box, .box-wrapper .right-box {
+    width: 100%;
+}
+
+
+.release-page h1 {
+    font-size: 24px;
+}
+
+
+.left-box {
+    display: block; /* Disable flex on mobile */
+    text-align: center;
+    padding-top: 2vh;
+}
+
 .release-cover {
     display: block;
     padding: 0;
-    width: 200px;
     margin: auto;
 }
 
-    .release-page h1 {
-        font-size: 24px;
-    }
+.release-cover img {
+    max-width: 100%;
+    height: auto;
+}
 
-    .left-box {
-        display: block; /* Disable flex on mobile */
-        text-align: center;
-        padding-top: 2vh;
-    }
 
-    .right-box {
-        text-align: center;
-    }
+.info-box {
+    display: block; 
+}
 
-    .release-tracks ol {
-        list-style-type: none;
-    }
 
-    .release-titles, .release-tracks li {
-        text-align: center;
-    }
+.release-tracks ol {
+    padding-left: 0;
+}
 
-    .info-box {
-        display: block; 
-    }
+.release-tracks li {
+    font-size: 0.8rem;
+}
 
-    .cover-image img {
-        max-width: 240px;
-    }
+.release-tracks .track-button {
+    font-size: 20px;
+}
 
-    .release-tracks ol {
-        padding-left: 0;
-    }
-
-    .release-tracks li {
-        font-size: 0.8rem;
-    }
-
-    .release-tracks .track-button {
-        font-size: 20px;
-    }
-    
 }
 </style>
