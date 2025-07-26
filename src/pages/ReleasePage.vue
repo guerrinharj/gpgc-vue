@@ -3,6 +3,16 @@
         <div class="release-page">
             <div class="box-wrapper">
                 <div class="left-box">
+
+                    <!-- Title Section -->
+                    <div class="release-titles">
+                        <h1 class="release-name" v-if="release">
+                            {{ release.name }}
+                        </h1>
+                        <h1 class="release-artist" v-if="release">{{ release.artist_name }}</h1>
+                    </div>
+
+
                     <!-- Cover Images Section -->
                     <div class="release-cover" v-if="release?.cover?.length > 0">                      
                         <img :src="release.cover[0]" :alt="`${release.name} cover`" />
@@ -46,13 +56,6 @@
                 </div>
 
                 <div class="right-box">
-                    <!-- Title Section -->
-                    <div class="release-titles">
-                        <h1 class="release-name" v-if="release">
-                            {{ release.name }}
-                        </h1>
-                        <h1 class="release-artist" v-if="release">{{ release.artist_name }}</h1>
-                    </div>
 
 
                     <!-- Tracklist Section -->
