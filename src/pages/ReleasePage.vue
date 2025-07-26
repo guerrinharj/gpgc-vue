@@ -628,7 +628,7 @@ export default {
 
 
 .release-page h1 {
-    font-size: 24px;
+    font-size: 28px;
 }
 
 
