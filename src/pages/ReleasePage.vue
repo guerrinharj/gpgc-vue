@@ -416,6 +416,10 @@ export default {
     cursor: pointer;
 }
 
+.release-tracks {
+    padding: 20px 0;
+}
+
 .release-tracks ol {
     list-style-type: none;
     margin: 0;
@@ -468,7 +472,8 @@ export default {
     color: white; 
     font-family: inherit; 
     letter-spacing: -1px;
-    font-size: 22px; 
+    margin: -12px;
+    font-size: 25px; 
     padding: 0;
     cursor: pointer;
     text-decoration: none;
@@ -643,7 +648,7 @@ export default {
 }
 
 .download-button-wrapper a {
-    font-size: 18px;
+    font-size: 14px;
 }
 
 .release-cover {
