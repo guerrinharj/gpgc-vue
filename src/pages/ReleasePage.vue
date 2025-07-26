@@ -3,81 +3,77 @@
         <div class="release-page">
             <div class="box-wrapper">
                 <div class="left-box">
-
                     <!-- Cover Images Section -->
                     <div class="release-cover" v-if="release?.cover?.length > 0">
                         <div v-if="release.cover.length === 1" class="cover-download-wrapper">
-                            <a 
-                                :href="release.download_link" 
-                                download 
-                                class="download-cover"
-                            >
-                                <img :src="release.cover[0]" :alt="`${release.name} cover`" />
-                                <div class="download-overlay">Download</div>
-                            </a>
+                            <img :src="release.cover[0]" :alt="`${release.name} cover`" />
                         </div>
+
                         <div v-else class="cover-slider">
-                            <a 
-                                :href="release.download_link" 
-                                download 
-                                class="download-cover"
+                            <img
+                                v-for="(image, index) in release.cover"
+                                :key="index"
+                                :src="image"
+                                :alt="`${release.name} cover ${index + 1}`"
+                                loading="lazy"
+                                class="cover-image"
+                                v-show="currentCoverIndex === index"
+                            />
+                        </div>
+
+                        <!-- Download Button -->
+                        <div class="download-button-wrapper">
+                            <a
+                                v-if="release.download_link"
+                                :href="release.download_link"
+                                download
+                                class="download-btn"
                             >
-                                <img
-                                    v-for="(image, index) in release.cover"
-                                    :key="index"
-                                    :src="image"
-                                    :alt="`${release.name} cover ${index + 1}`"
-                                    loading="lazy"
-                                    class="cover-image"
-                                    v-show="currentCoverIndex === index"
-                                />
-                                <div class="download-overlay">download</div>
+                                download
                             </a>
                         </div>
                     </div>
                 </div>
 
-
-
-                    <div class="right-box">
+                <div class="right-box">
                     <!-- Title Section -->
-                        <div class="release-titles">
-                            <h1 class="release-name" v-if="release">
-                                <a :href="release.download_link" download>
-                                    {{ release.name }}
-                                </a>
-                            </h1>
-                            <h1 class="release-artist" v-if="release">{{ release.artist_name }}</h1>
-                        </div>
+                    <div class="release-titles">
+                        <h1 class="release-name" v-if="release">
+                            <a :href="release.download_link" download>
+                                {{ release.name }}
+                            </a>
+                        </h1>
+                        <h1 class="release-artist" v-if="release">{{ release.artist_name }}</h1>
+                    </div>
 
-                        <!-- Actions Section -->
-                        <div v-if="isAuthenticated && release" class="release-actions">
-                            <p>
-                                <router-link 
-                                    class="edit" 
-                                    :to="{ path: `/update-release/${release.slug}` }">
-                                    edit
-                                </router-link>
-                            </p>
-                            <p>
-                                <a class="delete" @click="deleteRelease">delete</a>
-                            </p>
-                        </div>
+                    <!-- Actions Section -->
+                    <div v-if="isAuthenticated && release" class="release-actions">
+                        <p>
+                            <router-link class="edit" :to="{ path: `/update-release/${release.slug}` }">
+                                edit
+                            </router-link>
+                        </p>
+                        <p>
+                            <a class="delete" @click="deleteRelease">delete</a>
+                        </p>
+                    </div>
 
-                        <!-- Tracklist Section -->
-                        <div class="release-tracks" v-if="release?.tracks?.length > 0">
-                            <ol>
-                                <li v-for="(track, index) in release.tracks" :key="index">
-                                    <button 
-                                        v-if="track.url" 
-                                        @click="playTrackHandler(track)"
-                                        class="track-button">
-                                        {{ track.name }}
-                                    </button>
-                                </li>
-                            </ol>
-                        </div>
+                    <!-- Tracklist Section -->
+                    <div class="release-tracks" v-if="release?.tracks?.length > 0">
+                        <ol>
+                            <li v-for="(track, index) in release.tracks" :key="index">
+                                <button
+                                    v-if="track.url"
+                                    @click="playTrackHandler(track)"
+                                    class="track-button"
+                                >
+                                    {{ track.name }}
+                                </button>
+                            </li>
+                        </ol>
+                    </div>
 
+                    <!-- Info Section -->
                     <p class="info-toggle" @click="showInfo = !showInfo">
                         info
                     </p>
@@ -119,13 +115,12 @@
                             </div>
                         </transition>
                     </div>
-
-                        
-                    </div>
                 </div>
-                </div>
+            </div>
+        </div>
     </transition>
 </template>
+
 
 
 <script>
@@ -135,7 +130,7 @@ export default {
     data() {
         return {
             showInfo: false,
-            currentCoverIndex: 0, // Track the current index of the displayed cover
+            currentCoverIndex: 0,
             coverInterval: null,
         };
     },
@@ -144,25 +139,20 @@ export default {
         release() {
             return this.getSelectedRelease;
         },
-        filteredLinks() { 
-            if (!this.release.links) return []; // In case "links" is null, return an empty array to avoid errors. 
-            return Object.entries(this.release.links) // Transform the array of objects "release.links" into an array that follow the pattern ["key", "value"]
-                .map(([platform, url]) => ({ platform, url })); // Use `platform` and `url` in the final result
+        filteredLinks() {
+            if (!this.release.links) return [];
+            return Object.entries(this.release.links).map(([platform, url]) => ({ platform, url }));
         },
         filteredCredits() {
             if (!this.release.credits) return [];
-            return Object.entries(this.release.credits) 
-                .map(([credit, name]) => ({ credit, name }));
-            
+            return Object.entries(this.release.credits).map(([credit, name]) => ({ credit, name }));
         }
     },
     methods: {
         ...mapActions(['playTrack']),
 
         async editRelease() {
-            this.$router.push({ 
-                path: `/update-release/${this.release.slug}` 
-            });
+            this.$router.push({ path: `/update-release/${this.release.slug}` });
         },
 
         async deleteRelease() {
@@ -178,8 +168,6 @@ export default {
                 alert('Failed to delete the release. Please try again.');
             }
         },
-
-
 
         playTrackHandler(track) {
             const playlist = this.release.tracks.map((t) => ({
@@ -198,14 +186,13 @@ export default {
 
         startCoverTransition() {
             clearInterval(this.coverInterval);
-                this.coverInterval = setInterval(() => {
-                    this.currentCoverIndex =
+            this.coverInterval = setInterval(() => {
+                this.currentCoverIndex =
                     (this.currentCoverIndex + 1) % this.release.cover.length;
-                }, 3000);
-            },
-
+            }, 3000);
+        },
     },
-    
+
     created() {
         const slug = this.$route.params.slug;
 
@@ -219,6 +206,7 @@ export default {
         this.startCoverTransition();
         window.scrollTo(0, 0);
     },
+
     watch: {
         release(newVal) {
             if (newVal?.cover?.length > 1) {
@@ -230,9 +218,9 @@ export default {
     beforeUnmount() {
         clearInterval(this.coverInterval);
     },
-
 };
 </script>
+
 
 <style>
 .release-page {
@@ -274,7 +262,7 @@ export default {
     width:100%
 }
 
-.left-box div {
+.left-box .release-cover {
     width: 100%
 }
 
@@ -364,53 +352,12 @@ export default {
 .release-cover {
     display: block;
     padding: 1rem;
-    width: 600px;
 }
 
-.cover-download-wrapper {
-    position: relative;
-    display: inline-block;
-}
 
-.download-cover {
-    position: relative;
-    display: block;
-}
-
-.download-cover img {
-    display: block;
+.release-cover img {
     max-width: 100%;
-}
-
-.download-overlay {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: rgba(0, 0, 0, 0.7);
-    color: white;
-    padding: 1rem 2rem;
-    border-radius: 8px;
-    font-size: 1.2rem;
-    opacity: 0;
-    transition: opacity 0.3s ease-in-out;
-    pointer-events: none;
-    text-transform: lowercase;
-}
-
-.download-cover:hover .download-overlay {
-    opacity: 1;
-}
-
-
-.cover-image {
-    margin-bottom: 1rem;
-}
-
-.cover-image img {
-    max-width: 400px;
     height: auto;
-    border-radius: 8px;
 }
 
 .cover-slider {
