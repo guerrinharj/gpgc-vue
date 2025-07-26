@@ -77,9 +77,6 @@
                                 </li>
                             </ol>
                         </div>
-                    </div>
-
-                </div>
 
                     <p class="info-toggle" @click="showInfo = !showInfo">
                         info
@@ -122,6 +119,10 @@
                             </div>
                         </transition>
                     </div>
+
+                        
+                    </div>
+                </div>
                 </div>
     </transition>
 </template>
@@ -238,7 +239,7 @@ export default {
     background: black;
     color: white;
     text-align: center;
-    padding: 2rem;
+    padding: 5rem 1rem;
     width: 90vw;
     margin-bottom: 50px;
     margin-left: auto;
@@ -252,7 +253,7 @@ export default {
     width: 100%
 }
 
-.box-wrapper div {
+.box-wrapper .left-box, .box-wrapper .right-box {
     width: 50%;
 }
 
@@ -269,9 +270,12 @@ export default {
     display: flex;
     align-items: flex-start;
     gap: 2rem;
-    padding-top: 6vh;
     margin-bottom: 2rem;
     width:100%
+}
+
+.left-box div {
+    width: 100%
 }
 
 .right-box {
@@ -292,14 +296,13 @@ export default {
 .info-box {
     width: 100%;
     margin-top: 3rem;
-    padding: 0 1rem;
-    text-align: center;
+    text-align: left;
     margin: auto;
 }
 
 
 .info-item {
-    text-align: center;
+    text-align: left;
     font-size: 22px;
     margin-top: 20px;
 }
