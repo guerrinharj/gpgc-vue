@@ -312,6 +312,10 @@ export default {
     justify-content: center;
 }
 
+.release-title-box {
+    padding-bottom: 20px;
+}
+
 .release-titles {
     text-align: center;
     font-size: 36px;
@@ -412,7 +416,7 @@ export default {
 }
 
 .download-button-wrapper a {
-    font-size: 28px;
+    font-size: 16px;
     cursor: pointer;
 }
 
