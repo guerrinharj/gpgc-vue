@@ -363,7 +363,7 @@ export default {
 
 
 .release-cover img {
-    max-width: 60%;
+    max-width: 40%;
     height: auto;
 }
 
