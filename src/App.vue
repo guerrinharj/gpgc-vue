@@ -30,7 +30,7 @@ body {
   font-family: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
   letter-spacing: -2px;
   background-color: black;
-  padding: 0;
+  padding: 4vh;
   margin: 0;
   -webkit-font-smoothing: antialiased; /* Smooth fonts for WebKit browsers */
   -moz-osx-font-smoothing: grayscale; /* Smooth fonts for macOS */

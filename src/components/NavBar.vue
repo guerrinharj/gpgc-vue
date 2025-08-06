@@ -81,7 +81,7 @@ export default {
     .radio-button {
         color: white;
         text-decoration: none;
-        font-size: 1.6rem;
+        font-size: 32px;
         background: none;
         border: none;
         cursor: pointer;
@@ -130,11 +130,6 @@ export default {
         margin: 0;
     }
 
-    .navbar a,
-    .radio-button {
-        font-size: 1.2rem;
-        padding: 0.5rem;
-    }
 
     #artists-li {
         display: none;
