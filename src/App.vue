@@ -32,8 +32,8 @@ body {
   background-color: black;
   padding: 4vh;
   margin: 0;
-  -webkit-font-smoothing: antialiased; /* Smooth fonts for WebKit browsers */
-  -moz-osx-font-smoothing: grayscale; /* Smooth fonts for macOS */
+  -webkit-font-smoothing: antialiased; 
+  -moz-osx-font-smoothing: grayscale;
   max-width: 100vw;
 }
 
