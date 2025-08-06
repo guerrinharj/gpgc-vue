@@ -61,27 +61,27 @@ body::-webkit-scrollbar {
   background: black;
   color: white;
   min-height: 100vh;
-  display: flex; /* Use flexbox */
-  flex-direction: column; /* Stack children vertically */
-  align-items: center; /* Horizontally center */
-  justify-content: center; /* Vertically center */
-  text-align: center; /* Center text */
+  display: flex;
+  flex-direction: column; 
+  align-items: center; 
+  justify-content: center; 
+  text-align: center;
   overflow-x: hidden;
 }
 
 a {
-  color: inherit; /* Inherits the text color from the parent element */
-  text-decoration: none; /* Removes the underline */
+  color: inherit; 
+  text-decoration: none; 
 }
 
 a:hover {
-  text-decoration: underline; /* Optional: Add underline on hover */
+  text-decoration: underline;
 }
 
 .router-link-active {
-  font-weight: bold; /* Make the text bold */
-  text-decoration: underline; /* Optional: Add underline */
-  color: white; /* Ensure active links are visible */
+  font-weight: bold; 
+  text-decoration: underline; 
+  color: white; 
 }
 
 ol {
@@ -97,4 +97,11 @@ ol {
 button {
   all: unset;
 }
+
+@media (max-width: 768px) {
+  body {
+    padding: 2vh 0 !important;
+  }
+}
+
 </style>
