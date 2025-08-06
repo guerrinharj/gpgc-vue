@@ -27,12 +27,11 @@ export default {
 
 <style>
 body {
-  font-family: math, 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
+  font-family: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
   letter-spacing: -2px;
   background-color: black;
   padding: 0;
   margin: 0;
-  text-transform: lowercase;
   -webkit-font-smoothing: antialiased; /* Smooth fonts for WebKit browsers */
   -moz-osx-font-smoothing: grayscale; /* Smooth fonts for macOS */
   max-width: 100vw;

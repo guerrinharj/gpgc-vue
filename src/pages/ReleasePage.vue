@@ -482,7 +482,6 @@ export default {
     cursor: pointer;
     text-decoration: none;
     transition: color 0.3s ease, text-decoration 0.3s ease; 
-    text-transform: lowercase;
     text-align:left
 }
 

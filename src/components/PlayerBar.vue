@@ -300,7 +300,6 @@ export default {
     font-size: 16px;
     padding: 8px 16px;
     cursor: pointer;
-    text-transform: lowercase;
     transition: color 0.3s ease;
 }
 
