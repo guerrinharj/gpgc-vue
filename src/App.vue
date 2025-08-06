@@ -67,7 +67,6 @@ body::-webkit-scrollbar {
   justify-content: center; /* Vertically center */
   text-align: center; /* Center text */
   overflow-x: hidden;
-  width: 90vw;
 }
 
 a {

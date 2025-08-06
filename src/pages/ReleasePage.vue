@@ -258,7 +258,7 @@ export default {
 
 .release-name {
     font-size: 48px;
-    text-transform: uppercase
+    text-decoration: underline
 }
 
 

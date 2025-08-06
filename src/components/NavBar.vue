@@ -67,8 +67,9 @@ export default {
         margin: 0;
         display: flex;
         justify-content: center;
+        font-weight: 600;
         align-items: center;
-        gap: 1rem;
+        gap: 48px;
     }
 
     .navbar li {
@@ -80,7 +81,6 @@ export default {
     .navbar a,
     .radio-button {
         color: white;
-        text-decoration: none;
         font-size: 32px;
         background: none;
         border: none;
