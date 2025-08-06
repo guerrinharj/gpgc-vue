@@ -325,7 +325,7 @@ export default {
     }
 
     .release-artist {
-        font-size: 24px;
+        font-size: 26px;
     }
 
     .track-button {
