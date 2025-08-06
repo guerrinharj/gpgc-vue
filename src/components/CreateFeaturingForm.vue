@@ -21,6 +21,10 @@
             <input id="info" v-model="form.info" required />
         </div>
         <div>
+            <label for="url">Url</label>
+            <input id="url" v-model="form.url" required />
+        </div>
+        <div>
             <label for="is_album">Album?</label>
             <input id="is_album" type="checkbox" v-model="form.is_album" /> 
         </div>
