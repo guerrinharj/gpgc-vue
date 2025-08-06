@@ -126,6 +126,11 @@ export default {
         justify-content: center;
     }
 
+    .navbar a {
+        font-size: 20px;
+        font-weight: 600
+    }
+
     .navbar li {
         margin: 0;
     }
