@@ -279,6 +279,7 @@ export default {
 
 .track-name {
     margin: 8px;
+    font-weight: 600;
 }
 
 .track-button:hover .track-name {
