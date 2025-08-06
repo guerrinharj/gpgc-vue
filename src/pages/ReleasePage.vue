@@ -243,7 +243,11 @@ export default {
 
 
 .release-cover img {
+    display: block;
     width: 100%;
+    max-width: 600px; 
+    max-height: 600px;    
+    object-fit: cover; 
 }
 
 .download-button-wrapper {
@@ -254,16 +258,22 @@ export default {
 
 .release-title-box.release-titles, .release-tracks {
     padding-bottom: 48px;
+    transform: translateY(-12px);
 }
 
 .release-name {
-    font-size: 48px;
+    font-size: 52px;
     text-decoration: underline
+}
+
+.release-artist {
+    font-size: 32px;
 }
 
 
 .track-button {
-    font-size: 24px;
+    font-size: 22px;
+    letter-spacing: -1px;
     cursor: pointer;
 }
 
