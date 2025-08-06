@@ -122,7 +122,7 @@ export default {
     .navbar ul {
         flex-direction: row;
         flex-wrap: wrap;
-        gap: 10px;
+        gap: 11px;
         justify-content: center;
     }
 

@@ -27,7 +27,7 @@ export default {
 
 <style>
 body {
-  font-family: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
+  font-family: "Helvetica Neue", Helvetica, sans-serif;
   letter-spacing: -2px;
   background-color: black;
   padding: 4vh;
