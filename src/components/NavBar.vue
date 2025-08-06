@@ -67,8 +67,9 @@ export default {
         margin: 0;
         display: flex;
         justify-content: center;
+        font-weight: 600;
         align-items: center;
-        gap: 1rem;
+        gap: 48px;
     }
 
     .navbar li {
@@ -80,8 +81,7 @@ export default {
     .navbar a,
     .radio-button {
         color: white;
-        text-decoration: none;
-        font-size: 1.6rem;
+        font-size: 32px;
         background: none;
         border: none;
         cursor: pointer;
@@ -122,19 +122,19 @@ export default {
     .navbar ul {
         flex-direction: row;
         flex-wrap: wrap;
-        gap: 0.5rem;
+        gap: 10px;
         justify-content: center;
+    }
+
+    .navbar a {
+        font-size: 20px;
+        font-weight: 600
     }
 
     .navbar li {
         margin: 0;
     }
 
-    .navbar a,
-    .radio-button {
-        font-size: 1.2rem;
-        padding: 0.5rem;
-    }
 
     #artists-li {
         display: none;

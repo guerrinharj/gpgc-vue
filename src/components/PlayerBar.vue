@@ -300,7 +300,6 @@ export default {
     font-size: 16px;
     padding: 8px 16px;
     cursor: pointer;
-    text-transform: lowercase;
     transition: color 0.3s ease;
 }
 
@@ -387,7 +386,7 @@ export default {
     .track-info p, .track-info span strong {
         text-align: left;
         margin: 0;
-        font-size: 1.4rem;
+        font-size: 20px;
     }
 
     .hidden-mobile {

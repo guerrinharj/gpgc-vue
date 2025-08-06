@@ -27,15 +27,21 @@ export default {
 
 <style>
 body {
-  font-family: math, 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
+  font-family: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
   letter-spacing: -2px;
   background-color: black;
-  padding: 0;
+  padding: 4vh;
   margin: 0;
-  text-transform: lowercase;
   -webkit-font-smoothing: antialiased; /* Smooth fonts for WebKit browsers */
   -moz-osx-font-smoothing: grayscale; /* Smooth fonts for macOS */
   max-width: 100vw;
+}
+
+h1 {
+    margin-block-start: 0;
+    margin-block-end: 0;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
 }
 
 .background {
@@ -55,26 +61,47 @@ body::-webkit-scrollbar {
   background: black;
   color: white;
   min-height: 100vh;
-  display: flex; /* Use flexbox */
-  flex-direction: column; /* Stack children vertically */
-  align-items: center; /* Horizontally center */
-  justify-content: center; /* Vertically center */
-  text-align: center; /* Center text */
+  display: flex;
+  flex-direction: column; 
+  align-items: center; 
+  justify-content: center; 
+  text-align: center;
   overflow-x: hidden;
 }
 
 a {
-  color: inherit; /* Inherits the text color from the parent element */
-  text-decoration: none; /* Removes the underline */
+  color: inherit; 
+  text-decoration: none; 
 }
 
 a:hover {
-  text-decoration: underline; /* Optional: Add underline on hover */
+  text-decoration: underline;
 }
 
 .router-link-active {
-  font-weight: bold; /* Make the text bold */
-  text-decoration: underline; /* Optional: Add underline */
-  color: white; /* Ensure active links are visible */
+  font-weight: bold; 
+  text-decoration: underline; 
+  color: white; 
 }
+
+ol {
+    display: block;
+    list-style-type: none;
+    margin-block-start: 0;
+    margin-block-end: 0;
+    padding-inline-start: 0;
+    unicode-bidi: isolate;
+}
+
+
+button {
+  all: unset;
+}
+
+@media (max-width: 768px) {
+  body {
+    padding: 2vh 0 !important;
+  }
+}
+
 </style>

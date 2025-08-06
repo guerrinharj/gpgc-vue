@@ -1,18 +1,7 @@
 <template>
     <transition name="fade" appear>
         <div class="release-page">
-
             <div class="box-wrapper">
-
-                <!-- Title Section -->
-                <div class="release-title-box release-titles">
-                    <h1 class="release-name" v-if="release">
-                        {{ release.name }}
-                    </h1>
-                    <h1 class="release-artist" v-if="release">{{ release.artist_name }}</h1>
-                </div>
-
-
                 <div class="left-box">
                     <!-- Cover Images Section -->
                     <div class="release-cover" v-if="release?.cover?.length > 0">                      
@@ -30,7 +19,6 @@
                             <a class="delete" @click="deleteRelease">delete</a>
                         </p>
                     </div>
-
 
                     <!-- Download Button -->
                     <div class="download-button-wrapper">
@@ -52,18 +40,20 @@
                         >
                             download
                         </a>
-</div>
-
+                    </div>
                 </div>
 
                 <div class="right-box">
-
+                    <!-- Title Section -->
+                    <div class="release-title-box release-titles">
+                        <h1 class="release-name" v-if="release">
+                            {{ release.name }}
+                        </h1>
+                        <h1 class="release-artist" v-if="release">{{ release.artist_name }}</h1>
+                    </div>
 
                     <!-- Tracklist Section -->
                     <div class="release-tracks" v-if="release?.tracks?.length > 0">
-                        <div class="info-item">
-                            <b>Tracks</b>
-                        </div>
 
                         <ol>
                             <li v-for="(track, index) in release.tracks" :key="index">
@@ -72,7 +62,7 @@
                                     @click="playTrackHandler(track)"
                                     class="track-button"
                                 >
-                                    {{ track.name }}
+                                    {{ index + 1 }}. <span class="track-name">{{ track.name }}</span>
                                 </button>
                             </li>
                         </ol>
@@ -83,12 +73,12 @@
                         <transition name="dropdown">
                             <div class="info-box" v-show="showInfo">
                                 <div v-if="release?.release_type" class="info-item">
-                                    <b>Type</b>
+                                    <b>Type:</b>
                                     <span>{{ release.release_type }}</span>
                                 </div>
 
                                 <div v-if="release?.release_date" class="info-item">
-                                    <b>Release date</b>
+                                    <b>Release Date:</b>
                                     <span>{{ release.release_date }}</span>
                                 </div>
 
@@ -98,20 +88,21 @@
                                 </div>
 
                                 <div v-if="release?.format?.length > 0" class="info-item">
-                                    <b>Formats</b>
+                                    <b>Formats: </b>
                                     <span>{{ release.format.join(', ') }}</span>
                                 </div>
 
-                                <div v-if="filteredCredits.length > 0" class="info-item">
-                                    <b>Credits</b>
-                                    <span v-for="({ name, credit }) in filteredCredits" :key="name">
-                                        <strong>{{ credit }}</strong>: {{ name }}
-                                    </span>
-                                </div>
+                                <div class="credits-area">
 
-                                <div v-if="release?.notes?.length > 0" class="info-item">
-                                    <b>Notes</b>
-                                    <span v-for="notes in release.notes" :key="notes">{{ notes }}</span>
+                                    <div v-if="release?.notes?.length > 0" class="info-item">
+                                        <p v-for="notes in release.notes" :key="notes">{{ notes }}</p>
+                                    </div>
+
+                                    <div v-if="filteredCredits.length > 0" class="info-item info-credits">
+                                        <p v-for="({ name, credit }) in filteredCredits" :key="name">
+                                            <b>{{ credit }}</b>: {{ name }}
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
                         </transition>
@@ -227,9 +218,8 @@ export default {
 .release-page {
     background: black;
     color: white;
-    text-align: center;
+    text-align: left;
     padding: 5rem 1rem;
-    width: 90vw;
     margin-bottom: 50px;
     margin-left: auto;
     margin-right: auto;
@@ -237,452 +227,117 @@ export default {
 }
 
 .box-wrapper {
-    display: block;
-    margin: auto;
-    width: 60%
-}
-
-.box-wrapper .left-box, .box-wrapper .right-box {
-    width: 100%;
-}
-
-
-.release-page b, h4 {
-    text-decoration: underline
-}
-
-.release-page h1 {
-    margin: 0.1rem;
-}
-
-.left-box {
-
-    display: block;
-}
-
-.left-box .release-cover {
-    width: 100%
-}
-
-.right-box {
-    flex: 1;
-    text-align: center;
-}
-
-.lower-box {
-    padding-bottom: 20px;
-}
-
-.lower-wrapper {
     display: flex;
-    justify-content: center;
-    padding-bottom: 10px;
-}
-
-.info-box {
-    width: 100%;
-    margin-top: 3rem;
-    text-align: center;
-    margin: auto;
-}
-
-
-.info-item {
-    text-align: center;
-    font-size: 22px;
-    margin-bottom: 20px;
-}
-
-.info-item b {
-    display: block;
-    text-decoration: underline;
-    margin-bottom: 0.5rem;
-}
-
-.info-item span {
-    display: block;
-    margin-bottom: 0.3rem;
-}
-
-
-.information-box {
-    display: flex;
-    flex-wrap: wrap;
+    flex-direction: row;
     gap: 2rem;
-    justify-content: center;
+    margin: auto;
+    text-align: left;
 }
 
-.release-title-box {
-    padding-bottom: 20px;
-}
-
-.release-titles {
-    text-align: center;
-    font-size: 36px;
-}
-
-.release-name {
-    position: relative;
-    display: inline-block;
-    text-decoration: underline;
-    cursor: pointer;
-}
-
-.release-name {
-    font-size: 48px;
-}
-.release-artist {
-    font-size: 28px;
-}
-
-.release-name:hover {
-    opacity: 0.8;
-    transition: ease-in-out 0.3s all;
-}
-
-
-.info-toggle {
-    font-size: 30px;
-}
-
-.release-actions {
-    font-size: 20px;
-}
-
-.edit {
-    color: blue
-}
-
-.delete {
-    color: red
-}
-
-.release-cover {
-    display: block;
+.box-wrapper .left-box,
+.box-wrapper .right-box {
+    flex: 1;
+    width: 50%;
+    text-align: left;
 }
 
 
 .release-cover img {
-    max-width: 40%;
-    height: auto;
-}
-
-.cover-slider {
-    position: relative;
+    display: block;
     width: 100%;
-    max-width: 400px; 
-    margin: auto; 
-    overflow: hidden; 
-    aspect-ratio: 1 / 1;
-}
-
-.cover-slider img {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%; 
-    height: 100%; 
-    object-fit: cover;
-    border-radius: 8px;
-    opacity: 0; 
-    transition: opacity 1s ease-in-out;
-}
-
-.cover-image {
-    opacity: 0;
-    transition: opacity 1s ease-in-out;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 8px;
-}
-
-.cover-image[v-show="true"] {
-    opacity: 1 !important;
-    z-index: 1;
-}
-
-
-.release-info {
-    margin: 2rem 0;
-    text-align: center;
+    max-width: 600px; 
+    max-height: 600px;    
+    object-fit: cover; 
 }
 
 .download-button-wrapper {
-    margin: 10px;
-}
-
-.download-button-wrapper a {
-    font-size: 16px;
+    text-align: center;
+    font-size: 18px;
     cursor: pointer;
 }
 
-.release-tracks {
-    padding: 20px 0;
+.release-title-box.release-titles, .release-tracks {
+    padding-bottom: 48px;
+    transform: translateY(-12px);
 }
 
-.release-tracks ol {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
+.release-name {
+    font-size: 52px;
+    text-decoration: underline
 }
 
-.release-tracks li {
-    text-align: center;
-    margin-bottom: 0.5rem;
-}
-
-.release-tracks a {
-    color: white!important;
-}
-
-.release-tracks a {
-    color: lightblue;
-    text-decoration: none;
-    margin-left: 5px;
-}
-
-.release-tracks a:hover {
-    text-decoration: underline; 
-}
-
-.release-info ul {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-}
-
-.release-info li {
-    margin: 0.1rem 0;
-    text-align: center;
-}
-
-.release-info a {
-    color: inherit;
-    text-decoration: none;
-}
-
-.release-info a:hover {
-    text-decoration: underline;
+.release-artist {
+    font-size: 32px;
 }
 
 
-.release-tracks .track-button {
-    background: none;
-    border: none; 
-    color: white; 
-    font-family: inherit; 
+.track-button {
+    font-size: 22px;
     letter-spacing: -1px;
-    margin: -12px;
-    font-size: 25px; 
-    padding: 0;
     cursor: pointer;
-    text-decoration: none;
-    transition: color 0.3s ease, text-decoration 0.3s ease; 
-    text-transform: lowercase;
-    text-align:left
 }
 
-.release-tracks .track-button:hover {
-    color: white; 
-    text-decoration: underline; 
+.track-name {
+    margin: 8px;
 }
 
-.release-tracks .track-button:active {
-    color: gray; 
-}
-
-#links {
-    display: none;
-}
-
-.info-toggle {
-    cursor: pointer;
+.track-button:hover .track-name {
     text-decoration: underline;
-    font-weight: bold;
-    margin-top: 1rem;
-    display: inline-block;
 }
 
-.dropdown-enter-active,
-.dropdown-leave-active {
-    transition: all 0.5s ease;
-    overflow: hidden;
+.info-item {
+    font-size: 18px;
+    margin: 2px;
+    letter-spacing: -1px
 }
 
-.dropdown-enter-from,
-.dropdown-leave-to {
-    max-height: 0;
-    opacity: 0;
+.info-item span {
+    margin: 8px;
 }
 
-.dropdown-enter-to,
-.dropdown-leave-from {
-    max-height: 500px;
-    opacity: 1;
-}
-
-
-.info-list {
-    list-style-type: none;
-    padding: 0;
+.info-item p {
     margin: 0;
-    width: 100%;
-    max-width: 800px;
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
 }
 
-.info-list > li {
-    text-align: center;
+.credits-area {
+    transform: translateY(30px);
 }
-
-
-.info-list b {
-    text-decoration: underline;
-    margin-bottom: 0.5rem;
-}
-
-
-.fade-enter-active,
-.fade-leave-active {
-    transition: opacity 1.2s ease;
-}
-
-.fade-enter-from,
-.fade-leave-to {
-    opacity: 0;
-}
-
-.fade-enter-to,
-.fade-leave-from {
-    opacity: 1;
-}
-
-
-
 
 @media (max-width: 1024px) {
-    .release-titles {
-        font-size: 30px;
-    }
-
-    .release-name,
-    .release-artist {
-        font-size: 24px;
-    }
-
-    .release-actions {
-        font-size: 18px;
-    }
-
-    .release-tracks .track-button {
-        font-size: 18px;
-    }
-
-    .info-item {
-        font-size: 14px;
-    }
-}
-
-@media (max-width: 600px) {
-    .release-titles {
-        font-size: 24px;
-    }
-
-    .release-name,
-    .release-artist {
-        font-size: 20px;
-    }
-
-    .release-actions {
-        font-size: 16px;
-    }
-
-    .release-tracks .track-button {
-        font-size: 16px;
-    }
-
-    .info-item {
-        font-size: 16px;
-        letter-spacing: -1px;
-    }
-}
-
-
-@media (max-width: 500px) {
 
     .release-page {
-    background: #000;
-    color: #fff;
-    text-align: center;
-    padding:0;
-    width: 100%;
-    margin-bottom: 50px;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 31px;
-    box-sizing: border-box;
-}
+        padding-bottom: 5vh;
+    }
 
-.box-wrapper {
-    display: block;
-    width: 80%;
-    padding: 20px 0;
-}
+    .box-wrapper {
+        flex-direction: column;
+        width: 100%;
+    }
 
-.box-wrapper .left-box, .box-wrapper .right-box {
-    width: 100%;
-}
+    .box-wrapper .left-box,
+    .box-wrapper .right-box {
+        width: 100%;
+    }
 
+    .release-name {
+        font-size: 27px;
+    }
 
-.release-page h1 {
-    font-size: 28px;
-}
+    .release-artist {
+        font-size: 24px;
+    }
 
+    .track-button {
+        font-size: 20px;
+        letter-spacing: -2px;
+    }
 
-.left-box {
-    display: block; /* Disable flex on mobile */
-    text-align: center;
-    padding-top: 2vh;
-}
+    .release-tracks span, .info-item span {
+        margin: 4px;
+    }
 
-.download-button-wrapper a {
-    font-size: 14px;
-}
-
-.release-cover {
-    display: block;
-    padding: 0;
-    margin: auto;
-}
-
-.release-cover img {
-    max-width: 100%;
-    height: auto;
-}
-
-
-.info-box {
-    display: block; 
-}
-
-
-.release-tracks ol {
-    padding-left: 0;
-}
-
-.release-tracks li {
-    font-size: 0.8rem;
-}
-
-.release-tracks .track-button {
-    font-size: 20px;
-}
-
+    .info-item {
+        font-size: 16px;
+    }
 }
 </style>
