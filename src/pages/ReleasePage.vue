@@ -279,6 +279,7 @@ export default {
 
 .track-name {
     margin: 8px;
+    font-weight: 600;
 }
 
 .track-button:hover .track-name {
@@ -324,7 +325,7 @@ export default {
     }
 
     .release-artist {
-        font-size: 24px;
+        font-size: 26px;
     }
 
     .track-button {
