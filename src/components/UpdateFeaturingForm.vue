@@ -21,6 +21,10 @@
             <input id="info" v-model="form.info" />
         </div>
         <div>
+            <label for="url">Url</label>
+            <input id="url" v-model="form.url" />
+        </div>
+        <div>
             <label for="is_album">Album?</label>
             <input id="is_album" type="checkbox" v-model="form.is_album" /> 
         </div>
@@ -61,8 +65,8 @@ export default {
                 label: '',
                 info: '',
                 is_album: false,
-                credits: []
-
+                credits: [],
+                url: ''
             }
         };
     },
@@ -101,6 +105,7 @@ export default {
                     release_date: featuring.release_date || '',
                     label: featuring.label || '',
                     info: featuring.info || '',
+                    url: featuring.url || '',
                     is_album: featuring.is_album || false,
                     credits: featuring.credits || []
                 };
