@@ -83,12 +83,12 @@
                                 </div>
 
                                 <div v-if="release?.label?.length > 0" class="info-item">
-                                    <b>Label</b>
+                                    <b>Label:</b>
                                     <span v-for="label in release.label" :key="label">{{ label }}</span>
                                 </div>
 
                                 <div v-if="release?.format?.length > 0" class="info-item">
-                                    <b>Formats: </b>
+                                    <b>Format: </b>
                                     <span>{{ release.format.join(', ') }}</span>
                                 </div>
 
