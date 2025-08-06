@@ -37,6 +37,13 @@ body {
   max-width: 100vw;
 }
 
+h1 {
+    margin-block-start: 0;
+    margin-block-end: 0;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+}
+
 .background {
   background-image: url('../src/assets/scan-3.jpeg')!important;
   background-size: cover;
@@ -60,6 +67,7 @@ body::-webkit-scrollbar {
   justify-content: center; /* Vertically center */
   text-align: center; /* Center text */
   overflow-x: hidden;
+  width: 90vw;
 }
 
 a {
@@ -75,5 +83,19 @@ a:hover {
   font-weight: bold; /* Make the text bold */
   text-decoration: underline; /* Optional: Add underline */
   color: white; /* Ensure active links are visible */
+}
+
+ol {
+    display: block;
+    list-style-type: none;
+    margin-block-start: 0;
+    margin-block-end: 0;
+    padding-inline-start: 0;
+    unicode-bidi: isolate;
+}
+
+
+button {
+  all: unset;
 }
 </style>
