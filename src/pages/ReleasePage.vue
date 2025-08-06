@@ -304,14 +304,40 @@ export default {
 }
 
 @media (max-width: 1024px) {
+
+    .release-page {
+        padding-bottom: 5vh;
+    }
+
     .box-wrapper {
         flex-direction: column;
-        width: 90%;
+        width: 100%;
     }
 
     .box-wrapper .left-box,
     .box-wrapper .right-box {
         width: 100%;
+    }
+
+    .release-name {
+        font-size: 27px;
+    }
+
+    .release-artist {
+        font-size: 24px;
+    }
+
+    .track-button {
+        font-size: 20px;
+        letter-spacing: -2px;
+    }
+
+    .release-tracks span, .info-item span {
+        margin: 4px;
+    }
+
+    .info-item {
+        font-size: 16px;
     }
 }
 </style>
