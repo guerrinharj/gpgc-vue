@@ -222,7 +222,6 @@ export default {
 </script>
 
 <style>
-/* Player bar */
 .player-bar {
     position: fixed;
     bottom: 0;
@@ -252,9 +251,9 @@ export default {
 }
 
 .track-info {
-    display: flex; /* Use flexbox to layout the children */
-    align-items: center; /* Align items vertically */
-    justify-content: space-between; /* Space out items equally */
+    display: flex; 
+    align-items: center;
+    justify-content: space-between;
     font-size: 24px;
 }
 
@@ -291,7 +290,6 @@ export default {
     cursor: pointer;
 }
 
-/* Controls */
 .controls button {
     background: none;
     border: none;
@@ -307,7 +305,7 @@ export default {
     text-decoration: underline;
 }
 
-/* Volume slider */
+
 .volume-control {
     display: flex;
     align-items: center;
@@ -342,7 +340,6 @@ export default {
 }
 
 
-/* Hide elements by default */
 .hidden-desktop {
     display: none;
 }
@@ -364,11 +361,11 @@ export default {
 
 
     .track-info {
-        display: block; /* Maintain block layout for mobile */
-        width: 50%; /* Define a consistent width */
-        overflow: hidden; /* Hide overflow content */
-        text-overflow: ellipsis; /* Add ellipsis for overflowing text */
-        white-space: nowrap; /* Prevent text wrapping */
+        display: block; 
+        width: 50%;
+        overflow: hidden; 
+        text-overflow: ellipsis; 
+        white-space: nowrap;
     }
 
     .controls {

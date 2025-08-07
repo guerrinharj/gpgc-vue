@@ -66,13 +66,13 @@ export default {
 }
 
 .soundtrack-item a {
-    text-decoration: none; /* Remove underline for all links initially */
-    color: white; /* Ensure the link matches the styling */
+    text-decoration: none;
+    color: white; 
     cursor: pointer;
 }
 
 .soundtrack-item a:hover {
-    text-decoration: underline; /* Add underline on hover */
+    text-decoration: underline;
 }
 
 .year {

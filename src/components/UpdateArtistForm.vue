@@ -92,6 +92,4 @@ export default {
     gap: 1rem;
     align-items: center;
 }
-
-/* Add specific styles here if needed */
 </style>

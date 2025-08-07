@@ -189,7 +189,7 @@ export default {
 
 .formatted-type {
     position: absolute;
-    left: -100px; /* adjust this value as needed */
+    left: -100px; 
     top: 50%;
     transform: translateY(-50%);
     opacity: 0;
@@ -242,7 +242,6 @@ export default {
 }
 
 
-/* Smooth dropdown animation */
 .dropdown-enter-active, .dropdown-leave-active {
     transition: max-height 0.5s ease, opacity 0.3s ease;
     overflow: hidden;
@@ -254,7 +253,7 @@ export default {
 }
 
 .dropdown-enter-to, .dropdown-leave-from {
-    max-height: 500px; /* You can adjust this value if needed */
+    max-height: 500px;
     opacity: 1;
 }
 

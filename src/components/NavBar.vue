@@ -77,7 +77,6 @@ export default {
         margin: 0;
     }
 
-    /* Common styles for links and the button */
     .navbar a,
     .radio-button {
         color: white;
@@ -94,16 +93,15 @@ export default {
         background: transparent;
     }
 
-    /* Gradient text styling */
     .radio-button:hover {
         background: linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet);
         -webkit-background-clip: text;
         background-clip: text;
-        color: transparent; /* Makes the text take on the gradient */
+        color: transparent;
     }
 
     .navbar a:hover {
-        color: #ccc; /* Hover effect */
+        color: #ccc; 
     }
 
 
@@ -112,7 +110,6 @@ export default {
         display: none;
     }
 
-/* Mobile View */
 @media (max-width: 600px) {
     .navbar {
         padding: 0.5rem;

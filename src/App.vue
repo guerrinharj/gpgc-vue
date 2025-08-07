@@ -54,7 +54,7 @@ h1 {
 }
 
 body::-webkit-scrollbar {
-  display: none; /* Chrome, Safari, and Opera */
+  display: none;
 }
 
 #app {

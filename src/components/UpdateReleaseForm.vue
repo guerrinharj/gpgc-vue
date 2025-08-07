@@ -266,13 +266,10 @@ export default {
 </script>
 
 <style>
-/* Use styles similar to CreateReleaseForm */
 .update-release-form {
     display: flex;
     flex-direction: column;
     gap: 1rem;
     align-items: center;
 }
-
-/* Add specific styles here if needed */
 </style>

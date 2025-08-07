@@ -292,7 +292,7 @@ export default {
 }
 
 .create-release-form textarea {
-    overflow: hidden; /* Hides the scrollbar */
+    overflow: hidden;
 }
 
 .track-input-group, .credit-input-group, .link-input-group {
