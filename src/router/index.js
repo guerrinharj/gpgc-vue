@@ -5,6 +5,7 @@ import FeaturingsPage from '@/pages/FeaturingsPage.vue';
 import SoundtracksPage from '@/pages/SoundtracksPage.vue';
 import ArtistsPage from '@/pages/ArtistsPage.vue';
 import AboutPage from '@/pages/AboutPage.vue';
+import LabelPage from '@/pages/LabelPage.vue';
 import LoginPage from '@/pages/LoginPage.vue';
 import CreateReleasePage from '@/pages/CreateReleasePage.vue';
 import CreateFeaturingPage from '@/pages/CreateFeaturingPage.vue';
@@ -25,6 +26,7 @@ const routes = [
     { path: '/featurings', component: FeaturingsPage },
     { path: '/soundtracks', component: SoundtracksPage },
     { path: '/about', component: AboutPage },
+    { path: '/label', component: LabelPage },
     { path: '/login', component: LoginPage },
     { path: '/create-release', component: CreateReleasePage, meta: { requiresAuth: true } },
     { path: '/create-featuring', component: CreateFeaturingPage, meta: { requiresAuth: true } },
