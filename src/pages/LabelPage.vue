@@ -118,7 +118,7 @@ export default {
 
 .release-wrapper {
     transition: transform 0.2s ease-out, opacity 0.2s ease-out;
-    margin: 40px 0;
+    margin: 50px 0;
     opacity: 0.9;
 }
 
