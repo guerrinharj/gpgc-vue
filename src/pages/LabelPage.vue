@@ -96,7 +96,7 @@ export default {
 .catalog-number {
     text-transform: uppercase;
     text-decoration: underline;
-    font-size: 20px;
+    font-size: 15px;
     font-weight: bold;
     letter-spacing: 2px;
     margin-bottom: 8px;
