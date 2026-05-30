@@ -7,6 +7,10 @@
                 :ref="el => itemRefs[index] = el"
                 class="release-wrapper"
             >
+                <p class="catalog-number">
+                    {{ release.catalog_number }}
+                </p>
+
                 <ReleaseItem :release="release" />
             </div>
         </div>
@@ -35,11 +39,13 @@ export default {
         ...mapState(['releases']),
 
         labelReleases() {
-            return this.releases.filter((release) => {
-                return release.label?.some(
-                    (label) => label.trim() === 'GPGC'
-                );
-            });
+            return this.releases
+                .filter((release) => release.label?.includes('GPGC'))
+                .sort((a, b) => new Date(a.release_date) - new Date(b.release_date))
+                .map((release, index) => ({
+                    ...release,
+                    catalog_number: `GPGC${String(index + 1).padStart(3, '0')}`
+                }));
         }
     },
 
@@ -86,6 +92,17 @@ export default {
 </script>
 
 <style scoped>
+
+.catalog-number {
+    text-transform: uppercase;
+    text-decoration: underline;
+    font-size: 14px;
+    font-weight: bold;
+    letter-spacing: 2px;
+    margin-bottom: 8px;
+}
+
+
 .releases-page {
     background: black;
     color: white;
