@@ -8,7 +8,7 @@
                 class="release-wrapper"
             >
                 <p class="catalog-number">
-                    {{ release.catalog_number }}
+                    {{ release.catalog_number }}:
                 </p>
 
                 <ReleaseItem :release="release" />
@@ -103,8 +103,9 @@ export default {
 }
 
 .release-item {
-    padding: 0;
-    margin: 0
+    padding: 10px;
+    margin: 0;
+    font-size:19px
 }
 
 
