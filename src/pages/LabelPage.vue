@@ -96,10 +96,15 @@ export default {
 .catalog-number {
     text-transform: uppercase;
     text-decoration: underline;
-    font-size: 14px;
+    font-size: 20px;
     font-weight: bold;
     letter-spacing: 2px;
     margin-bottom: 8px;
+}
+
+.release-item {
+    padding: 0;
+    margin: 0
 }
 
 
