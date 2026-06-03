@@ -5,8 +5,8 @@
                 <p>
                     Apart from being used as an acronym for all things that I've made
                     with music, GPGC also works as a label / copyright holder for some
-                    of my stuff, focusing on four projects: Gabismo, Pessoalizado,
-                    Guerrinha and Cavalcantissimos.
+                    of my stuff, focusing on four projects: <b>G</b>abismo, <b>P</b>essoalizado,
+                    <b>G</b>uerrinha and <b>C</b>avalcantissimos.
                 </p>
             </div>
             <div
@@ -110,7 +110,7 @@ export default {
 .label-intro p {
     font-size: 18px;
     line-height: 1.6;
-    letter-spacing: 0.3px;
+    letter-spacing: -1px;
 }
 
 .catalog-number {
@@ -118,7 +118,6 @@ export default {
     text-decoration: underline;
     font-size: 15px;
     font-weight: bold;
-    letter-spacing: 2px;
     margin-bottom: 8px;
 }
 
