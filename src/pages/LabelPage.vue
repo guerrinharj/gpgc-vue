@@ -4,8 +4,8 @@
             <div class="label-intro">
                 <p>
                     Apart from being used as an acronym for all things that I've made
-                    with music, GPGC also works as a label / copyright holder for some
-                    of my stuff, focusing on four projects: <b>G</b>abismo, <b>P</b>essoalizado,
+                    with music, GPGC also works as a label / copyright holder for selected
+                    works of four projects: <b>G</b>abismo, <b>P</b>essoalizado,
                     <b>G</b>uerrinha and <b>C</b>avalcantissimos.
                 </p>
             </div>
