@@ -1,6 +1,15 @@
 <template>
     <transition name="page" appear>
         <div class="releases-page" ref="container">
+
+            <div class="label-logo">
+                <img
+                    src="@/assets/gpgc-logo.png"
+                    alt="GPGC"
+                    class="logo"
+                >
+            </div>
+
             <div class="label-intro">
                 <p>
                     Apart from being used as an acronym for all things that I've made
@@ -9,6 +18,7 @@
                     <b>G</b>uerrinha and <b>C</b>avalcantissimos.
                 </p>
             </div>
+
             <div
                 v-for="(release, index) in labelReleases"
                 :key="release.id"
@@ -101,10 +111,25 @@ export default {
 
 <style scoped>
 
+.label-logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 140px;
+    margin-bottom: 40px;
+}
+
+.logo {
+    width: 420px;
+    max-width: 80vw;
+    height: auto;
+    display: block;
+}
+
 .label-intro {
     max-width: 760px;
     margin: 0 auto 80px;
-    padding: 140px 24px 20px;
+    padding: 0 24px 20px;
 }
 
 .label-intro p {
