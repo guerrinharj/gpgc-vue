@@ -9,6 +9,7 @@
             <li id="featurings-li"><router-link to="/featurings">Featurings</router-link></li>
             <li id="soundtracks-li"><router-link to="/soundtracks">Soundtracks</router-link></li>
             <li><router-link to="/about">About</router-link></li>
+            <li id="label-li"><router-link to="/label">Label</router-link></li>
         </ul>
     </nav>
 </template>
@@ -133,7 +134,7 @@ export default {
     }
 
 
-    #artists-li {
+    #artists-li, #label-li {
         display: none;
     }
 }
