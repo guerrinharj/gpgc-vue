@@ -1,10 +1,12 @@
 <template>
-    <div class="about-page">
-        <div
-            class="content-wrapper"
-            v-html="aboutText"
-        ></div>
-    </div>
+    <transition name="page" appear>
+        <div class="about-page">
+            <div
+                class="content-wrapper"
+                v-html="aboutText"
+            ></div>
+        </div>
+    </transition>
 </template>
 
 <script>
@@ -31,5 +33,15 @@ export default {
     line-height: 1.8;
     letter-spacing: -1px;
     padding: 2rem;
+}
+
+.page-enter-active,
+.page-leave-active {
+    transition: opacity 1.6s ease;
+}
+
+.page-enter-from,
+.page-leave-to {
+    opacity: 0;
 }
 </style>
