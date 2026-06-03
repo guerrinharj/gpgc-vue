@@ -1,6 +1,14 @@
 <template>
     <transition name="page" appear>
         <div class="releases-page" ref="container">
+            <div class="label-intro">
+                <p>
+                    Apart from being used as an acronym for all things that I've made
+                    with music, GPGC also works as a label / copyright holder for some
+                    of my stuff, focusing on four projects: Gabismo, Pessoalizado,
+                    Guerrinha and Cavalcantissimos.
+                </p>
+            </div>
             <div
                 v-for="(release, index) in labelReleases"
                 :key="release.id"
@@ -92,6 +100,18 @@ export default {
 </script>
 
 <style scoped>
+
+.label-intro {
+    max-width: 760px;
+    margin: 0 auto 80px;
+    padding: 140px 24px 20px;
+}
+
+.label-intro p {
+    font-size: 18px;
+    line-height: 1.6;
+    letter-spacing: 0.3px;
+}
 
 .catalog-number {
     text-transform: uppercase;
