@@ -115,7 +115,7 @@ export default {
     justify-content: center;
     align-items: center;
     padding-top: 0;
-    margin-bottom: 40px;
+    margin: 40px 0;
 }
 
 .logo {
