@@ -13,7 +13,7 @@
             <div class="label-intro">
                 <p>
                     Apart from being used as an acronym for all things that I've made
-                    with music, GPGC also works as a label / copyright holder for selected
+                    with music, GPGC Discos works as a label / copyright holder for selected
                     works.
                 </p>
             </div>
@@ -57,7 +57,7 @@ export default {
 
         labelReleases() {
             return this.releases
-                .filter((release) => release.label?.includes('GPGC'))
+                .filter((release) => release.label?.includes('GPGC Discos'))
                 .sort((a, b) => new Date(a.release_date) - new Date(b.release_date))
                 .map((release, index) => ({
                     ...release,
