@@ -4,7 +4,7 @@
 
             <div class="label-logo">
                 <img
-                    src="@/assets/gpgclogov4.jpeg"
+                    src="@/assets/gpgclogov4.png"
                     alt="GPGC"
                     class="logo"
                 >
