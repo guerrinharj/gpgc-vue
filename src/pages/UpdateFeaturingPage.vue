@@ -22,7 +22,7 @@ export default {
 
 <style>
     .update-featuring-page {
-        padding: 2rem;
+        padding: 2.1rem;
         background: black;
         color: white;
     }
